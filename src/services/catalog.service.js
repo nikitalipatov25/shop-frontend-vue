@@ -7,7 +7,7 @@ let sortBy = 'Name,asc';
 
 class CatalogService {
 
-    newGetCatalog(page = 0, size = 4) {
+    getAllProductsFromCatalog(page = 0, size = 4) {
         pagination = 'page=' + page + '&size=' + size;
             return axios.get(API_URL + '?' + pagination + '&sort=' + sortBy)
         }

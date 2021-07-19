@@ -73,7 +73,7 @@ export default {
       )
   },
     addProductToCart() {
-      //Этот метот взят со страницы каталог. Там была использована шина событий (Не помню зачем).
+      //Этот метот взят с компонента "productList". Там была использована шина событий (Не помню зачем).
       CartService.addToCart(this.currentProduct.id);
     }
   }

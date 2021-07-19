@@ -104,7 +104,7 @@ export default {
         this.getCategory()
       } else {
         this.searchFor = this.searchText + this.startPrice + '-' + this.endPerice
-        CatalogService.newGetCatalog(this.currentPage, this.pageSize)
+        CatalogService.getAllProductsFromCatalog(this.currentPage, this.pageSize)
           .then(response => {
             this.productsFromServer = response;
             this.products = this.productsFromServer.data.content;

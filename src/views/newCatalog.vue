@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     getCatalog() {
-      CatalogService.newGetCatalog().then(
+      CatalogService.getAllProductsFromCatalog().then(
           response => {
             this.content = response.data
           }
