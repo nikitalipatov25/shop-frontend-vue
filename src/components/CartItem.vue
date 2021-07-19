@@ -64,6 +64,37 @@ export default {
       eventBus.$emit('deleteItemFromCart');
 
     }
+    // Усовершенствованный метод на увеличение покупаемого товара
+    // async addProductToCart() {
+    //   const productToCart = {
+    //     "catalogProductName": this.newProduct.name,
+    //     "catalogProductPrice": this.newProduct.price,
+    //     "selectedProductKol": this.currentQuantity,
+    //     "catalogProductPhoto": this.newProduct.photo,
+    //     "productCost": this.currentPrice,
+    //   }
+    //   let productId = this.newProduct.id;
+    //   await this.$api.cart.addItemToCart(productId, productToCart);
+    //   await this.$router.push({ name: 'cart', params: { id: this.newProduct.id } })
+    // },
+    // addQuantity() {
+    //   if (this.currentQuantity >= this.newProduct.quantity) {
+    //     this.isError = true;
+    //   } else {
+    //     this.isError = false;
+    //     this.currentQuantity++;
+    //     this.currentPrice = this.newProduct.price * this.currentQuantity;
+    //   }
+    // },
+    // subQuantity() {
+    //   if (this.currentQuantity <= 1) {
+    //     this.isError = true;
+    //   } else {
+    //     this.isError = false;
+    //     this.currentQuantity--;
+    //     this.currentPrice = this.newProduct.price * this.currentQuantity;
+    //   }
+    // },
   }
 }
 </script>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/catalog/?';
+const API_URL = 'http://localhost:8080/catalog/';
 
 let pagination = '';
 let sortBy = 'Name,asc';
@@ -9,8 +9,11 @@ class CatalogService {
 
     newGetCatalog(page = 0, size = 4) {
         pagination = 'page=' + page + '&size=' + size;
-            return axios.get(API_URL + pagination + '&sort=' + sortBy)
+            return axios.get(API_URL + '?' + pagination + '&sort=' + sortBy)
         }
+    getProductFromCatalog(productUUID) {
+        return axios.get(API_URL + productUUID)
+    }
 
     // getCatalog(page = 0, size = 4,  category = 'empty', checkboxesArray = '', search = '', sort = 'productName,asc') {
     //     pagination = 'page=' + page + '&size=' + size;
