@@ -10,6 +10,10 @@ class OrdersService {
         return axios.post(API_URL, orderType,{ headers: authHeader()})
     }
 
+    getUserOrders() {
+        return axios.get(API_URL,{ headers: authHeader()})
+    }
+
 }
 
 export default new OrdersService()

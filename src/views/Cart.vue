@@ -21,7 +21,7 @@
         <b-modal id="order-modal" hide-footer title="Оформить покупку">
           <div class="d-block text-left">
             <form>
-              <select class="form-select" v-model="typeToServer">
+              <select class="form-select" v-model="payload">
                 <option
                   v-for="type in orderType"
                   :value="type.value"
@@ -30,7 +30,7 @@
                   {{type.label}}
                 </option>
               </select>
-              <div class="mb-3" v-if="typeToServer === 'Delivery'">
+              <div class="mb-3" v-if="payload === 'Delivery'">
                 <label  class="form-label">Адрес</label>
                 <input type="email" class="form-control"  v-model="user.address">
               </div>
@@ -94,7 +94,7 @@ export default {
       ],
       text: 'Корзина',
       products: [],
-      typeToServer: 'Pickup'
+      payload: 'Pickup'
     }
   },
   methods: {
@@ -111,7 +111,7 @@ export default {
   },
     orderProducts() {
       let payload = {
-        "orderStatus": this.typeToServer,
+        "orderType": this.payload,
       }
       OrdersService.generateOrder(payload);
       // this.$api.orders.addOrder(this.typeToServer);
