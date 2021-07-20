@@ -9,7 +9,7 @@
       <form name="form" @submit.prevent="handleRegister">
         <div v-if="!successful">
           <div class="form-group">
-            <label for="username">Username</label>
+            <label for="username">Укажите имя</label>
             <input
                 v-model="user.username"
                 v-validate="'required|min:3|max:20'"
@@ -23,7 +23,7 @@
             >{{errors.first('username')}}</div>
           </div>
           <div class="form-group">
-            <label for="email">Email</label>
+            <label for="email">Укажите почту</label>
             <input
                 v-model="user.email"
                 v-validate="'required|email|max:50'"
@@ -37,7 +37,7 @@
             >{{errors.first('email')}}</div>
           </div>
           <div class="form-group">
-            <label for="password">Password</label>
+            <label for="password">Приумайте пароль</label>
             <input
                 v-model="user.password"
                 v-validate="'required|min:6|max:40'"
@@ -85,7 +85,7 @@ export default {
   },
   mounted() {
     if (this.loggedIn) {
-      this.$router.push('/profile');
+      this.$router.push('/personalarea');
     }
   },
   methods: {
@@ -98,6 +98,7 @@ export default {
               data => {
                 this.message = data.message;
                 this.successful = true;
+                this.$router.push('/login');
               },
               error => {
                 this.message =

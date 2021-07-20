@@ -1,61 +1,54 @@
 <template>
   <div class="personal-area">
     <Header/>
-    <div class="body">
-      <h1>{{ text }}</h1>
+      <div class="body">
+        <h1>{{ text }}</h1>
 
+          <div class="profile">
+            <p>Не забыть фото</p>
+            <p>Имя: {{user.name}}</p>
+            <p>Телефон: {{user.phone}}</p>
+            <p>Почта: {{user.email}}</p>
+            <p>Адрес: {{user.address}}</p>
+            <p>Редактировать профиль</p>
+            <p>Изменить почту/логин</p>
+          </div>
 
-
-<!--      <div class="row">-->
-<!--        <div class="col-2"></div>-->
-<!--        <div class="col-2">-->
-<!--          <h2>Профиль</h2>-->
-<!--        </div>-->
-<!--        <div class="col-2">-->
-<!--          <p>ФИО: {{ fullName }}</p>-->
-<!--          <p>Телефон: {{ phoneNumber }}</p>-->
-<!--          <p>Адрес: {{ adress }}</p>-->
-<!--        </div>-->
-<!--        <div class="col-2">-->
-<!--          <p>Эл. почта: {{ email }}</p>-->
-<!--          <p>Роль: {{ role }}</p>-->
-<!--          <a href="#">Редактировать</a>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <hr>-->
-
-
-      <div class="orders">
+          <div class="orders">
             <orders-component
-                v-for="order in orders"
-                :key="order.orderId"
-                :order="order"
+              v-for="order in orders"
+              :key="order.orderId"
+              :order="order"
             />
           </div>
-
-          </div>
         </div>
+    <Footer/>
+  </div>
 </template>
 
 <script>
 import Header from '../components/Header'
+import Footer from '../components/Foter'
 import ordersComponent from "@/components/ordersComponent";
 import OrderService from '@/services/orders.service'
+import UserService from '@/services/user.service'
 
 export default {
   name: 'PersonalArea',
   components: {
     Header,
+    Footer,
     ordersComponent
   },
   data() {
     return {
       text: 'Личный кабинет',
-      fullName: '',
-      phoneNumber: '',
-      email: '',
-      adress: '',
-      role: '',
+      user: {
+        name: '',
+        phone: '',
+        email: '',
+        address: ''
+      },
       orders: '',
     }
   },
@@ -67,10 +60,23 @@ export default {
             console.log(response.data);
           }
       )
+    },
+    getUserProfile() {
+      UserService.getUser().then(
+          response => {
+            this.user.name = response.data.fullName;
+            this.user.phone = response.data.phoneNumber;
+            this.user.email = response.data.email;
+            this.user.address = response.data.address;
+            console.log(response)
+          }
+      )
     }
   },
   created() {
+    this.getUserProfile();
     this.geUserOrders();
+
     // const userFromServer = await this.$api.user.getSingleUser('cd668994-a73a-4da6-8f03-e7fe7034aa17');
     // console.log(userFromServer);
     // this.fullName = userFromServer.data.fullName;
@@ -84,15 +90,9 @@ export default {
   },
 }
 </script>
+
 <style>
-.personal-area h1 {
-  margin-left: 10px;
-  text-align: left;
-}
-.personal-area h2 {
-  text-align: right;
-}
-.col-2 {
-  text-align: left;
+.orders {
+ text-align: center;
 }
 </style>
