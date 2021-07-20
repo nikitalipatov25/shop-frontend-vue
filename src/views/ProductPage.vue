@@ -37,6 +37,18 @@
             </div>
           </div>
         </div>
+        <section class="comment">
+          <div class="row">
+            <col-12>
+              <h1 class="title">
+                Комментарии
+              </h1>
+            </col-12>
+          </div>
+            <CommentForm />
+            <CommentList />
+        </section>
+
       </div>
     </div>
   </div>
@@ -44,11 +56,15 @@
 
 <script>
 import Header from '../components/Header'
+import CommentForm from "../components/CommentForm";
+import CommentList from "../components/CommentList";
 
 export default {
   name: 'ProductPage',
   components: {
-    Header
+    Header,
+    CommentForm,
+    CommentList
   },
   data() {
     return {
