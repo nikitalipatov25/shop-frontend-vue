@@ -39,14 +39,14 @@
         </div>
         <section class="comment">
           <div class="row">
-            <col-12>
+            <div class="col-12">
               <h1 class="title">
                 Комментарии
               </h1>
-            </col-12>
+            </div>
           </div>
             <CommentForm />
-            <CommentList />
+            <CommentList :comments="comments"/>
         </section>
 
       </div>
@@ -58,6 +58,8 @@
 import Header from '../components/Header'
 import CommentForm from "../components/CommentForm";
 import CommentList from "../components/CommentList";
+
+import CommentService from '../services/comment.service'
 
 export default {
   name: 'ProductPage',
@@ -81,7 +83,8 @@ export default {
       productKol: '',
       tempPrice: 0,
       categoryType: '',
-      categoryName: ''
+      categoryName: '',
+      comments: null
     }
   },
   created: async function() {
@@ -95,8 +98,17 @@ export default {
     this.productKol = this.productsFromServer.data.productKol;
     this.categoryType = this.productsFromServer.data.categoryType;
     this.categoryName = this.productsFromServer.data.categoryName;
+    this.getComments()
   },
   methods: {
+    getComments() {
+      CommentService.getComments(this.productUUID)
+      .then(
+          response => {
+            this.comments = response.data
+          }
+      )
+    },
     async addToCart() {
       const productToCart = {
       "catalogProductName": this.productName,
@@ -143,5 +155,11 @@ export default {
 }
 .category-nav a {
   margin-right: 25px;
+}
+.comment{
+  margin-top: 50px;
+}
+.comment h1{
+  text-align: center;
 }
 </style>

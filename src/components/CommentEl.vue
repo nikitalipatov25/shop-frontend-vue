@@ -2,32 +2,67 @@
   <div class="comment-el col-12">
     <div class="comment">
       <div class="comment__head">
-        <div class="user-name">
-          NewUser
+        <div class="head__el user-name">
+          <p>
+            {{ comment.userName }}
+          </p>
         </div>
-        <div class="date">
-          20.07.2021
+        <div class="head__el date">
+          <p>
+            {{ comment.date }}
+          </p>
         </div>
-        <div class="rating">
-          9 из 10
+        <div class="head__el rating">
+          <p>
+            {{ comment.rating }} из 10
+          </p>
         </div>
       </div>
       <div class="comment__body">
         <div class="text">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex explicabo fuga iste, laborum minima molestiae nesciunt nihil officiis porro praesentium, quod sed, vel veniam voluptate voluptatibus. Illum maxime pariatur vitae?
+          <p>
+            {{isButtonVisible ? shortText : fullText }}
+          </p>
         </div>
         <div class="text-extension">
-          Показать/скрыть
+          <span @click="isButtonVisible = !isButtonVisible">
+            {{ isButtonVisible === true ? 'Показать' : 'Скрыть' }}
+          </span>
+
         </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "CommentEl"
+  name: "CommentEl",
+  props: [
+    "comment"
+  ],
+  data() {
+    return {
+      isAppear: false,
+      isButtonVisible: false,
+      fullText: this.comment.text,
+      shortText: ''
+    }
+  },
+  created() {
+    this.visibleButton()
+    this.sliceText()
+  },
+  methods: {
+    visibleButton(){
+      if(this.comment.text.length > 10){
+        return this.isButtonVisible = true
+      }
+    },
+    sliceText(){
+      this.shortText = this.fullText.slice(0, 10)
+    },
+  }
 }
 </script>
 
@@ -39,4 +74,25 @@ export default {
     border: 1px solid #ccc;
     border-radius: 3px;
   }
+  .comment__head{
+    display: flex;
+  }
+  .comment span{
+    cursor: pointer;
+  }
+  .comment p, span{
+    margin: 0;
+    padding: 5px 10px;
+  }
+  .user-name{
+    margin-right: 5px;
+    width: 150px;
+  }
+  .date{
+
+  }
+  .rating{
+    margin-left: auto;
+  }
+
 </style>
