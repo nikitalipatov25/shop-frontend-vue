@@ -8,7 +8,7 @@
       />
       <form name="form" @submit.prevent="handleLogin">
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="username">Введите логин</label>
           <input
               v-model="user.username"
               v-validate="'required'"
@@ -20,10 +20,10 @@
               v-if="errors.has('username')"
               class="alert alert-danger"
               role="alert"
-          >Username is required!</div>
+          >Необходимо указать логин!</div>
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">Введите пароль</label>
           <input
               v-model="user.password"
               v-validate="'required'"
@@ -35,7 +35,7 @@
               v-if="errors.has('password')"
               class="alert alert-danger"
               role="alert"
-          >Password is required!</div>
+          >Необходимо указать пароль!</div>
         </div>
         <div class="form-group">
           <button class="btn btn-primary btn-block" :disabled="loading">
@@ -70,7 +70,7 @@ export default {
   },
   created() {
     if (this.loggedIn) {
-      this.$router.push('/profile');
+      this.$router.push('/personalarea');
     }
   },
   methods: {
@@ -85,7 +85,7 @@ export default {
         if (this.user.username && this.user.password) {
           this.$store.dispatch('auth/login', this.user).then(
               () => {
-                this.$router.push('/profile');
+                this.$router.push('/personalarea');
               },
               error => {
                 this.loading = false;

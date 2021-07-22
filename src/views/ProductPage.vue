@@ -3,38 +3,26 @@
     <Header/>
     <div class="body">
       <div class="category-nav">
-        <a href="#">{{ categoryType }}</a>
-        <a href="#">{{ categoryName }}</a>
+        <a href="#">{{ currentProduct.animal }}</a>
+        <a href="#">{{ currentProduct.category }}</a>
       </div>
       <div class="container">
         <div class="row">
           <div class="col-5">
             <img
-            :src="productPhoto"
-            :alt="productName"
-            height="300px"
+              :src="currentProduct.photo"
+              :alt="currentProduct.name"
+              height="300px"
             >
           </div>
           <div class="col-7">
-            <h1>{{ productName }}</h1>
-            <p>Артикул товара: {{ productUUID }}</p>
+            <h1>{{ currentProduct.name }}</h1>
+            <p>Артикул товара: {{ currentProduct.id }}</p>
             <hr>
-            Описание: {{ productDescription }}
+            <p>Описание: {{ currentProduct.description }}</p>
             <hr>
-            <p>В наличии: {{ productKol }} шт.</p>
-            <p>
-              <button type="button" class="btn btn-success" @click="addCol">+</button>
-              {{ addToCartKol }} шт.
-              <button type="button" class="btn btn-success" @click="subCol">-</button>
-            </p>
-              <p v-if="!isError">
-                <button class="btn btn-primary" @click="addToCart">
-                  Добавить в корзину: {{productPrice}} руб.
-                </button>
-              </p>
-            <div class="alert alert-warning" role="alert" v-else>
-              Проверьте указанное кол-во!
-            </div>
+            <p>В наличии: {{ currentProduct.quantity }} шт.</p>
+            <p><button class="btn btn-primary" @click="addProductToCart">Добавить в корзину: {{currentProduct.price}} руб.</button></p>
           </div>
         </div>
       </div>
@@ -44,6 +32,8 @@
 
 <script>
 import Header from '../components/Header'
+import CatalogService from '../services/catalog.service'
+import CartService from "@/services/cart.service";
 
 export default {
   name: 'ProductPage',
@@ -52,65 +42,40 @@ export default {
   },
   data() {
     return {
-      itemsInCart: 0,
-      searchText: '',
-      addToCartKol: 1,
-      isError: false,
-      productUUID: '',
-      productsFromServer: {},
-      productName: '',
-      productPrice: '',
-      productPhoto: '',
-      productDescription: '',
-      productKol: '',
-      tempPrice: 0,
-      categoryType: '',
-      categoryName: ''
+      currentProduct: {
+        id: '',
+        name: '',
+        price: '',
+        photo: '',
+        description: '',
+        quantity: '',
+        animal: '',
+        category: ''
+      }
     }
   },
-  created: async function() {
-    this.productUUID = this.$route.params.id;
-    this.productsFromServer = await this.$api.catalog.getCatalogItemByUUID(this.productUUID);
-    this.productName = this.productsFromServer.data.productName;
-    this.productPrice = this.productsFromServer.data.productPrice;
-    this.tempPrice = this.productsFromServer.data.productPrice;
-    this.productPhoto = this.productsFromServer.data.productPhoto;
-    this.productDescription = this.productsFromServer.data.productDescription;
-    this.productKol = this.productsFromServer.data.productKol;
-    this.categoryType = this.productsFromServer.data.categoryType;
-    this.categoryName = this.productsFromServer.data.categoryName;
+  created() {
+    this.currentProduct.id = this.$route.params.id;
+    this.getProductFromCatalog();
   },
   methods: {
-    async addToCart() {
-      const productToCart = {
-      "catalogProductName": this.productName,
-      "catalogProductPrice": this.tempPrice,
-      "selectedProductKol": this.addToCartKol,
-      "catalogProductPhoto": this.productPhoto,
-      "productCost": this.productPrice,
-      }
-      let productId = this.productUUID;
-      await this.$api.cart.addItemToCart(productId, productToCart);
-      await this.$router.push({ name: 'cart', params: { id: this.productUUID } })
-    },
-    addCol() {
-      if (this.addToCartKol >= this.productKol) {
-        this.isError = true;
-      } else {
-        this.isError = false;
-        this.addToCartKol++;
-        this.productPrice = this.productPrice + this.tempPrice;
-      }
-    },
-    subCol() {
-      if (this.addToCartKol <= 1) {
-        this.isError = true;
-      } else {
-        this.isError = false;
-        this.addToCartKol--;
-        this.productPrice = this.productPrice - this.tempPrice;
-      }
-    },
+    getProductFromCatalog() {
+      CatalogService.getProductFromCatalog(this.currentProduct.id).then(
+        response => {
+          this.currentProduct.name = response.data.name;
+          this.currentProduct.price = response.data.price;
+          this.currentProduct.photo = response.data.photo;
+          this.currentProduct.description = response.data.description;
+          this.currentProduct.quantity = response.data.quantity;
+          this.currentProduct.animal = response.data.animal;
+          this.currentProduct.category = response.data.category;
+        }
+      )
+  },
+    addProductToCart() {
+      //Этот метот взят с компонента "productList". Там была использована шина событий (Не помню зачем).
+      CartService.addToCart(this.currentProduct.id);
+    }
   }
 }
 </script>

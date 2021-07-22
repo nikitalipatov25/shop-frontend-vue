@@ -11,18 +11,12 @@ import QandA from "@/views/QandA";
 import About from "@/views/About";
 import Login from "@/views/Login";
 import Register from "@/views/Register";
-import newCatalog from '@/views/newCatalog'
 
 Vue.use(Router);
 
 export const router = new Router({
     mode: 'history',
   routes: [
-      {
-          path: '/new',
-          name: 'new-catalog',
-          component: newCatalog
-      },
       {
           path: '/',
           name: 'main-page',
@@ -70,18 +64,6 @@ export const router = new Router({
       {
           path: '/register',
           component: Register
-      },
-      {
-          path: '/profile',
-          name: 'profile',
-          // lazy-loaded
-          component: () => import('./views/Profile.vue')
-      },
-      {
-          path: '/test',
-          name: 'test',
-          // lazy-loaded
-          component: () => import('./views/Test')
-      },
+      }
   ]  
 })
