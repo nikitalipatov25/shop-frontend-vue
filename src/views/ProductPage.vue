@@ -25,6 +25,17 @@
             <p><button class="btn btn-primary" @click="addProductToCart">Добавить в корзину: {{currentProduct.price}} руб.</button></p>
           </div>
         </div>
+        <section class="comment">
+          <div class="row">
+            <div class="col-12">
+              <h1 class="title">
+                Комментарии
+              </h1>
+            </div>
+          </div>
+          <CommentForm />
+          <CommentList :comments="comments"/>
+        </section>
       </div>
     </div>
   </div>
@@ -34,11 +45,17 @@
 import Header from '../components/Header'
 import CatalogService from '../services/catalog.service'
 import CartService from "@/services/cart.service";
+import CommentForm from "../components/CommentForm";
+import CommentList from "../components/CommentList";
+
+import CommentService from '../services/comment.service'
 
 export default {
   name: 'ProductPage',
   components: {
-    Header
+    Header,
+    CommentForm,
+    CommentList
   },
   data() {
     return {
@@ -51,14 +68,24 @@ export default {
         quantity: '',
         animal: '',
         category: ''
-      }
+      },
+      comments: null
     }
   },
   created() {
     this.currentProduct.id = this.$route.params.id;
     this.getProductFromCatalog();
+    this.getComments()
   },
   methods: {
+    getComments() {
+      CommentService.getComments(this.productUUID)
+          .then(
+              response => {
+                this.comments = response.data
+              }
+          )
+    },
     getProductFromCatalog() {
       CatalogService.getProductFromCatalog(this.currentProduct.id).then(
         response => {
@@ -92,5 +119,11 @@ export default {
 }
 .category-nav a {
   margin-right: 25px;
+}
+.comment{
+  margin-top: 50px;
+}
+.comment h1{
+  text-align: center;
 }
 </style>
