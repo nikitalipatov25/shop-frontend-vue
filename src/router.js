@@ -11,6 +11,7 @@ import QandA from "@/views/QandA";
 import About from "@/views/About";
 import Login from "@/views/Login";
 import Register from "@/views/Register";
+import Admin from "@/views/Admin";
 
 Vue.use(Router);
 
@@ -64,6 +65,10 @@ export const router = new Router({
       {
           path: '/register',
           component: Register
+      },
+      {
+          path: '/admin',
+          component: Admin
       }
   ]  
 })

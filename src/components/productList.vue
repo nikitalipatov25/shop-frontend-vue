@@ -11,7 +11,8 @@
       </div>
       <div class="col-3">
         <p>{{product.name}}</p>
-        <p>Стоимость за шт. {{product.price}} руб.</p>
+        <p v-if="product.promotionPrice === 0">Стоимость за шт. {{product.price}} руб.</p>
+        <p v-else>Стоимость за шт. {{product.promotionPrice}} руб.</p>
         <p style="color: crimson" v-if="product.quantity === 1"> Поторопитесь! Осталась одна штука</p>
         <p v-else-if="product.quantity === 0"> Товар распродан</p>
         <p v-else> Кол-во на складе: {{product.quantity}} шт.</p>
