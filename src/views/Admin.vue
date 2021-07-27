@@ -1,22 +1,14 @@
 <template>
   <div class="admin">
     <h1>Admins page</h1>
-    <input v-model="name" placeholder="название">
-    <input v-model="discount" placeholder="скидка">
-    <input v-model="date" placeholder="дата">
-    <input v-model="type" placeholder="тип">
-
-    <input type="file" ref="file" @change="selectFile">
-
-
-    <button class="btn btn-success" :disabled="!selectedFiles" @click="upload">
-      Upload
-    </button>
-
-
-    <button @click="createPromotion">New promotion</button>
-    <hr>
-    <img :src="src">
+    <p><input v-model="name" placeholder="название"></p>
+    <p><input v-model="discount" placeholder="скидка"></p>
+    <p><input v-model="date" placeholder="дата"></p>
+    <p><input v-model="expirationDate" placeholder="data2"></p>
+    <p><input v-model="description" placeholder="desc"></p>
+    <p><input v-model="type" placeholder="тип"></p>
+    <p><input type="file" ref="file" @change="selectFile"></p>
+    <button @click="createPromotion">Добавить акцию</button>
   </div>
 </template>
 
@@ -29,25 +21,35 @@ export default {
       name: '',
       discount: '',
       date:'',
+      expirationDate:'',
+      description: '',
       type: '',
-      src: 'http://localhost:8080/files/1132bac2-6e9f-41c2-af9a-6619b565c9f2',
+      src: 'http://localhost:8080/files/',
       selectedFiles: undefined,
       currentFile: undefined,
-      message: "",
       fileInfos: []
     }
   },
   methods: {
     createPromotion() {
+
+      this.currentFile = this.selectedFiles.item(0);
+      FileService.uploadImage(this.currentFile)
+          .then(response => {
+            console.log(response.data)
+          })
+
       let payload = {
-        'expirationDate': this.date,
+        'description': this.description,
+        'expirationDate': this.expirationDate,
+        'date': this.date,
         'name': this.name,
         'type': this.type,
-        'discount': this.discount
+        'discount': this.discount,
+        'image': this.currentFile.name
       }
-      this.currentFile = this.selectedFiles.item(0);
-      console.log(this.currentFile)
-      PromotionService.generatePromotion(payload, this.currentFile).then(
+
+      PromotionService.generatePromotion(payload).then(
           response => {
             console.log(response);
           }
@@ -59,11 +61,9 @@ export default {
     },
     upload() {
       this.currentFile = this.selectedFiles.item(0);
-      console.log(this.currentFile)
       FileService.uploadImage(this.currentFile)
           .then(response => {
-            this.message = response.data.message;
-            console.log(this.message)
+            console.log(response.data)
           })
     }
   }

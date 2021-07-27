@@ -6,10 +6,12 @@ import authHeader from "@/services/auth-header";
 
 class PromotionsService {
 
-    generatePromotion(payload, file) {
-        let formData = new FormData();
-        formData.append('file', file);
+    generatePromotion(payload) {
         return axios.post(API_URL, payload, { headers: authHeader()})
+    }
+
+    getPromotions() {
+        return axios.get(API_URL, { headers: authHeader()})
     }
 
 }
