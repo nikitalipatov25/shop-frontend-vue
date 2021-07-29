@@ -53,6 +53,7 @@
 
       </div>
     </div>
+    <Footer/>
   </div>
 </template>
 
@@ -60,6 +61,7 @@
 import CartItem from '../components/CartItem'
 import { eventBus } from '../main'
 import Header from '../components/Header'
+import Footer from '../components/Foter'
 import CartService from '../services/cart.service'
 import OrdersService from '../services/orders.service'
 
@@ -67,7 +69,8 @@ export default {
   name: 'Cart',
   components: {
     CartItem,
-    Header
+    Header,
+    Footer
   },
   data() {
     return {

@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-3">
         <img
-            :src="product.photo"
+            :src="'http://localhost:8080/files/' + product.photo"
             style="width: 286px; height: 286px"
             @click="$router.push({ name: 'product-page', params: { id: product.id } })"
         >
