@@ -6,6 +6,22 @@ const API_URL = 'http://localhost:8080/';
 
 class AdminService {
 
+    getAnimals() {
+        return axios.get(API_URL + 'api/admin/animals', { headers: authHeader()})
+    }
+
+    getCategories() {
+        return axios.get(API_URL + 'api/admin/categories', { headers: authHeader()})
+    }
+
+    addAnimals(animal, categories) {
+        return axios.get(API_URL + 'api/admin/add/' + animal + '/' + categories,  { headers: authHeader()})
+    }
+
+    addCategories(payload) {
+        return axios.post(API_URL + 'animal/add/', payload, { headers: authHeader()})
+    }
+
     getProductFromCatalog(productUUID) {
         return axios.get(API_URL + 'catalog/' + productUUID, { headers: authHeader()})
     }

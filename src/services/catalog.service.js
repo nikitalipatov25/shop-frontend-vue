@@ -7,6 +7,20 @@ let sortBy = 'Name,asc';
 
 class CatalogService {
 
+    getAnimalsList() {
+        return axios.get(API_URL + 'animals')
+    }
+
+    getCategoriesList() {
+        return axios.get(API_URL + 'categories')
+    }
+
+    getCatalogByUserFilter(animals, page = 0, size = 4) {
+        pagination = 'page=' + page + '&size=' + size;
+            return axios.get(API_URL + 'user_filters/' + animals)
+
+    }
+
     getAllProductsFromCatalog(page = 0, size = 4) {
         pagination = 'page=' + page + '&size=' + size;
             return axios.get(API_URL + '?' + pagination + '&sort=' + sortBy)

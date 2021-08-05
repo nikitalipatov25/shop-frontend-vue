@@ -5,7 +5,7 @@
           <h2>Наши акции</h2>
           <index-corusel/>
           <h2>Наш каталог</h2>
-          <catalog-category/>
+          <IndexCatalog/>
           <h2>Новинки</h2>
           Work in progress...
           <h2>Популярные товары</h2>
@@ -18,7 +18,7 @@
 <script>
 import Header from '../components/Header'
 import Footer from '../components/Foter'
-import CatalogCategory from "@/components/IndexSmallMenu"
+import IndexCatalog from "@/components/IndexCatalog"
 import IndexCorusel from '@/components/IndexCorusel'
 
 export default {
@@ -27,15 +27,7 @@ export default {
     IndexCorusel,
     Header,
     Footer,
-    CatalogCategory,
+    IndexCatalog,
   }
 }
 </script>
-
-<style>
-.catalog-category {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-</style>

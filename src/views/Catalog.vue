@@ -4,7 +4,8 @@
     <div class="body">
       <div class="row">
         <div class="col-2">
-          <CatalogMenu/>
+<!--          <CatalogMenu/>-->
+          <newMenuInCatalog/>
         </div>
         <div class="col-10">
           <div class="catalog-nav">
@@ -63,7 +64,8 @@
 <script>
 import ProductCard from '@/components/ProductCard'
 import productList from '@/components/productList'
-import CatalogMenu from '../components/CatalogMenu'
+// import CatalogMenu from '../components/CatalogMenu'
+import newMenuInCatalog from "@/components/newMenuInCatalog";
 import Header from '../components/Header'
 import Footer from '../components/Foter'
 import { eventBus } from '@/main'
@@ -74,9 +76,10 @@ export default {
   components: {
     ProductCard,
     productList,
-    CatalogMenu,
+    // CatalogMenu,
     Header,
     Footer,
+    newMenuInCatalog
   },
   data() {
     return {

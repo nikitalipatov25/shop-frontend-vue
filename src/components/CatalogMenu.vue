@@ -1,6 +1,20 @@
 <template>
   <div class="custom-left-menu">
-<!--    скрыть блок с категорией, когда отображаютсся все товары. показывать толко по стоимости и аакции-->
+
+    <strong @click="isAnimalClicked = !isAnimalClicked">Питомец</strong>
+    <div class="animal" v-if="isAnimalClicked">
+      <div class="animal-list" v-for="animalValue in animalsValues" :key="animalValue" >
+        {{animalValue}}
+      </div>
+    </div>
+
+    <strong @click="isCategoryClicked = !isCategoryClicked">Категория</strong>
+    <div class="category" v-if="isCategoryClicked">
+      <div class="category-list" v-for="categoryValue in categoriesValues" :key="categoryValue">
+        {{categoryValue}}
+      </div>
+    </div>
+
     <p>Категория:</p>
     <div class="c-list" v-for="item in dynamicArray" :key="item">
       <input type="checkbox" v-bind:value="item" v-model="checkboxesArray"> <label>{{ item }}</label>
@@ -14,10 +28,19 @@
 
 <script>
 import {eventBus} from "@/main";
+import CatalogService from '../services/catalog.service'
 
 export default {
   data() {
     return {
+      animalsKeys: {},
+      animalsValues: {},
+      categoriesKeys: {},
+      categoriesValues: {},
+      isAnimalClicked: false,
+      isCategoryClicked: false,
+
+      category: {},
       startPrice: 0,
       endPrice: 999999,
       checkboxesArray: [],
@@ -30,6 +53,24 @@ export default {
     }
   },
   methods: {
+    getAnimals() {
+      CatalogService.getAnimalsList().then(
+          response => {
+            let animals = response.data;
+            this.animalsKeys = Object.keys(animals);
+            this.animalsValues = Object.values(animals)
+          }
+      )
+    },
+    getCategories() {
+      CatalogService.getCategoriesList().then(
+          response => {
+            let categories = response.data;
+            this.categoriesKeys = Object.keys(categories);
+            this.categoriesValues = Object.values(categories)
+          }
+      )
+    },
     async getCategory() {
       let arr = [this.dynamicArrayParameter, this.checkboxesArray, this.startPrice, this.endPrice];
       eventBus.$emit('getCategory', arr)
@@ -50,6 +91,8 @@ export default {
     }
   },
   created() {
+    this.getAnimals()
+    this.getCategories()
     this.dynamicArrayParameter = this.$route.params.catalogParameter;
     this.changeCheckBoxes(this.dynamicArrayParameter);
   }
