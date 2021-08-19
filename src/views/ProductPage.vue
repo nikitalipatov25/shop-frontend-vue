@@ -10,7 +10,7 @@
         <div class="row">
           <div class="col-5">
             <img
-              :src="currentProduct.photo"
+              :src="currentProduct.image"
               :alt="currentProduct.name"
               height="300px"
             >
@@ -21,7 +21,7 @@
             <hr>
             <p>Описание: {{ currentProduct.description }}</p>
             <hr>
-            <p>В наличии: {{ currentProduct.quantity }} шт.</p>
+            <p>В наличии: {{ currentProduct.amount }} шт.</p>
             <p><button class="btn btn-primary" @click="addProductToCart">Добавить в корзину: {{currentProduct.price}} руб.</button></p>
           </div>
         </div>
@@ -43,11 +43,11 @@
 
 <script>
 import Header from '../components/Header'
-import CatalogService from '../services/catalog.service'
-import CartService from "@/services/cart.service";
 import CommentForm from "../components/CommentForm";
 import CommentList from "../components/CommentList";
 
+import CatalogService from '../services/catalog.service'
+import CartService from "@/services/cart.service";
 import CommentService from '../services/comment.service'
 
 export default {
@@ -63,9 +63,9 @@ export default {
         id: '',
         name: '',
         price: '',
-        photo: '',
+        image: '',
         description: '',
-        quantity: '',
+        amount: '',
         animal: '',
         category: ''
       },
@@ -79,10 +79,11 @@ export default {
   },
   methods: {
     getComments() {
-      CommentService.getComments(this.productUUID)
+      CommentService.getComments(this.currentProduct.id)
           .then(
               response => {
                 this.comments = response.data
+                console.log(this.comments)
               }
           )
     },
@@ -91,9 +92,9 @@ export default {
         response => {
           this.currentProduct.name = response.data.name;
           this.currentProduct.price = response.data.price;
-          this.currentProduct.photo = response.data.photo;
+          this.currentProduct.image = response.data.image;
           this.currentProduct.description = response.data.description;
-          this.currentProduct.quantity = response.data.quantity;
+          this.currentProduct.amount = response.data.amount;
           this.currentProduct.animal = response.data.animal;
           this.currentProduct.category = response.data.category;
         }

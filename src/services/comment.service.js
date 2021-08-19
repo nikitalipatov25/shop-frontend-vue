@@ -10,8 +10,8 @@ class CommentService {
         return axios.get(API_URL + id, { headers: authHeader() })
     }
 
-    generateComment(id, comment){
-        return axios.post(API_URL + id, comment, { headers: authHeader() })
+    generateComment(id, payload){
+        return axios.post(API_URL + id, payload, { headers: authHeader() })
     }
 
     updateComment(id, comment){
@@ -20,6 +20,18 @@ class CommentService {
 
     deleteComment(id){
         return axios.delete(API_URL + id, { headers: authHeader() })
+    }
+
+    generateAnswer(id, payload){
+        return axios.post(API_URL + id + '/answer', payload, { headers: authHeader() })
+    }
+
+    deleteAnswer(id){
+        return axios.delete(API_URL + id + '/answer', { headers: authHeader() })
+    }
+
+    getAnswers(id){
+        return axios.get(API_URL + id + '/answer', { headers: authHeader() })
     }
 
 }

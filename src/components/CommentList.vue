@@ -6,7 +6,7 @@
 
 <script>
 import CommentEl from "../components/CommentEl";
-//wdw
+
 export default {
   name: "CommentList",
   components: {
