@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080';
+const API_URL = 'http://localhost:8080/api/category';
 
 class CategoryService {
-    getCategoriesList() {
-        return axios.get(API_URL + '/api/admin/categories')
+    getCategoriesSet() {
+        return axios.get(API_URL + '/get')
     }
 }
 export default new CategoryService();

@@ -9,8 +9,6 @@ import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 import BootstrapVue from "bootstrap-vue"
 Vue.use(BootstrapVue)
-import ApiPlugin from './plugins/api'
-Vue.use(ApiPlugin)
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap-vue/dist/bootstrap-vue.css"
 import 'bootstrap/dist/css/bootstrap.min.css'

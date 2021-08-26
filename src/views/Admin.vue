@@ -3,10 +3,6 @@
     <Header/>
       <div class="body">
         <h1>Admins page</h1>
-        <input type="text" placeholder="Animal" v-model="av">
-        <input type="text" placeholder="Category" v-model="item" @keyup.enter="add">
-        {{cv}}
-        <button @click="test">Test</button>
         <CatalogTool/>
         <DealsTool/>
         <UserTool/>
@@ -30,21 +26,7 @@ export default {
     DealsTool,
     UserTool
   },
-  data() {
-    return {
-      item: '',
-      av:'',
-      cv:[],
-
-    }
-  },
   methods: {
-    add() {
-      this.cv.push(this.item)
-    },
-    test() {
-      AdminService.addAnimals(this.av, this.cv)
-    },
     created() {
       AdminService.getAnimals().then(
           response => {

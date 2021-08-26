@@ -1,8 +1,5 @@
 <template>
   <div class="footer">
-    <div class="alert alert-success" role="alert">
-      Режим работы магазина: ежедневно с 10 до 20, тел.: 8(951)525-91-32
-    </div>
     <div class="row">
       <div class="col-4">
         <ul class="list-group">

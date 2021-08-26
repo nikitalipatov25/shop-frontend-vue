@@ -7,27 +7,31 @@ const API_URL = 'http://localhost:8080/';
 class AdminService {
 
     getAnimals() {
-        return axios.get(API_URL + 'api/admin/animals', { headers: authHeader()})
+        return axios.get(API_URL + 'api/admin/get/animals', { headers: authHeader()})
+    }
+
+    getAnimal(animalName) {
+        return axios.get(API_URL + 'api/admin/get/animal/' + animalName, { headers: authHeader()})
     }
 
     getCategories() {
-        return axios.get(API_URL + 'api/admin/categories', { headers: authHeader()})
+            return axios.get(API_URL + 'api/admin/categories', { headers: authHeader()})
     }
 
-    addAnimals(animal, categories) {
-        return axios.get(API_URL + 'api/admin/add/' + animal + '/' + categories,  { headers: authHeader()})
-    }
-
-    addCategories(payload) {
-        return axios.post(API_URL + 'animal/add/', payload, { headers: authHeader()})
-    }
+    // addAnimals(animal, categories) {
+    //     return axios.get(API_URL + 'api/admin/add/' + animal + '/' + categories,  { headers: authHeader()})
+    // }
+    //
+    // addCategories(payload) {
+    //     return axios.post(API_URL + 'animal/add/', payload, { headers: authHeader()})
+    // }
 
     getProductFromCatalog(productUUID) {
         return axios.get(API_URL + 'catalog/' + productUUID, { headers: authHeader()})
     }
 
     addProductToCatalog(payload) {
-        return axios.post(API_URL + 'catalog/add', payload, { headers: authHeader()})
+        return axios.post(API_URL + 'api/admin/add/product', payload, { headers: authHeader()})
     }
 
     deleteProductFromCatalog(productUUID) {
@@ -44,9 +48,9 @@ class AdminService {
         return axios.post(API_URL + 'upload', formData, {headers: {"Content-Type": "multipart/form-data"}})
     }
 
-    generatePromotion(payload) {
-        return axios.post(API_URL + 'promotions/' , payload, { headers: authHeader()})
-    }
+    // generatePromotion(payload) {
+    //     return axios.post(API_URL + 'promotions/' , payload, { headers: authHeader()})
+    // }
 }
 
 export default new AdminService()

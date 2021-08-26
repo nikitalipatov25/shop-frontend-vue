@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/catalog/';
+const API_URL = 'http://localhost:8080/api/products/';
 
 let pagination = '';
 let sortBy = 'Name,asc';

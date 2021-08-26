@@ -8,9 +8,15 @@
         <p>Введите название товара: <input type="text" v-model="product.name"/></p>
         <p>Введите описание товара: <input type="text" v-model="product.description"/></p>
         <p>Введите стоимость товара: <input type="text" v-model="product.price"/></p>
-        <p>Введите количество товара: <input type="text" v-model="product.quantity"/></p>
-        <p>Введите тип животного: <input type="text" v-model="product.animal"/></p>
-        <p>Введите категорию товара: <input type="text" v-model="product.category"/></p>
+        <p>Введите количество товара: <input type="text" v-model="product.amount"/></p>
+          <select class="form-select" @change="selectAnimal($event)">
+            <option selected>Выберете тип животного</option>
+            <option v-for="animal in animals" :key="animal.id">{{animal.name}}</option>
+          </select>
+          <select class="form-select" @change="selectCategory($event)">
+            <option selected>Выберете категорию товара</option>
+            <option v-for="category in categories" :key="category.id">{{category.name}}</option>
+          </select>
         <p>Добавьте фотографию:<input type="file" ref="file" @change="selectFile"></p>
       </div>
       <button class="btn btn-success" @click="addNewProductToCatalog">Добавить товар</button>
@@ -20,7 +26,10 @@
     <button type="button" class="btn btn-danger" @click="$bvModal.show('delete-product-modal')">Удалить товар из каталога</button>
     <b-modal id="delete-product-modal" hide-footer title="Удалить товар">
       <div class="d-block text-left">
-        <p>Введите артикул товара: <input type="text" v-model="productUUID"/></p>
+        <p>Введите артикул товара: <input type="text" v-model="productUUID" @keyup.enter="findProduct"/></p>
+        <div class="delete-body" v-if="isDetected">
+              <p>Вы собираетесь удалить <input type="text" v-model="product.name"></p>
+        </div>
       </div>
       <button class="btn btn-success" @click="deleteProductFromCatalog">Удалить товар</button>
       <button type="button" class="btn btn-danger" @click="$bvModal.hide('delete-product-modal')">Закрыть</button>
@@ -42,7 +51,7 @@
               <p>Название<input type="text" v-model="product.name"></p>
               <p>Введите описание товара: <input type="text" v-model="product.description"/></p>
               <p>Введите стоимость товара: <input type="text" v-model="product.price"/></p>
-              <p>Введите количество товара: <input type="text" v-model="product.quantity"/></p>
+              <p>Введите количество товара: <input type="text" v-model="product.amount"/></p>
               <p>Введите тип животного: <input type="text" v-model="product.animal"/></p>
               <p>Введите категорию товара: <input type="text" v-model="product.category"/></p>
           </div>
@@ -66,11 +75,13 @@ export default {
         'name': '',
         'description': '',
         'price': '',
-        'quantity': '',
+        'amount': '',
         'animal': '',
         'category': '',
-        'photo': ''
+        'image': ''
       },
+      animals: [],
+      categories: [],
       detectedProduct: {},
       productUUID: '',
       isDetected: false,
@@ -79,6 +90,32 @@ export default {
     }
   },
   methods: {
+    getAnimals() {
+      AdminService.getAnimals().then(
+          response => {
+            this.animals = response.data;
+            console.log(this.animals)
+          }
+      )
+    },
+    selectAnimal(event) {
+     this.product.animal = event.target.value;
+     AdminService.getAnimal(this.product.animal).then(
+         response => {
+           this.categories = response.data.categories;
+         }
+     )
+    },
+    selectCategory(event) {
+      this.product.category = event.target.value;
+    },
+    async addNewProductToCatalog() {
+      this.currentFile = this.selectedFiles.item(0);
+      await AdminService.uploadImage(this.currentFile);
+      this.product.image = this.currentFile.name;
+      await AdminService.addProductToCatalog(this.product);
+      this.$bvModal.hide('add-product-modal');
+    },
     findProduct() {
       AdminService.getProductFromCatalog(this.productUUID).then(
           response => {
@@ -92,13 +129,6 @@ export default {
             this.isDetected = true;
           })
     },
-    async addNewProductToCatalog() {
-      this.currentFile = this.selectedFiles.item(0);
-      await AdminService.uploadImage(this.currentFile);
-      this.product.photo = this.currentFile.name;
-      await AdminService.addProductToCatalog(this.product);
-      this.$bvModal.hide('add-product-modal');
-    },
     deleteProductFromCatalog() {
       AdminService.deleteProductFromCatalog(this.productUUID);
       this.$bvModal.hide('delete-product-modal');
@@ -109,8 +139,10 @@ export default {
     },
     selectFile() {
       this.selectedFiles = this.$refs.file.files;
-      console.log(this.selectedFiles);
     },
+  },
+  created() {
+    this.getAnimals();
   }
 }
 </script>

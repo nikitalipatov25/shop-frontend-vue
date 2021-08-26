@@ -17,33 +17,20 @@
               </div>
               <div class="col-3">
                 <select class="form-select" aria-label="Default select example" @change="sortProducts($event)">
-                  <option selected value="default">По умолчанию</option>
+                  "<option selected value="default">По умолчанию</option>"
                   <option value="priceLess">Сначала дешевле</option>
                   <option value="priceMore">Сначала дороже</option>
                   <option value="popular">Сначала популярные</option>
                   <option value="highRating">Сначала с высоким рейтингом</option>
                 </select>
               </div>
-              <div class="col-2">
-                <button class="btn btn-primary" @click="changeCatalogStyle('card')">Карточки</button>
-                <button class="btn btn-primary" @click="changeCatalogStyle('list')">Список</button>
-              </div>
             </div>
           </div>
-          <div class="product-list" v-show="list">
-            <product-list
-                v-for="product in products"
-                :key="product.id"
-                :product="product"
-            />
-          </div>
-          <div class="product-card" v-show="card">
             <product-card
                 v-for="product in products"
                 :key="product.id"
                 :product="product"
             />
-          </div>
         </div>
       </div>
       <hr>
@@ -63,7 +50,6 @@
 
 <script>
 import ProductCard from '@/components/ProductCard'
-import productList from '@/components/productList'
 // import CatalogMenu from '../components/CatalogMenu'
 import newMenuInCatalog from "@/components/newMenuInCatalog";
 import Header from '../components/Header'
@@ -75,7 +61,6 @@ export default {
   name: 'Catalog',
   components: {
     ProductCard,
-    productList,
     // CatalogMenu,
     Header,
     Footer,
@@ -84,8 +69,6 @@ export default {
   data() {
     return {
       content: {},
-      list: true,
-      card: false,
       products: [],
       productsFromServer: {},
       searchFor: '',
