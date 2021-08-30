@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <button class="btn-success">Применить фильтр</button>
+    <button class="btn-success" @click="createUserFilter">Применить фильтр</button>
 
   </div>
 </template>
@@ -32,6 +32,8 @@
 <script>
 import AnimalService from '@/services/animal.service'
 import CategoryService from '@/services/category.service'
+
+import { eventBus } from '@/main'
 
 export default {
   data() {
@@ -74,8 +76,14 @@ export default {
       )
     },
     createUserFilter() {
-      //?animal=ТоварыдляКошек&category=[]&deal=true&priceFrom=0&to=999,sortBy
-      this.filter = this.filter
+      let payload = {
+        "animal": this.selectedAnimal,
+        "categories": this.selectedCategories,
+        "priceFrom": this.startPrice,
+        "priceTo": this.endPrice
+      }
+      eventBus.$emit('createUserFilter', payload);
+
     }
   },
   created() {

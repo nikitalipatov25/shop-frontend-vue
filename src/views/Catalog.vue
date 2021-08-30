@@ -4,7 +4,6 @@
     <div class="body">
       <div class="row">
         <div class="col-2">
-<!--          <CatalogMenu/>-->
           <newMenuInCatalog/>
         </div>
         <div class="col-10">
@@ -17,11 +16,10 @@
               </div>
               <div class="col-3">
                 <select class="form-select" aria-label="Default select example" @change="sortProducts($event)">
-                  "<option selected value="default">По умолчанию</option>"
-                  <option value="priceLess">Сначала дешевле</option>
-                  <option value="priceMore">Сначала дороже</option>
-                  <option value="popular">Сначала популярные</option>
-                  <option value="highRating">Сначала с высоким рейтингом</option>
+                  <option selected value="name,ASC">По умолчанию</option>
+                  <option value="price,ASC">Сначала дешевле</option>
+                  <option value="price,DESC">Сначала дороже</option>
+                  <option value="rating,DESC">Сначала с высоким рейтингом</option>
                 </select>
               </div>
             </div>
@@ -38,7 +36,7 @@
         <ul class="pagination">
           <li @click="changePageNoIndex('first')" class="page-item"><a class="page-link" >&laquo;</a></li>
           <li @click="changePageNoIndex('previous')" class="page-item"><a class="page-link" >Предыдущая</a></li>
-          <li @click="changePage(pageIndex)" class="page-item" v-for="pageIndex in totalPages" :key="pageIndex"><a class="page-link">{{ pageIndex }}</a></li>
+          <li @click="changePage(pageIndex)" class="page-item" v-for="pageIndex in filter.totalPages" :key="pageIndex"><a class="page-link">{{ pageIndex }}</a></li>
           <li @click="changePageNoIndex('next')" class="page-item"><a class="page-link" >Следующая</a></li>
           <li @click="changePageNoIndex('last')" class="page-item"><a class="page-link" >&raquo;</a></li>
         </ul>
@@ -50,7 +48,6 @@
 
 <script>
 import ProductCard from '@/components/ProductCard'
-// import CatalogMenu from '../components/CatalogMenu'
 import newMenuInCatalog from "@/components/newMenuInCatalog";
 import Header from '../components/Header'
 import Footer from '../components/Foter'
@@ -61,7 +58,6 @@ export default {
   name: 'Catalog',
   components: {
     ProductCard,
-    // CatalogMenu,
     Header,
     Footer,
     newMenuInCatalog
@@ -71,173 +67,88 @@ export default {
       content: {},
       products: [],
       productsFromServer: {},
-      searchFor: '',
-      searchText: '',
-      sortBy: 'productName,asc',
-      inCategory: 'empty',
-      withChekboxes: [],
-      startPrice: 0,
-      endPerice: 999999,
       text: 'Все товары',
-      currentPage: 0,
-      pageSize: 4,
-      totalPages: ''
-    }
-  },
-  methods: {
-    getCatalog() {
-      if (this.inCategory !== 'empty') {
-        this.getCategory()
-      } else {
-        this.searchFor = this.searchText + this.startPrice + '-' + this.endPerice
-        CatalogService.getAllProductsFromCatalog(this.currentPage, this.pageSize)
-          .then(response => {
-            this.productsFromServer = response;
-            this.products = this.productsFromServer.data.content;
-            this.totalPages = this.productsFromServer.data.totalPages;
-            console.log(this.productsFromServer)
-          },
-          error => {
-            this.productsFromServer =
-              (error.response && error.response.data) || error.message || error.toString();
-          }
-          );
-//this.productsFromServer = this.$api.catalog.getCatalog(this.currentPage,// this.pageSize, this.inCategory, this.withChekboxes, this.searchFor, this.sortBy, this.token);
+      filter: {
+        animal: null,
+        categories: null,
+        priceFrom: 1,
+        priceTo: 99999,
+        pageNumber: 0,
+        pageSize: 4,
+        totalPages: null,
+        sortBy: 'name',
+        sortDirection: 'ASC',
+        searchText: null,
       }
-    },
-    getCategory() {
-      this.searchFor = this.searchText + this.startPrice + '-' + this.endPerice
-      CatalogService.getCatalog(this.currentPage, this.pageSize, this.inCategory, this.withChekboxes, this.searchFor, this.sortBy, this.token)
-          .then(response => {
-                this.productsFromServer = response;
-                this.products = this.productsFromServer.data.content;
-                this.totalPages = this.productsFromServer.data.totalPages
-              },
-              error => {
-                this.productsFromServer =
-                    (error.response && error.response.data) ||
-                    error.message ||
-                    error.toString();
-              }
-          );
-      //this.productsFromServer = await this.$api.catalog.getCategory(this.currentPage, this.pageSize, this.inCategory, this.withChekboxes, this.searchFor, this.sortBy, this.token);
-    },
-    async countItemsInCart() {
-      //const userId = 'cd668994-a73a-4da6-8f03-e7fe7034aa17'
-      //const cart = await this.$api.cart.getCart(userId);
-      let itemsInCart = 2;
-      eventBus.$emit('addCountedItemsToBadge', itemsInCart)
-    },
-    sortProducts(event) {
-      switch (event.target.value) {
-        case 'priceLess':
-          this.sortBy = 'productPrice,asc';
-          break;
-        case 'priceMore':
-          this.sortBy = 'productPrice,desc';
-          break;
-        case 'default':
-          this.sortBy = '';
-          break
-      }
-      this.getCatalog()
-    },
-    changeCatalogStyle(viewParameter) {
-      switch (viewParameter) {
-        case 'list':
-          this.list = true;
-          this.card = false;
-          break;
-        case 'card':
-          this.list = false;
-          this.card = true;
-      }
-    },
-    async changePage(pageIndex) {
-      this.currentPage = pageIndex - 1;
-      await this.getCatalog()
-    },
-    async changePageNoIndex(parameter) {
-      switch(parameter) {
-        case 'first':
-          this.currentPage = 0;
-          break;
-        case 'previous':
-          if (this.currentPage > 0 ) {
-            this.currentPage = this.currentPage - 1;
-          }
-          break;
-        case 'next':
-          if (this.currentPage !== this.totalPages - 1) {
-            this.currentPage = this.currentPage + 1;
-          }
-          break;
-        case 'last':
-          this.currentPage = this.totalPages - 1;
-          break;
-      }
-      await this.getCatalog()
-    }
-  },
-   async created() {
-   this.getCatalog()
-    await this.countItemsInCart();
-    eventBus.$on('addToCart', this.countItemsInCart);
-    eventBus.$on('deleteFromCart', this.countItemsInCart);
 
+    }
+  },
+methods: {
+  getFilteredProducts() {
+    CatalogService.getByUserFilter(this.filter).then(
+        response => {
+          this.productsFromServer = response;
+          this.products = this.productsFromServer.data.content;
+          this.filter.totalPages = this.productsFromServer.data.totalPages;
+        }
+    )
+  },
+  sortProducts(event) {
+    let value = event.target.value;
+    let values = value.split(",",2);
+    this.filter.sortBy = values[0];
+    this.filter.sortDirection = values[1];
+    this.getFilteredProducts();
+  },
+  changePage(pageIndex) {
+    this.filter.pageNumber = pageIndex - 1;
+    this.getFilteredProducts()
+    window.scrollTo(0, 0);
+  },
+  async changePageNoIndex(parameter) {
+    switch (parameter) {
+      case 'first':
+        this.filter.pageNumber = 0;
+        break;
+      case 'previous':
+        if (this.filter.pageNumber > 0) {
+          this.filter.pageNumber = this.filter.pageNumber - 1;
+        }
+        break;
+      case 'next':
+        if (this.filter.pageNumber !== this.filter.totalPages - 1) {
+          this.filter.pageNumber = this.filter.pageNumber + 1;
+        }
+        break;
+      case 'last':
+        this.filter.pageNumber = this.filter.pageNumber - 1;
+        break;
+    }
+    await this.getFilteredProducts()
+    window.scrollTo(0, 0);
+  },
+},
+  created() {
+    this.getFilteredProducts()
+    eventBus.$on('createUserFilter', payload => {
+      this.filter.animal = payload.animal;
+      this.filter.categories = payload.categories;
+      this.filter.priceFrom = payload.priceFrom;
+      this.filter.priceTo = payload.priceTo;
+      this.getFilteredProducts();
+    });
     eventBus.$on('searchProducts', data => {
-      this.searchText = data;
-      this.getCatalog()
+      this.filter.searchText = data;
+      this.getFilteredProducts()
     });
     eventBus.$on('changePage', data => {
-      this.currentPage = data
-      this.getCatalog()
+      this.filter.pageNumber = data
+      this.getFilteredProducts()
     });
     eventBus.$on('sortProducts', data => {
-      this.sortBy = data;
-      this.getCatalog()
-    });
-    eventBus.$on('getCategory', data => {
-      this.inCategory = data[0];
-      this.withChekboxes = data[1];
-      this.startPrice = data[2];
-      this.endPerice = data[3];
-      this.getCategory()
-    });
-    eventBus.$on('changeCheckBoxes', data => {
-      this.inCategory = data;
-      if (this.inCategory === 'empty') {
-        this.getCatalog();
-      } else {
-        this.text = this.inCategory
-        this.getCategory();
-      }
-    });
-    eventBus.$on('openCatalogCategory', data => {
-      this.inCategory = data;
-      if (this.inCategory === 'empty') {
-        this.getCatalog();
-      } else {
-        this.text = this.inCategory
-        this.getCategory();
-      }
+      this.filter.pageNumber = data;
+      this.getFilteredProducts()
     });
   }
 }
 </script>
-
-<style>
-nav {
-  display: flex;
-  justify-content: center;
-}
-/*body {*/
-/*  background: url("../assets/background.jpg") ;*/
-/*}*/
-.product-card {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-</style>
