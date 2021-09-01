@@ -18,7 +18,7 @@
         </div>
         <div class="card-footer">
           <button v-if="product.amount === 0" class="btn btn-secondary">Добавить в корзину</button>
-          <button v-else class="btn btn-primary" @click="addToCart">Добавить в корзину</button>
+          <button v-else class="btn btn-primary" @click="addProductToCart">Добавить в корзину</button>
         </div>
       </div>
     </div>
@@ -38,8 +38,12 @@ export default {
     }
   },
   methods: {
-    addToCart() {
-      CartService.addToCart(this.product.id)
+    addProductToCart() {
+      let cartDTO = {
+        "productId": this.product.id,
+        "amount": 1
+      }
+      CartService.addProductToCart(cartDTO);
     }
   }
 }

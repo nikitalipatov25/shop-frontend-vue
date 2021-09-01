@@ -2,27 +2,28 @@ import axios from "axios";
 
 import authHeader from "@/services/auth-header";
 
-const API_URL = 'http://localhost:8080/cart/';
-
-let user = JSON.parse(localStorage.getItem('user'));
+const API_URL = 'http://localhost:8080/api/cart';
 
 class CartService {
 
-    addToCart(productUUID) {
-        return axios.get(API_URL + 'add?productUUID=' + productUUID, { headers: authHeader() })
+    addProductToCart(cartDTO) {
+        return axios.post(API_URL + '/add', cartDTO, { headers: authHeader() })
     }
 
-    // переписать без передачи юзернейма, т.к он есть в хедере
-    getCart() {
-        return axios.get(API_URL + 'get?user=' + user.username, { headers: authHeader()} )
+    getNewCart() {
+        return axios.get(API_URL + '/get', { headers: authHeader() })
     }
 
-    modifyProductInCart(productUUID, payload) {
-        return axios.put(API_URL + productUUID, payload, { headers: authHeader()} )
+    getCartSummary() {
+        return axios.get(API_URL + '/summary', { headers: authHeader() })
     }
 
-    deleteProductFromCart(UUID) {
-        return axios.delete(API_URL + UUID, { headers: authHeader()})
+    modifyProductInCart(cartDTO) {
+        return axios.put(API_URL + '/modify', cartDTO, { headers: authHeader()} )
+    }
+
+    deleteProductFromCart(productId) {
+        return axios.delete(API_URL + '/delete/' + productId, { headers: authHeader()})
     }
 }
 

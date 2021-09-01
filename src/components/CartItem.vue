@@ -5,20 +5,19 @@
       </div>
       <div class="col-3">
         <img
-          :src="product.catalogProductPhoto"
+          :src="'http://localhost:8080/files/' + product.product.image"
           width="200px"
           height="200px"
           alt="">
       </div>
       <div class="col-2">
-        {{ product.catalogProductName }}
-<!--         Сделать по-человечески-->
-        На складе {{inStock}} шт.
+        {{ product.product.name }}
+        На складе {{product.product.amount}} шт.
       </div>
       <div class="col-3">
-        {{ product.productCost }} руб.
+        {{ product.product.price }} руб.
         <button type="button" class="btn btn-primary" v-on:click="addQuantity">+</button>
-        {{ product.selectedProductKol }} шт.
+        {{ product.amount }} шт.
         <button type="button" class="btn btn-primary" v-on:click="subQuantity">-</button>
       </div>
       <div class="col-2">
@@ -32,7 +31,6 @@
 <script>
 import { eventBus } from '../main'
 import CartService from '../services/cart.service'
-import CatalogService from '../services/catalog.service'
 
 export default {
   props: {
@@ -42,47 +40,39 @@ export default {
   },
   data() {
     return {
-      inStock: 0,
       currentQuantity: 1
     }
   },
-  created() {
-    this.checkStock()
-  },
   methods: {
-    checkStock() {
-      CatalogService.getProductFromCatalog(this.product.productId).then(
-        response =>{
-          this.inStock = response.data.quantity;
-        }
-      )
-    },
     async addQuantity() {
-      this.checkStock()
-      if (this.currentQuantity <= this.inStock) {
+      if (this.currentQuantity < this.product.product.amount) {
         this.currentQuantity++;
-        let payload = {
-          "selectedProductKol": this.currentQuantity,
+        let cartDTO = {
+          "productId": this.product.productId,
+          "amount": this.currentQuantity
         }
-        await CartService.modifyProductInCart(this.product.productId, payload);
-        eventBus.$emit('addQuantity') // - эмит на событие в корзине "обновить корзину"
+        await CartService.modifyProductInCart(cartDTO);
+        await eventBus.$emit('addQuantity')
       }
     },
     async subQuantity() {
-      this.checkStock()
-      if (this.currentQuantity >= 1) {
+      if (this.currentQuantity > 1) {
         this.currentQuantity--;
-        let payload = {
-          "selectedProductKol": this.currentQuantity,
-        };
-        await CartService.modifyProductInCart(this.product.productId, payload);
-        eventBus.$emit('subQuantity');
-      }// - эмит на событие в корзине "обновить корзину"
+        let cartDTO = {
+          "productId": this.product.productId,
+          "amount": this.currentQuantity
+        }
+        await CartService.modifyProductInCart(cartDTO);
+        await eventBus.$emit('subQuantity');
+      }
     },
     async deleteProductFromCart() {
       await CartService.deleteProductFromCart(this.product.productId)
-      eventBus.$emit('deleteProductFromCart'); // - эмит на событие в корзине "обновить корзину"
+      eventBus.$emit('deleteProductFromCart');
     }
+  },
+  created() {
+    this.currentQuantity = this.product.amount;
   }
 }
 </script>

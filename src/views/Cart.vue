@@ -11,8 +11,10 @@
           />
         </div>
         <div class="col-5">
-          <p>Товаров в корзине: {{ cart.count }}</p>
-          <p>Цена с учетом скидки: {{ cart.result }} руб.</p>
+          <p>Товаров в корзине: {{ cart.numberOfProductsInCart }}</p>
+          <p>Цена без скидки: {{ cart.priceWithoutDiscount }} руб.</p>
+          <p>Ваша скидка: {{ cart.discount }}</p>
+          <p>Цена с учетом скидки: {{ cart.priceWithDiscount }} руб.</p>
           <b-button variant="primary" @click="$bvModal.show('order-modal')" >Оформить покупку</b-button>
         </div>
 
@@ -80,10 +82,10 @@ export default {
         phone: ''
       },
       cart: {
-        count: 0,
-        cost: 0,
+        numberOfProductsInCart: 0,
+        priceWithoutDiscount: 0,
         discount: 0,
-        result: 0
+        priceWithDiscount: 0
       },
       orderType: [
         {
@@ -101,31 +103,37 @@ export default {
     }
   },
   methods: {
-    getCart() {
-      CartService.getCart().then(
-        response => {
-          this.products = response.data.catalogPage.content;
-          this.cart.count = response.data.cartSummary[0];
-          this.cart.cost = response.data.cartSummary[1];
-          this.cart.discount = response.data.cartSummary[2];
-          this.cart.result = response.data.cartSummary[3];
-       }
-     )
-  },
+    getNewCart() {
+      CartService.getNewCart().then(
+          response => {
+            this.products = response.data.content;
+            this.getCartSummary();
+          }
+      )
+    },
+    getCartSummary() {
+      CartService.getCartSummary().then(
+          response => {
+            this.cart.numberOfProductsInCart = response.data[0];
+            this.cart.priceWithoutDiscount = response.data[1];
+            this.cart.discount = response.data[2];
+            this.cart.priceWithDiscount = response.data[3];
+          }
+      )
+    },
     orderProducts() {
       let payload = {
         "orderType": this.payload,
       }
       OrdersService.generateOrder(payload);
-      // this.$api.orders.addOrder(this.typeToServer);
-      // this.$router.push({name: 'personal-area'})
     }
   },
   created() {
-    eventBus.$on('deleteProductFromCart', this.getCart)
-    eventBus.$on('addQuantity', this.getCart)
-    eventBus.$on('subQuantity', this.getCart)
-    this.getCart();
+    eventBus.$on('deleteProductFromCart', this.getNewCart)
+    eventBus.$on('addQuantity', this.getNewCart)
+    eventBus.$on('subQuantity', this.getNewCart)
+    this.getNewCart();
+
   }
 }
 </script>
