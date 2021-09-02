@@ -23,10 +23,16 @@
         <b-modal id="order-modal" hide-footer title="Оформить покупку">
           <div class="d-block text-left">
             <form>
-              <p>Ваш зкаказ</p>
+              <p>Ваш зкаказ:</p>
+                <div v-for="product in products"
+                  :key="product.id"
+                  :product="product"
+                >
+                  <p>Товар: {{product.product.name}} - {{product.amount}} шт.</p>
+              </div>
               <select class="form-select" v-model="defaultOrderType">
                 <option
-                  v-for="type in order.orderType"
+                  v-for="type in orderType"
                   :value="type.value"
                   :key="type"
                 >
@@ -35,18 +41,18 @@
               </select>
               <div class="mb-3" v-if="defaultOrderType === 'Доставка'">
                 <label  class="form-label">Адрес</label>
-                <input type="text" class="form-control" disabled v-model="order.address">
+                <input :disabled="inputStatus" type="text" class="form-control" v-model="order.address">
               </div>
               <div class="mb-3">
                 <label  class="form-label">ФИО покупателя</label>
-                <input type="text" class="form-control"  v-model="order.fullName">
+                <input :disabled="inputStatus" type="text" class="form-control"  v-model="order.fullName">
               </div>
               <div class="mb-3">
                 <label  class="form-label">Телефон</label>
-                <input type="text" class="form-control"  v-model="order.phoneNumber">
+                <input :disabled="inputStatus" type="text" class="form-control"  v-model="order.phoneNumber">
               </div>
-                <p><input type="checkbox">Изменить данные заказа</p>
-                <p><input type="checkbox">Изменить данные в личном кабинете</p>
+                <p><input type="checkbox" @change="changeOrderInfo">Изменить данные заказа</p>
+                <p><input type="checkbox" @change="saveOrderInfo">Изменить данные в личном кабинете</p>
                 <p>*Оплата производится наличными и только при получении товара</p>
             </form>
           </div>
@@ -88,24 +94,40 @@ export default {
       },
       order: {
         products: [],
-        orderType: [
-          {
-            value: "Самовывоз"
-          },
-          {
-            value: "Доставка"
-          }
-        ],
+        orderType: '',
         fullName: '',
         address: '',
         phoneNumber: '',
+        changeData: false,
+        saveData: false
       },
       text: 'Корзина',
       products: [],
-      defaultOrderType: 'Самовывоз'
+      orderType: [
+        {
+          value: "Самовывоз"
+        },
+        {
+          value: "Доставка"
+        }
+      ],
+      defaultOrderType: 'Самовывоз',
+      inputStatus: true
     }
   },
   methods: {
+    addProductsToOrder() {
+      for (let i = 0; i < this.products.length; i++) {
+        this.order.products.push(this.products[i].productId)
+      }
+    },
+    changeOrderInfo() {
+      this.inputStatus = !this.inputStatus;
+      this.order.changeData = !this.order.changeData;
+    },
+    saveOrderInfo() {
+      this.order.saveData = !this.order.saveData;
+    },
     getUserInformation() {
       UserService.getUser().then(
           response => {
@@ -120,6 +142,7 @@ export default {
           response => {
             this.products = response.data.content;
             this.getCartSummary();
+            this.addProductsToOrder();
           }
       )
     },
@@ -134,7 +157,9 @@ export default {
       )
     },
     orderProducts() {
+      this.order.orderType = this.defaultOrderType;
       OrdersService.createOrder(this.order);
+      this.$bvModal.hide('order-modal');
     },
   },
   created() {

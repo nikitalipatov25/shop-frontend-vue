@@ -53,11 +53,11 @@ export default {
     }
   },
   methods: {
-    geUserOrders() {
-      OrderService.getUserOrders().then(
+    getOrders() {
+      OrderService.getOrders().then(
           response => {
             this.orders = response.data.content;
-            console.log(response.data);
+            console.log(this.orders);
           }
       )
     },
@@ -75,7 +75,7 @@ export default {
   },
   created() {
     this.getUserProfile();
-    this.geUserOrders();
+    this.getOrders();
   },
 }
 </script>
