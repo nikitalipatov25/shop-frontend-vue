@@ -76,17 +76,6 @@ export default {
   created() {
     this.getUserProfile();
     this.geUserOrders();
-
-    // const userFromServer = await this.$api.user.getSingleUser('cd668994-a73a-4da6-8f03-e7fe7034aa17');
-    // console.log(userFromServer);
-    // this.fullName = userFromServer.data.fullName;
-    // this.phoneNumber = userFromServer.data.phoneNumber;
-    // this.email = userFromServer.data.email;
-    // this.adress = userFromServer.data.adress;
-    // this.role = userFromServer.data.role;
-    // let a = await this.$api.orders.getOrders('cd668994-a73a-4da6-8f03-e7fe7034aa17')
-    // this.orders = a.data
-    // console.log(this.orders)
   },
 }
 </script>

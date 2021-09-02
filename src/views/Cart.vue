@@ -23,27 +23,30 @@
         <b-modal id="order-modal" hide-footer title="Оформить покупку">
           <div class="d-block text-left">
             <form>
-              <select class="form-select" v-model="payload">
+              <p>Ваш зкаказ</p>
+              <select class="form-select" v-model="defaultOrderType">
                 <option
-                  v-for="type in orderType"
+                  v-for="type in order.orderType"
                   :value="type.value"
                   :key="type"
                 >
-                  {{type.label}}
+                  {{type.value}}
                 </option>
               </select>
-              <div class="mb-3" v-if="payload === 'Delivery'">
+              <div class="mb-3" v-if="defaultOrderType === 'Доставка'">
                 <label  class="form-label">Адрес</label>
-                <input type="email" class="form-control"  v-model="user.address">
+                <input type="text" class="form-control" disabled v-model="order.address">
               </div>
               <div class="mb-3">
                 <label  class="form-label">ФИО покупателя</label>
-                <input type="email" class="form-control"  v-model="user.name">
+                <input type="text" class="form-control"  v-model="order.fullName">
               </div>
               <div class="mb-3">
                 <label  class="form-label">Телефон</label>
-                <input type="email" class="form-control"  v-model="user.phone">
+                <input type="text" class="form-control"  v-model="order.phoneNumber">
               </div>
+                <p><input type="checkbox">Изменить данные заказа</p>
+                <p><input type="checkbox">Изменить данные в личном кабинете</p>
                 <p>*Оплата производится наличными и только при получении товара</p>
             </form>
           </div>
@@ -66,6 +69,7 @@ import Header from '../components/Header'
 import Footer from '../components/Foter'
 import CartService from '../services/cart.service'
 import OrdersService from '../services/orders.service'
+import UserService from '@/services/user.service'
 
 export default {
   name: 'Cart',
@@ -76,33 +80,41 @@ export default {
   },
   data() {
     return {
-      user: {
-        name: '',
-        address: '',
-        phone: ''
-      },
       cart: {
         numberOfProductsInCart: 0,
         priceWithoutDiscount: 0,
         discount: 0,
         priceWithDiscount: 0
       },
-      orderType: [
-        {
-          label: 'Самовывоз из магазина',
-          value: 'Pickup'
-        },
-        {
-          label: 'Доставка по указанномму адресу',
-          value: 'Delivery'
-        }
-      ],
+      order: {
+        products: [],
+        orderType: [
+          {
+            value: "Самовывоз"
+          },
+          {
+            value: "Доставка"
+          }
+        ],
+        fullName: '',
+        address: '',
+        phoneNumber: '',
+      },
       text: 'Корзина',
       products: [],
-      payload: 'Pickup'
+      defaultOrderType: 'Самовывоз'
     }
   },
   methods: {
+    getUserInformation() {
+      UserService.getUser().then(
+          response => {
+            this.order.fullName = response.data.username;
+            this.order.address = response.data.address;
+            this.order.phoneNumber = response.data.phoneNumber;
+          }
+      )
+    },
     getNewCart() {
       CartService.getNewCart().then(
           response => {
@@ -122,18 +134,15 @@ export default {
       )
     },
     orderProducts() {
-      let payload = {
-        "orderType": this.payload,
-      }
-      OrdersService.generateOrder(payload);
-    }
+      OrdersService.createOrder(this.order);
+    },
   },
   created() {
     eventBus.$on('deleteProductFromCart', this.getNewCart)
     eventBus.$on('addQuantity', this.getNewCart)
     eventBus.$on('subQuantity', this.getNewCart)
     this.getNewCart();
-
+    this.getUserInformation();
   }
 }
 </script>
