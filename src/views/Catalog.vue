@@ -88,6 +88,7 @@ methods: {
     CatalogService.getByUserFilter(this.filter).then(
         response => {
           this.productsFromServer = response;
+          console.log(this.productsFromServer);
           this.products = this.productsFromServer.data.content;
           this.filter.totalPages = this.productsFromServer.data.totalPages;
         }
