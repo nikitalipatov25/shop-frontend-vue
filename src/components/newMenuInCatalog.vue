@@ -1,6 +1,6 @@
 <template>
   <div class="custom-left-menu">
-<h1>{{ selectedAnimal }} {{ selectedCategories }}</h1>
+    <h2>Расширенный поиск</h2>
     <p><strong @click="isAnimalClicked = !isAnimalClicked">Питомец</strong></p>
     <div class="animal" v-if="isAnimalClicked">
       <div v-for="animal in animals" :key="animal.name">
@@ -14,8 +14,6 @@
         <input type="checkbox" :value="category.name" v-model="selectedCategories"> {{ category.name }}
       </div>
     </div>
-
-    <p><strong @click="isCategoryClicked = !isCategoryClicked">Акционный товар?</strong><input type="checkbox"  v-model="isDeal"></p>
 
     <p><strong @click="isPriceClicked = !isPriceClicked">Цена</strong></p>
     <div class="price" v-if="isPriceClicked">
@@ -39,9 +37,7 @@ export default {
   data() {
     return {
       selectedAnimal: null,
-      filter: '?',
       selectedCategories:[],
-      isDeal: false,
       animals: {},
       categories: {},
       isAnimalClicked: false,

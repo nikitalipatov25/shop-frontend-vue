@@ -3,10 +3,10 @@
     <Header/>
     <div class="body">
       <h1>{{text}}</h1>
-        <deals-list
-        v-for="deal in deals"
-        :key="deal.id"
-        :deal="deal"
+        <sale-list
+        v-for="sale in sales"
+        :key="sale.id"
+        :sale="sale"
         />
     </div>
     <Footer/>
@@ -17,34 +17,34 @@
 <script>
 import Header from '../components/Header'
 import Footer from '../components/Foter'
-import PromotionService from '@/services/promotion.service'
-import DealsList from "@/components/DealsList";
+import SaleService from '@/services/sale.service'
+import SaleList from "@/components/SaleList";
 
 export default {
   name: 'Deals',
   components: {
-    DealsList,
+    SaleList,
     Header,
     Footer
   },
   data() {
     return {
       text: 'Скидки и акции',
-      deals: {},
+      sales: {},
     }
   },
   methods: {
-    getDeals() {
-      PromotionService.getPromotions().then(
+    getSales() {
+      SaleService.getSales().then(
           response => {
-            this.deals = response.data.content
-            console.log(this.deals)
+            this.sales = response.data.content
+            console.log(this.sales)
           }
       )
     },
   },
    created() {
-     this.getDeals()
+     this.getSales()
   }
 }
 </script>

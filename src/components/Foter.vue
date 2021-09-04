@@ -13,7 +13,7 @@
       <div class="col-4">
         <ul class="list-group">
           <li class="list-group-item" @click="$router.push({name: 'questions'})">Информация покупателям(ЧаВо)</li>
-          <li class="list-group-item" @click="$router.push({name: 'deals'})">Скидки и акции</li>
+          <li class="list-group-item" @click="$router.push({name: 'sale'})">Скидки и акции</li>
         </ul>
       </div>
       <div class="col-4">

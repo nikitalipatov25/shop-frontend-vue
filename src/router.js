@@ -6,7 +6,7 @@ import Catalog from '@/views/Catalog'
 import ProductPage from '@/views/ProductPage'
 import PersonalArea from '@/views/PersonalArea'
 import Cart from '@/views/Cart.vue'
-import Deals from "@/views/Deals";
+import Sale from "@/views/Sale";
 import QandA from "@/views/QandA";
 import About from "@/views/About";
 import Login from "@/views/Login";
@@ -44,9 +44,9 @@ export const router = new Router({
           component: Cart
       },
       {
-          path: '/deals',
-          name: 'deals',
-          component: Deals
+          path: '/sale',
+          name: 'sale',
+          component: Sale
       },
       {
           path: '/questions',
