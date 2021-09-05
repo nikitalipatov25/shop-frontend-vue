@@ -18,29 +18,6 @@ class AdminService {
             return axios.get(API_URL + 'api/admin/categories', { headers: authHeader()})
     }
 
-    // addAnimals(animal, categories) {
-    //     return axios.get(API_URL + 'api/admin/add/' + animal + '/' + categories,  { headers: authHeader()})
-    // }
-    //
-    // addCategories(payload) {
-    //     return axios.post(API_URL + 'animal/add/', payload, { headers: authHeader()})
-    // }
-
-    getProductFromCatalog(productUUID) {
-        return axios.get(API_URL + 'catalog/' + productUUID, { headers: authHeader()})
-    }
-
-    addProductToCatalog(payload) {
-        return axios.post(API_URL + 'api/admin/add/product', payload, { headers: authHeader()})
-    }
-
-    deleteProductFromCatalog(productUUID) {
-        return axios.delete(API_URL + 'catalog/delete/' + productUUID, { headers: authHeader()})
-    }
-
-    modifyProductInCatalog(productUUID, payload) {
-        return axios.put(API_URL + 'catalog/modify/' + productUUID, payload, { headers: authHeader()})
-    }
 
     uploadImage(file) {
         let formData = new FormData();

@@ -20,7 +20,7 @@
     </b-modal>
 
     <button type="button" class="btn btn-danger">Заблокировать пользователя</button>
-    <button type="button" class="btn btn-warning">Отключить админа</button>
+    <button type="button" class="btn btn-warning">Удалить администратора</button>
   </div>
 </template>
 
