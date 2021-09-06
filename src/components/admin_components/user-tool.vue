@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import AdminService from '@/services/admin.service'
 
 export default {
   data() {
@@ -41,14 +40,5 @@ export default {
       }
     }
   },
-  methods: {
-    addNewProductToCatalog() {
-      AdminService.addProductToCatalog(this.product).then(
-          response => {
-            console.log(response)
-          }
-      )
-    }
-  }
 }
 </script>

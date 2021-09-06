@@ -32,6 +32,10 @@ class CatalogService {
         return axios.put(API_URL + 'modify/' + productUUID, payload, { headers: authHeader()})
     }
 
+    getOneProduct(productId) {
+        return axios.get(API_URL + productId, { headers: authHeader()})
+    }
+
 }
 
 export default new CatalogService();

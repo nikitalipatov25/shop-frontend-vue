@@ -10,8 +10,8 @@ class PromotionsService {
         return axios.get(API_URL + "/get", { headers: authHeader()})
     }
 
-    generatePromotion(payload) {
-        return axios.post(API_URL, payload, { headers: authHeader()})
+    createSale(saleDTO) {
+        return axios.post(API_URL + "/add", saleDTO, { headers: authHeader()})
     }
 
     getPromotions() {

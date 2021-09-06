@@ -75,8 +75,9 @@
 </template>
 
 <script>
-import AdminService from '@/services/admin.service'
 import CatalogService from '@/services/catalog.service'
+import FileService from '@/services/files.service'
+import AnimalService from "@/services/animal.service"
 
 export default {
   data() {
@@ -101,7 +102,7 @@ export default {
   },
   methods: {
     getAnimals() {
-      AdminService.getAnimals().then(
+      AnimalService.getAnimals().then(
           response => {
             this.animals = response.data;
             console.log(this.animals)
@@ -110,7 +111,7 @@ export default {
     },
     selectAnimal(event) {
      this.product.animal = event.target.value;
-     AdminService.getAnimal(this.product.animal).then(
+     AnimalService.getAnimal(this.product.animal).then(
          response => {
            this.categories = response.data.categories;
          }
@@ -121,7 +122,7 @@ export default {
     },
     async addNewProductToCatalog() {
       this.currentFile = this.selectedFiles.item(0);
-      await AdminService.uploadImage(this.currentFile);
+      await FileService.uploadImage(this.currentFile);
       this.product.image = this.currentFile.name;
       await CatalogService.addProductToCatalog(this.product);
       this.$bvModal.hide('add-product-modal');
@@ -145,7 +146,7 @@ export default {
     },
     async modifyProductInCatalog() {
       this.currentFile = this.selectedFiles.item(0);
-      await AdminService.uploadImage(this.currentFile);
+      await FileService.uploadImage(this.currentFile);
       this.product.image = this.currentFile.name;
       await CatalogService.modifyProductInCatalog(this.productUUID, this.product);
       this.productUUID = '';
