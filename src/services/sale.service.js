@@ -14,8 +14,16 @@ class PromotionsService {
         return axios.post(API_URL + "/add", saleDTO, { headers: authHeader()})
     }
 
-    getPromotions() {
-        return axios.get(API_URL, { headers: authHeader()})
+    getSale(saleId) {
+        return axios.get(API_URL + "/get/" + saleId)
+    }
+
+    deleteSale(saleId) {
+        return axios.delete(API_URL + "/delete/" + saleId, { headers: authHeader()})
+    }
+
+    modifySale(saleDTO) {
+        return axios.put(API_URL + "/modify", saleDTO, { headers: authHeader()})
     }
 
 }
