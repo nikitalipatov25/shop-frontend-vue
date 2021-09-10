@@ -79,12 +79,9 @@
               <p>Название<input type="text" v-model="sale.name"></p>
               <p>Добавьте фотографию:<input type="file" ref="file" @change="selectFile"></p>
               <p>Введите описание акции: <input type="text" v-model="sale.description"/></p>
-              <p>Введите дату начала: <input type="text" v-model="sale.description"/></p>
-              <p>Введите дату окончания акции: <input type="text" v-model="sale.description"/></p>
-              <p>Введите размер скидки: <input type="text" v-model="sale.description"/></p>
-              <p>Введите стоимость товара: <input type="text" v-model="product.price"/></p>
-              <p>Введите количество товара: <input type="text" v-model="product.amount"/></p>
-
+              <p>Введите дату начала: <input type="text" v-model="sale.date"/></p>
+              <p>Введите дату окончания акции: <input type="text" v-model="sale.expirationDate"/></p>
+              <p>Введите размер скидки: <input type="text" v-model="sale.discount"/></p>
               <select class="form-select" @change="selectSaleType($event)" v-model="selectedSaleType">
                 <option selected>Выберете тип акции</option>
                 <option
@@ -176,7 +173,11 @@ export default {
       SaleService.getSale(this.saleId).then(
           response => {
             this.sale.name = response.data.name;
+            this.sale.description = response.data.description;
+            this.sale.date = response.data.date;
+            this.sale.expirationDate = response.data.expirationDate;
             this.sale.discount = response.data.discount;
+            this.sale.image = response.data.image;
             this.isDetected = true;
           });
     },
