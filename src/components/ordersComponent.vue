@@ -13,11 +13,14 @@
       <p v-if="isVisible">Тип заказа: {{order.orderType}}</p>
       <p v-if="isVisible">Статус заказа: {{order.orderStatus}}</p>
       <p v-if="isVisible">Дата заказа: {{order.date}}</p>
+      <button type="button" class="btn btn-danger" @click="modifyOrderEvent">Редактировать заказ</button>
     </div>
   </div>
 </template>
 
 <script>
+import { eventBus } from '@/main'
+
 export default {
   props: {
     order: {
@@ -26,10 +29,13 @@ export default {
   },
   data() {
     return {
-      isVisible: false
+      isVisible: false,
     }
   },
   methods: {
+    modifyOrderEvent() {
+      eventBus.$emit('modifyOrderEvent', this.order.orderId)
+    },
     changeVisible() {
       this.isVisible = !this.isVisible
     }

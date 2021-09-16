@@ -9,7 +9,49 @@
       <form name="form" @submit.prevent="handleRegister">
         <div v-if="!successful">
           <div class="form-group">
-            <label for="username">Укажите имя</label>
+            <label for="surname">Укажите Вашу фамилию</label>
+            <input
+                v-model="user.surname"
+                v-validate="'required|min:2|max:30'"
+                type="text"
+                class="form-control"
+                name="surname"
+            />
+            <div
+                v-if="submitted && errors.has('surname')"
+                class="alert-danger"
+            >{{errors.first('surname')}}</div>
+          </div>
+          <div class="form-group">
+            <label for="name">Укажите Ваше имя</label>
+            <input
+                v-model="user.name"
+                v-validate="'required|min:2|max:16'"
+                type="text"
+                class="form-control"
+                name="name"
+            />
+            <div
+                v-if="submitted && errors.has('name')"
+                class="alert-danger"
+            >{{errors.first('name')}}</div>
+          </div>
+          <div class="form-group">
+            <label for="secondname">Укажите Ваше отчество (при наличии)</label>
+            <input
+                v-model="user.secondname"
+                v-validate="'required|min:0|max:16'"
+                type="text"
+                class="form-control"
+                name="secondname"
+            />
+            <div
+                v-if="submitted && errors.has('secondname')"
+                class="alert-danger"
+            >{{errors.first('secondname')}}</div>
+          </div>
+          <div class="form-group">
+            <label for="username">Придумайте логин</label>
             <input
                 v-model="user.username"
                 v-validate="'required|min:3|max:20'"
@@ -23,7 +65,7 @@
             >{{errors.first('username')}}</div>
           </div>
           <div class="form-group">
-            <label for="email">Укажите почту</label>
+            <label for="email">Укажите Ваш эл. адрес</label>
             <input
                 v-model="user.email"
                 v-validate="'required|email|max:50'"
@@ -51,7 +93,7 @@
             >{{errors.first('password')}}</div>
           </div>
           <div class="form-group">
-            <button class="btn btn-primary btn-block">Sign Up</button>
+            <button class="btn btn-primary btn-block">Зарегистрироваться</button>
           </div>
         </div>
       </form>
@@ -72,7 +114,7 @@ export default {
   name: 'Register',
   data() {
     return {
-      user: new User('', '', ''),
+      user: new User('', '', '', '', '', ''),
       submitted: false,
       successful: false,
       message: ''

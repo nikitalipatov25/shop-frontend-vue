@@ -10,6 +10,10 @@ class UserService {
         return axios.get(API_URL,{ headers: authHeader()})
     }
 
+    modifyUser(userDTO) {
+        return axios.put(API_URL + 'modify', userDTO, { headers: authHeader()})
+    }
+
 }
 
 export default new UserService();

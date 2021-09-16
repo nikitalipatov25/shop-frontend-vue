@@ -8,7 +8,7 @@
       />
       <form name="form" @submit.prevent="handleLogin">
         <div class="form-group">
-          <label for="username">Введите логин</label>
+          <label for="username">Введите Ваш логин</label>
           <input
               v-model="user.username"
               v-validate="'required'"
@@ -23,7 +23,7 @@
           >Необходимо указать логин!</div>
         </div>
         <div class="form-group">
-          <label for="password">Введите пароль</label>
+          <label for="password">Введите Ваш пароль</label>
           <input
               v-model="user.password"
               v-validate="'required'"
@@ -40,7 +40,11 @@
         <div class="form-group">
           <button class="btn btn-primary btn-block" :disabled="loading">
             <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-            <span>Login</span>
+            <span>Войти</span>
+          </button>
+          <button class="btn btn-primary btn-block" :disabled="loading" @click="$router.push('/register')">
+            <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+            <span>Зарегистрироваться</span>
           </button>
         </div>
         <div class="form-group">
