@@ -2,8 +2,6 @@
   <div class="deals-tool">
     <h2>Работа с акциями</h2>
 
-    <button class="btn btn-primary">Отчёт по продажам</button>
-
     <button class="btn btn-success" @click="$bvModal.show('add-sale-modal')">Добавить акцию</button>
 
     <b-modal id="add-sale-modal" hide-footer title="Добавить акцию">
@@ -188,7 +186,8 @@ export default {
       this.$bvModal.hide('delete-sale-modal');
     },
     modifySale() {
-
+      this.sale.id = this.saleId;
+      SaleService.modifySale(this.sale);
     },
     getAnimals() {
       AnimalService.getAnimals().then(
