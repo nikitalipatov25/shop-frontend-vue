@@ -2,14 +2,14 @@
   <div class="test">
     <div class="custom-card">
       <div class="card" style="width: 18rem; margin-bottom: 25px; margin-right: 25px">
-        <img v-if="process.env.NODE_ENV === 'development'"
-             style="height: 286px; width: 286px"
+        <img v-if="isDevMode"
+            style="height: 286px; width: 286px"
             class="card-img-top"
             :src="'http://localhost:8080/files/' + product.image"
             alt=""
             @click="$router.push({ name: 'product-page', params: { id: product.id } })"
         >
-        <img v-if="process.env.NODE_ENV === 'development'"
+        <img v-else
              style="height: 286px; width: 286px"
              class="card-img-top"
              :src="'https://hand-made-shop.herokuapp.com/files/' + product.image"
@@ -50,7 +50,8 @@ export default {
   },
   data() {
     return {
-      priceWithDiscount: 0
+      priceWithDiscount: 0,
+      isDevMode: false
     }
   },
   methods: {
@@ -70,6 +71,9 @@ export default {
   },
   created() {
     this.calculateDiscount();
+    if (process.env.NODE_ENV === 'development') {
+      this.isDevMode = true;
+    }
   }
 }
 </script>
