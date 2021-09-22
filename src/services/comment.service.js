@@ -2,7 +2,12 @@ import axios from "axios";
 
 import authHeader from "@/services/auth-header";
 
-const API_URL = 'http://localhost:8080/comments/'
+// const API_URL = 'http://localhost:8080/comments/'
+
+let API_URL;
+if (process.env.NODE_ENV === 'development') {
+    API_URL = 'http://localhost:8080/comments/'
+} else API_URL = 'https://hand-made-shop.herokuapp.com/comments/'
 
 class CommentService {
 
@@ -23,15 +28,15 @@ class CommentService {
     }
 
     generateAnswer(id, payload){
-        return axios.post(API_URL + id + '/answer', payload, { headers: authHeader() })
+        return axios.post(API_URL + id + 'answer', payload, { headers: authHeader() })
     }
 
     deleteAnswer(id){
-        return axios.delete(API_URL + id + '/answer', { headers: authHeader() })
+        return axios.delete(API_URL + id + 'answer', { headers: authHeader() })
     }
 
     getAnswers(id){
-        return axios.get(API_URL + id + '/answer', { headers: authHeader() })
+        return axios.get(API_URL + id + 'answer', { headers: authHeader() })
     }
 
 }

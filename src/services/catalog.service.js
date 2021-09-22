@@ -1,14 +1,19 @@
 import axios from 'axios';
 import authHeader from "@/services/auth-header";
 
-const API_URL = 'http://localhost:8080/api/products/';
+let API_URL;
+if (process.env.NODE_ENV === 'development') {
+    API_URL = 'http://localhost:8080/api/products/'
+} else API_URL = 'https://hand-made-shop.herokuapp.com/api/products/'
+
+// process.env.NODE_ENV === 'development' ? API_URL='www/dev' : API_URL = 'www/prod'
 
 let pagination = '';
 
 class CatalogService {
 
     getByUserFilter(payload) {
-        return axios.post(API_URL + 'filter', payload)
+        return axios.post( API_URL + 'filter', payload)
     }
 
     getAllProductsFromCatalog(page = 0, size = 4, sortBy) {
