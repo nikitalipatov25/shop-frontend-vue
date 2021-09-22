@@ -2,12 +2,19 @@
   <div class="test">
     <div class="custom-card">
       <div class="card" style="width: 18rem; margin-bottom: 25px; margin-right: 25px">
-        <img
-            style="height: 286px; width: 286px"
+        <img v-if="process.env.NODE_ENV === 'development'"
+             style="height: 286px; width: 286px"
             class="card-img-top"
             :src="'http://localhost:8080/files/' + product.image"
             alt=""
             @click="$router.push({ name: 'product-page', params: { id: product.id } })"
+        >
+        <img v-if="process.env.NODE_ENV === 'development'"
+             style="height: 286px; width: 286px"
+             class="card-img-top"
+             :src="'https://hand-made-shop.herokuapp.com/files/' + product.image"
+             alt=""
+             @click="$router.push({ name: 'product-page', params: { id: product.id } })"
         >
         <div class="card-body">
           <h5 class="card-title">{{ product.name }}</h5>

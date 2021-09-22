@@ -4,11 +4,18 @@
       <div class="col-1">
       </div>
       <div class="col-3">
-        <img
-          :src="'http://localhost:8080/files/' + product.product.image"
+        <img v-if="process.env.NODE_ENV === 'development'"
+             :src="'http://localhost:8080/files/' + product.product.image"
           width="200px"
           height="200px"
-          alt="">
+          alt=""
+        >
+        <img v-else
+             :src="'https://hand-made-shop.herokuapp.com/files/' + product.product.image"
+             width="200px"
+             height="200px"
+             alt=""
+        >
       </div>
       <div class="col-2">
         {{ product.product.name }}
