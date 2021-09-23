@@ -4,10 +4,11 @@
       <div class="col-4">
         <ul class="list-group">
           <li class="list-group-item" @click="openCatalogCategory('empty')">Все товары</li>
-          <li class="list-group-item" @click="openCatalogCategory('Товары для собак')">Товары для собак</li>
-          <li class="list-group-item" @click="openCatalogCategory('Товары для кошек')">Товары для кошек</li>
-          <li class="list-group-item" @click="openCatalogCategory('Товары для рыбок')">Товары для рыбок</li>
-          <li class="list-group-item" @click="openCatalogCategory('Товары для грызунов')">Товары для грызунов</li>
+          <li class="list-group-item" v-for="animal in animals" :key="animal">{{animal.name}}</li>
+<!--          <li class="list-group-item" @click="openCatalogCategory('Товары для собак')">Товары для собак</li>-->
+<!--          <li class="list-group-item" @click="openCatalogCategory('Товары для кошек')">Товары для кошек</li>-->
+<!--          <li class="list-group-item" @click="openCatalogCategory('Товары для рыбок')">Товары для рыбок</li>-->
+<!--          <li class="list-group-item" @click="openCatalogCategory('Товары для грызунов')">Товары для грызунов</li>-->
         </ul>
       </div>
       <div class="col-4">
@@ -38,9 +39,21 @@
 
 <script>
 import {eventBus} from "@/main";
+import AnimalService from "@/services/animal.service";
 
 export default {
+  data() {
+    return {
+      animals: {}
+    }
+  },
   methods: {
+    getAnimals() {
+      AnimalService.getAnimals().then(
+          response => {
+            this.animals = response.data;
+          })
+    },
     openCatalogCategory(catalogParameter) {
       if (this.$route.name === 'catalog-page') {
         eventBus.$emit('openCatalogCategory', catalogParameter)
@@ -48,6 +61,9 @@ export default {
         this.$router.push({name: 'catalog-page', params: {catalogParameter: catalogParameter}});
       }
     }
+  },
+  created() {
+    this.getAnimals()
   }
 }
 </script>

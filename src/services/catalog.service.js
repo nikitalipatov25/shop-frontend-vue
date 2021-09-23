@@ -41,6 +41,14 @@ class CatalogService {
         return axios.get(API_URL + productId, { headers: authHeader()})
     }
 
+    getPopularProducts() {
+        return axios.get(API_URL + 'popular')
+    }
+
+    getNewProducts() {
+        return axios.get(API_URL + 'new')
+    }
+
 }
 
 export default new CatalogService();

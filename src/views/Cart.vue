@@ -28,7 +28,7 @@
                   :key="product.id"
                   :product="product"
                 >
-                  <p>Товар: {{product.product.name}} - {{product.amount}} шт.</p>
+                  <p>Товар: {{product.product.name}} - {{product.amount}} шт. </p>
               </div>
               <select class="form-select" v-model="defaultOrderType">
                 <option
@@ -44,8 +44,16 @@
                 <input :disabled="inputStatus" type="text" class="form-control" v-model="order.address">
               </div>
               <div class="mb-3">
-                <label  class="form-label">ФИО покупателя</label>
-                <input :disabled="inputStatus" type="text" class="form-control"  v-model="order.fullName">
+                <label  class="form-label">Фамилия покупателя</label>
+                <input :disabled="inputStatus" type="text" class="form-control"  v-model="order.surname">
+              </div>
+              <div class="mb-3">
+                <label  class="form-label">Имя покупателя</label>
+                <input :disabled="inputStatus" type="text" class="form-control"  v-model="order.name">
+              </div>
+              <div class="mb-3">
+                <label  class="form-label">Отчество покупателя</label>
+                <input :disabled="inputStatus" type="text" class="form-control"  v-model="order.secondName">
               </div>
               <div class="mb-3">
                 <label  class="form-label">Телефон</label>
@@ -95,7 +103,9 @@ export default {
       order: {
         products: [],
         orderType: '',
-        fullName: '',
+        surname: '',
+        name: '',
+        secondName: '',
         address: '',
         phoneNumber: '',
         changeData: false,
@@ -112,7 +122,7 @@ export default {
         }
       ],
       defaultOrderType: 'Самовывоз',
-      inputStatus: true
+      inputStatus: true,
     }
   },
   methods: {
@@ -131,7 +141,9 @@ export default {
     getUserInformation() {
       UserService.getUser().then(
           response => {
-            this.order.fullName = response.data.username;
+            this.order.surname = response.data.surname;
+            this.order.name = response.data.name;
+            this.order.secondName = response.data.secondName;
             this.order.address = response.data.address;
             this.order.phoneNumber = response.data.phoneNumber;
           }

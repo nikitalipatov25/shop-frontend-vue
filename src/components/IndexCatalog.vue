@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-3" v-for="animal in animals" :key="animal">
         <div class="card" @click="openCatalogCategory(animal.name)">
-          <img src='../assets/puppies.jpg' class="card-img-top" alt="dogs">
+          <img :src="'http://localhost:8080/files/' + animal.imageURL" class="card-img-top" alt="dogs">
           <div class="card-body">
             <p class="card-text" >{{ animal.name }}</p>
           </div>
@@ -60,16 +60,15 @@ export default {
   },
   methods: {
     getAnimals() {
-      AnimalService.getAnimalsList().then(
+      AnimalService.getAnimals().then(
           response => {
             this.animals = response.data;
-            console.log(this.animals)
-          }
-      )
+          })
     },
+    // РАЗОБРАТЬСЯ!
     openCatalogCategory(catalogParameter) {
-      console.log(catalogParameter)
-      // this.$router.push({ name: 'catalog-page', params: {catalogParameter: catalogParameter} });
+      // console.log(catalogParameter)
+      this.$router.push({ name: 'catalog-page', params: {catalogParameter: catalogParameter} });
     }
   },
   created() {
