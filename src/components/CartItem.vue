@@ -21,6 +21,10 @@
         <button type="button" class="btn btn-primary" v-on:click="subQuantity">-</button>
       </div>
       <div class="col-2">
+        <!--   checkbox для удаления    -->
+        <input @change="setDelList(isChecked, product.productId)" v-model="isChecked" type="checkbox">
+        {{ isChecked }}
+        <br>
         <button type="button" class="btn btn-danger" @click="deleteProductFromCart">Удалить</button>
       </div>
     </div>
@@ -34,13 +38,15 @@ import CartService from '../services/cart.service'
 
 export default {
   props: {
+    setDelList: Function,
     product: {
       type: Object
     }
   },
   data() {
     return {
-      currentQuantity: 1
+      currentQuantity: 1,
+      isChecked: false
     }
   },
   methods: {

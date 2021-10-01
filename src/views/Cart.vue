@@ -2,12 +2,18 @@
   <div class="cart">
   <Header/>
     <div class="body">
+      <!--   deleteAll button   -->
+      <button @click="delAll">DELL ALL</button>
+      <!--  deleteSelected button    -->
+      <button @click="delSelected">DEL SELECTED</button>
+      {{delList}}
       <div class="row">
         <div class="col-7">
           <cart-item
             v-for="product in products"
             :key="product.id"
             :product="product"
+            :setDelList="setDelList"
           />
         </div>
         <div class="col-5">
@@ -94,6 +100,7 @@ export default {
   },
   data() {
     return {
+      delList: [],
       cart: {
         numberOfProductsInCart: 0,
         priceWithoutDiscount: 0,
@@ -126,6 +133,30 @@ export default {
     }
   },
   methods: {
+    async delSelected(){
+      await CartService.deleteSelectedCartItems(this.delList)
+      await this.getNewCart()
+      await this.getCartSummary()
+    },
+    setDelList(isChecked, productId) {
+      if (isChecked === true) {
+        this.delList.push(productId)
+        console.log('add', this.delList);
+        isChecked = false;
+      } else {
+        this.delList.forEach((item, index) => {
+          if (item === productId) {
+            this.delList.splice(index, 1)
+          }
+        })
+        console.log('del', this.delList)
+      }
+    },
+    async delAll(){
+      await CartService.deleteAllProductFromCart()
+      await this.getNewCart()
+      await this.getCartSummary()
+    },
     addProductsToOrder() {
       for (let i = 0; i < this.products.length; i++) {
         this.order.products.push(this.products[i].productId)
