@@ -75,7 +75,7 @@ export default {
   created() {
     this.currentProduct.id = this.$route.params.id;
     this.getProductFromCatalog();
-    this.getComments()
+    // this.getComments()
   },
   methods: {
     getComments() {
@@ -97,6 +97,7 @@ export default {
           this.currentProduct.amount = response.data.amount;
           this.currentProduct.animal = response.data.animal;
           this.currentProduct.category = response.data.category;
+          this.comments = response.data.comments;
         }
       )
   },
