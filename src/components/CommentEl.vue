@@ -13,11 +13,6 @@
                 {{ 'Оставлен ' + comment.date }}
               </p>
             </div>
-            <div class="date-update">
-              <p>
-                {{ comment.dateUpdate !== null ? 'Изменён ' + comment.dateUpdate : '' }}
-              </p>
-            </div>
           </div>
         <div class="head__el rating">
           <p>
@@ -83,12 +78,12 @@ export default {
   created() {
     this.visibleButton()
     this.sliceText()
-    this.getAnswer()
+    //this.getAnswer()
   },
   methods: {
-    getAnswer(){
-      CommentService.getAnswers(this.comment.commentId)
-    },
+    // getAnswer(){
+    //   CommentService.getAnswers(this.comment.commentId)
+    // },
     addAnswer(){
       CommentService.generateAnswer(this.comment.commentId, this.payload)
     },

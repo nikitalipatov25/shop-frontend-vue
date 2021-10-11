@@ -25,6 +25,8 @@
             <p><button class="btn btn-primary" @click="addProductToCart">Добавить в корзину: {{currentProduct.price}} руб.</button></p>
           </div>
         </div>
+
+
         <section class="comment">
           <div class="row">
             <div class="col-12">
@@ -69,13 +71,14 @@ export default {
         animal: '',
         category: ''
       },
-      comments: null
+      comments: null,
+      answers: null
     }
   },
   created() {
     this.currentProduct.id = this.$route.params.id;
     this.getProductFromCatalog();
-    // this.getComments()
+    //this.getComments()
   },
   methods: {
     getComments() {
@@ -98,6 +101,7 @@ export default {
           this.currentProduct.animal = response.data.animal;
           this.currentProduct.category = response.data.category;
           this.comments = response.data.comments;
+          this.answers = response.data.answers;
         }
       )
   },
