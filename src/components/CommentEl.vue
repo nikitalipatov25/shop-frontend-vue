@@ -33,32 +33,70 @@
         </div>
       </div>
       <div class="comment__footer">
-        <div v-if="$store.state.auth.user.username === comment.userName" class="modify">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="'#exampleModal'+comment.commentId" data-bs-whatever="@mdo">Редактировать</button>
+
+        <div v-if="$store.state.auth.user.username !== comment.userName">
+
+            <button type="button" class="btn btn-primary" @click="$bvModal.show('add-answer-modal')">Ответить</button>
+
+
+
         </div>
-        <div class="add-answer">
-          <button @click="addAnswer" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-whatever="@mdo">Ответить</button>
+
+        <div v-if="$store.state.auth.user.username === comment.userName">
+          <button type="button" class="btn btn-primary" @click="$bvModal.show('modify-comment-modal')">Редактировать</button>
+
+          <b-modal id="modify-comment-modal" hide-footer title="Модифицировать comment">
+            <div class="d-block text-left">
+              <div class="modify-body">
+                <form>
+                  <div class="mb-3">
+                    <CommentDropDown v-model="modalData.rating" />
+                  </div>
+                  <div class="mb-3">
+                    <label class="col-form-label">Message:</label>
+                    <textarea v-model="modalData.text" v-text="fullText" resize="none" class="form-control"></textarea>
+                  </div>
+                </form>
+                <button class="btn btn-success" @click="modifyComment">Модифицировать comment</button>
+                <button type="button" class="btn btn-danger" @click="$bvModal.hide('modify-comment-modal')">Закрыть</button>
+              </div>
+            </div>
+          </b-modal>
+
+          <button type="button" class="btn btn-danger" @click="$bvModal.show('delete-comment-modal')">Удалить comment</button>
+
+          <b-modal id="delete-comment-modal" hide-footer title="Удалить comment">
+            <div class="d-block text-left">
+              <strong>Вы действительно хотите удалить комментарий?</strong>
+              <button class="btn btn-success" @click="deleteComment">Удалить comment</button>
+              <button type="button" class="btn btn-danger" @click="$bvModal.hide('delete-comment-modal')">Закрыть</button>
+            </div>
+          </b-modal>
+
         </div>
+
       </div>
     </div>
-    <div class="answers">
-      <h5>Ответы</h5>
-      <hr>
-<!--      <AnswerList/>-->
-    </div>
-    <CommentModal :fullText="comment.text" :rating="comment.rating" :id="comment.commentId"/>
+<!--    <div class="answers">-->
+<!--      <h5>Ответы</h5>-->
+<!--      <hr>-->
+<!--&lt;!&ndash;      <AnswerList/>&ndash;&gt;-->
+<!--    </div>-->
+<!--    <CommentModal :fullText="comment.text" :rating="comment.rating" :id="comment.commentId"/>-->
   </div>
 </template>
 
 <script>
 
-import CommentModal from "@/components/CommentModal";
+// import CommentModal from "@/components/CommentModal";
 import CommentService from '@/services/comment.service'
+import CommentDropDown from "@/components/CommentDropDown";
 
 export default {
   name: "CommentEl",
   components: {
-    CommentModal
+    // CommentModal,
+    CommentDropDown
   },
   props: [
     "comment"
@@ -72,7 +110,11 @@ export default {
       payload: {
         text: 'answer'
       },
-      answers: null
+      answers: null,
+      modalData: {
+        text: this.fullText,
+        rating: this.rating
+      }
     }
   },
   created() {
@@ -81,6 +123,22 @@ export default {
     //this.getAnswer()
   },
   methods: {
+    modifyComment() {
+      if (this.modalData.text !== this.fullText){
+        CommentService.modifyNewComment(this.comment.productId, this.modalData)
+            .then(
+                response => {
+                  console.log(response.data)
+                }
+            )
+      } else {
+        alert('Измените комментарий')
+      }
+    },
+    deleteComment() {
+      console.log('sdsdf')
+      CommentService.deleteNewComment(this.comment.productId)
+    },
     // getAnswer(){
     //   CommentService.getAnswers(this.comment.commentId)
     // },

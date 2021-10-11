@@ -53,7 +53,7 @@ export default {
   methods: {
     modifyComment() {
       if (this.modalData.text !== this.fullText){
-        CommentService.updateComment(this.id, this.modalData)
+        CommentService.modifyNewComment(this.id, this.modalData)
             .then(
                 response => {
                   console.log(response.data)

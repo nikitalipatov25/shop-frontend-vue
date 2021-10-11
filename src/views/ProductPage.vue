@@ -78,14 +78,14 @@ export default {
   created() {
     this.currentProduct.id = this.$route.params.id;
     this.getProductFromCatalog();
-    //this.getComments()
+    this.getComments()
   },
   methods: {
     getComments() {
-      CommentService.getComments(this.currentProduct.id)
+      CommentService.getNewComments(this.currentProduct.id)
           .then(
               response => {
-                this.comments = response.data
+                this.comments = response.data.content
                 console.log(this.comments)
               }
           )
@@ -100,8 +100,8 @@ export default {
           this.currentProduct.amount = response.data.amount;
           this.currentProduct.animal = response.data.animal;
           this.currentProduct.category = response.data.category;
-          this.comments = response.data.comments;
-          this.answers = response.data.answers;
+          // this.comments = response.data.comments;
+          // this.answers = response.data.answers;
         }
       )
   },

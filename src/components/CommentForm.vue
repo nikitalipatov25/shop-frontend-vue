@@ -36,7 +36,7 @@ export default {
   methods: {
     addComment() {
       if (this.commentData.text !== '' && this.commentData.rating !== null){
-        CommentService.generateComment(this.$route.params.id, this.commentData)
+        CommentService.addNewComment(this.$route.params.id, this.commentData)
             .then(
                 response => {
                   console.log(response.data)
