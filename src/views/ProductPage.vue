@@ -86,6 +86,7 @@ export default {
           .then(
               response => {
                 this.comments = response.data.content
+                // this.answers = response.data.content
                 console.log(this.comments)
               }
           )

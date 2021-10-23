@@ -38,7 +38,16 @@
 
             <button type="button" class="btn btn-primary" @click="$bvModal.show('add-answer-modal')">Ответить</button>
 
-
+          <b-modal id="add-answer-modal" hide-footer title="Answer to comment">
+            <div class="d-block text-left">
+              <div class="modify-body">
+                    <label class="col-form-label">Answer to {{comment.userName}}</label>
+                    <textarea v-model="answer.text" resize="none"></textarea>
+                  </div>
+                <button class="btn btn-success" @click="addAnswer">Ответить</button>
+                <button type="button" class="btn btn-danger" @click="$bvModal.hide('add-answer-modal')">Закрыть</button>
+              </div>
+          </b-modal>
 
         </div>
 
@@ -77,25 +86,37 @@
 
       </div>
     </div>
-<!--    <div class="answers">-->
-<!--      <h5>Ответы</h5>-->
-<!--      <hr>-->
-<!--&lt;!&ndash;      <AnswerList/>&ndash;&gt;-->
-<!--    </div>-->
-<!--    <CommentModal :fullText="comment.text" :rating="comment.rating" :id="comment.commentId"/>-->
+
+    <div class="answers" v-if="comment.answers.length !== 0">
+      <h2>answers</h2>
+      <div v-for="answer in comment.answers" :key="answer.id">
+        {{answer}}
+        <button v-if="$store.state.auth.user.username === answer.userName" type="button" class="btn btn-danger" @click="deleteAnswer(answer.id)">Удалить answer</button>
+        <button v-if="$store.state.auth.user.username === answer.userName" type="button" class="btn btn-warning" @click="$bvModal.show('modify-answer-modal')">Изменить answer</button>
+
+        <b-modal id="modify-answer-modal" hide-footer title="modify">
+          <div class="d-block text-left">
+            <input type="text" v-model:="answer.text">
+            <button class="btn btn-success" @click="modifyAnswer(answer.id)">Modify</button>
+            <button type="button" class="btn btn-danger" @click="$bvModal.hide('modify-answer-modal')">Закрыть</button>
+          </div>
+        </b-modal>
+
+      </div>
+
+    </div>
   </div>
 </template>
 
 <script>
 
-// import CommentModal from "@/components/CommentModal";
 import CommentService from '@/services/comment.service'
 import CommentDropDown from "@/components/CommentDropDown";
+import AnswerService from '@/services/answer.service'
 
 export default {
   name: "CommentEl",
   components: {
-    // CommentModal,
     CommentDropDown
   },
   props: [
@@ -114,36 +135,39 @@ export default {
       modalData: {
         text: this.fullText,
         rating: this.rating
+      },
+      answer: {
+        productId: '',
+        answerToUser: '',
+        text: ''
       }
     }
   },
   created() {
     this.visibleButton()
     this.sliceText()
-    //this.getAnswer()
   },
   methods: {
     modifyComment() {
-      if (this.modalData.text !== this.fullText){
+      if (this.modalData.text !== this.fullText) {
         CommentService.modifyNewComment(this.comment.productId, this.modalData)
-            .then(
-                response => {
-                  console.log(response.data)
-                }
-            )
       } else {
         alert('Измените комментарий')
       }
     },
     deleteComment() {
-      console.log('sdsdf')
       CommentService.deleteNewComment(this.comment.productId)
     },
-    // getAnswer(){
-    //   CommentService.getAnswers(this.comment.commentId)
-    // },
     addAnswer(){
-      CommentService.generateAnswer(this.comment.commentId, this.payload)
+      this.answer.answerToUser = this.comment.userName;
+      this.answer.productId = this.comment.productId;
+      AnswerService.addAnswer(this.answer)
+    },
+    modifyAnswer(answerId) {
+      console.log(answerId);
+    },
+    deleteAnswer(answerId) {
+      console.log(answerId);
     },
     visibleButton(){
       if(this.comment.text.length > 150){

@@ -9,8 +9,8 @@ if (process.env.NODE_ENV === 'development') {
 
 class AnswerService {
 
-    generateAnswer(id, payload){
-        return axios.post(API_URL + id + 'answer', payload, { headers: authHeader() })
+    addAnswer(payload){
+        return axios.post(API_URL, payload, { headers: authHeader() })
     }
     deleteAnswer(id){
         return axios.delete(API_URL + id + 'answer', { headers: authHeader() })
