@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Header from '../components/Header'
+import Header from '../components/Sections/Header'
 import Footer from '../components/Foter'
 
 export default {

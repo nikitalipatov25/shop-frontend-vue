@@ -85,7 +85,7 @@
 <script>
 import CartItem from '../components/CartItem'
 import { eventBus } from '../main'
-import Header from '../components/Header'
+import Header from '../components/Sections/Header'
 import Footer from '../components/Foter'
 import CartService from '../services/cart.service'
 import OrdersService from '../services/orders.service'

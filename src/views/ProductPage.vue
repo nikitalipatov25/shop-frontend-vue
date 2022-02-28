@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import Header from '../components/Header'
+import Header from '../components/Sections/Header'
 import CommentForm from "../components/CommentForm";
 import CommentList from "../components/CommentList";
 

@@ -1,20 +1,23 @@
 <template>
-  <div class="header">
+  <header>
     <div class="row">
+      <div class="header__find">
+        <input class="find__input" placeholder="Поиск товаров в каталоге"/>
+        <div class="find__line" />
+        <div class="find__btn" title="найти">
+          <img src="" alt="найти">
+        </div>
+      </div>
+      <div class="header__menu">
+        <Menu/>
+      </div>
       <div class="col-3">
-        <a href="/"><strong>Hand-made магазин "Любимый питомец"</strong></a>
-      </div>
-      <div class="col-2">
-        <a href="/catalog">Каталог</a>
-      </div>
-      <div class="col-2">
-        <a href="/cart">Корзина</a>
         <span class="badge badge-success">{{ itemsInCart }}</span>
       </div>
-      <div class="col-2">
-        <p v-if="user === null">Добро пожаловать, гость</p>
+      <div class="drop">
+        <p v-if="user === null">Личный кабинет</p>
         <div v-else class="not-guest">
-          <p  >Добро пожаловать, {{ user.username }}</p>
+          <p>{{ user.username }}</p>
           <a href="/personalarea">Лычный кабинет</a>
         </div>
         <div>
@@ -30,13 +33,18 @@
         <button type="button" class="btn btn-primary" @click="searchProducts">Поиск</button>
       </div>
     </div>
-  </div>
+  </header>
 </template>
 
 <script>
-import { eventBus } from '../main'
+import { eventBus } from '../../main'
+import Menu from "../Base/Menu";
 
 export default {
+  name: "Header",
+  components:{
+    Menu
+  },
   data() {
     return {
       searchText: '',
@@ -65,8 +73,7 @@ export default {
 </script>
 
 <style>
-.header {
-  background-color: #92cbf8;
-  margin-bottom: 30px;
-}
+  header{
+    border: 1px solid red;
+  }
 </style>

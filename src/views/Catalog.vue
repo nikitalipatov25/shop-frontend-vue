@@ -49,7 +49,7 @@
 <script>
 import ProductCard from '@/components/ProductCard'
 import newMenuInCatalog from "@/components/newMenuInCatalog";
-import Header from '../components/Header'
+import Header from '../components/Sections/Header'
 import Footer from '../components/Foter'
 import { eventBus } from '@/main'
 import CatalogService from '../services/catalog.service'

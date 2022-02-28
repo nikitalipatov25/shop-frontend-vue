@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Header from '../components/Header'
+import Header from '../components/Sections/Header'
 import Footer from '../components/Foter'
 import IndexCatalog from "@/components/IndexCatalog"
 import IndexCorusel from '@/components/IndexCorusel'

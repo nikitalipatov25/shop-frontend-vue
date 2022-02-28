@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Header from '../components/Header'
+import Header from '../components/Sections/Header'
 import Footer from '../components/Foter'
 import CatalogTool from '@/components/admin_components/catalog-tool'
 import DealsTool from '@/components/admin_components/deals-tool'

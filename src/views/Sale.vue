@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Header from '../components/Header'
+import Header from '../components/Sections/Header'
 import Footer from '../components/Foter'
 import SaleService from '@/services/sale.service'
 import SaleList from "@/components/SaleList";

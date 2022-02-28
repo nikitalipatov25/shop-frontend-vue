@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import Header from '../components/Header'
+import Header from '../components/Sections/Header'
 import Footer from '../components/Foter'
 import ordersComponent from "@/components/ordersComponent";
 import OrderService from '@/services/orders.service'
