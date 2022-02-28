@@ -1,5 +1,5 @@
 <template>
-  <li @click="click, getActive(label)" class="drop-down__item">
+  <li @click="func(), getActive(label)" class="drop-down__item">
     <a :href="link" >
       {{ label }}
     </a>
@@ -7,6 +7,7 @@
 </template>
 
 <script>
+
 export default {
   name: "DropDownItem",
   props:{
@@ -14,6 +15,11 @@ export default {
     label: String,
     click: Function,
     getActive: Function
+  },
+  data(){
+    return{
+      func: this.click
+    }
   }
 }
 </script>

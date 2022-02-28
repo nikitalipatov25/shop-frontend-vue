@@ -1,0 +1,54 @@
+<template>
+  <a href="" class="logo" :class="[color === 'dark' ? darkTheme : '']">
+    <img src="../../../../assets/logo.png" alt="">
+    <div class="logo__title" >
+      <h2 class="title__bold">{{ titleBold }}</h2>
+      <h2 class="title__regular">{{ titleRegular }}</h2>
+    </div>
+  </a>
+</template>
+
+<script>
+import '../../../../assets/Style.scss'
+
+export default {
+  name: "Logo",
+  props: [
+    'color'
+  ],
+  data(){
+    return{
+      titleBold: 'Магазин для животных',
+      titleRegular: 'Любимый питомец',
+      darkTheme: 'logo-dark'
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+.logo{
+  display: inline-grid;
+  grid-template-columns: 82px auto;
+  align-items: center;
+  img{
+    height: 82px;
+  }
+  .logo__title{
+    display: inline-grid;
+    margin-left: 10px;
+    .title__regular{
+      font-weight: normal;
+      }
+  }
+}
+
+.logo-dark{
+  .logo__title{
+    color: #fff;
+  }
+}
+
+
+
+</style>

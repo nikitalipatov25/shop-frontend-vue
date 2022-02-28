@@ -85,7 +85,7 @@ export default {
         display: inline-grid;
         grid-template-rows: auto;
         //row-gap: 10px;
-        //padding: 10px;
+        padding: 0px;
         background-color: #FFFFFF;
         box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
       }

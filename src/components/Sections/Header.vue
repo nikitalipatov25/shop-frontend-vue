@@ -1,43 +1,24 @@
 <template>
   <header>
-    <div class="row">
-      <div class="header__find">
-        <input class="find__input" placeholder="Поиск товаров в каталоге"/>
-        <div class="find__line" />
-        <div class="find__btn" title="найти">
-          <img src="" alt="найти">
-        </div>
+    <div class="header__find">
+      <input type="text" class="find__input" placeholder="Поиск товаров в каталоге" v-model="searchText"/>
+      <div class="find__line" />
+      <div class="find__btn" title="найти" @click="searchProducts">
+        <img src="https://yt3.ggpht.com/ytc/AKedOLSl9gucL6qlUL8ocyolLte6pPU2CvjTPOOScyKg=s900-c-k-c0x00ffffff-no-rj" alt="найти">
       </div>
-      <div class="header__menu">
-        <Menu/>
-      </div>
-      <div class="col-3">
-        <span class="badge badge-success">{{ itemsInCart }}</span>
-      </div>
-      <div class="drop">
-        <p v-if="user === null">Личный кабинет</p>
-        <div v-else class="not-guest">
-          <p>{{ user.username }}</p>
-          <a href="/personalarea">Лычный кабинет</a>
-        </div>
-        <div>
-          <b-dropdown id="dropdown-1" variant="info" text="Выберете действие:" class="m-md-2">
-            <b-dropdown-item href="/login">Log In</b-dropdown-item>
-            <b-dropdown-item @click="logOut">Log Out</b-dropdown-item>
-            <b-dropdown-item href="/register">Sign In</b-dropdown-item>
-          </b-dropdown>
-        </div>
-      </div>
-      <div class="col-3">
-        <input type="text" placeholder="Поиск товаров в каталоге" v-model="searchText">
-        <button type="button" class="btn btn-primary" @click="searchProducts">Поиск</button>
-      </div>
+    </div>
+    <div class="header__menu">
+      <Menu/>
+    </div>
+    <div>
+      <span class="badge badge-success">{{ itemsInCart }}</span>
     </div>
   </header>
 </template>
 
 <script>
 import { eventBus } from '../../main'
+import '../../assets/Style.scss'
 import Menu from "../Base/Menu";
 
 export default {
@@ -75,5 +56,10 @@ export default {
 <style>
   header{
     border: 1px solid red;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+  }
+  img{
+    height: 25px;
   }
 </style>
