@@ -1,6 +1,6 @@
 <template>
-  <a href="" class="logo" :class="[color === 'dark' ? darkTheme : '']">
-    <img src="../../../../assets/logo.png" alt="">
+  <a href="/" class="logo" :class="[color === 'dark' ? darkTheme : '']">
+    <img src="../../assets/logo.png" alt="">
     <div class="logo__title" >
       <h2 class="title__bold">{{ titleBold }}</h2>
       <h2 class="title__regular">{{ titleRegular }}</h2>
@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import '../../../../assets/Style.scss'
 
 export default {
   name: "Logo",

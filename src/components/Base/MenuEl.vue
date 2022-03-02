@@ -1,6 +1,6 @@
 <template>
   <div class="menu__menu-el">
-    <a href="">
+    <a :href="link">
       <img :src="ico" :alt="label">
       <p>{{ label }}</p>
     </a>
@@ -8,32 +8,36 @@
 </template>
 
 <script>
+import '../../assets/home.png'
 export default {
   name: "MenuEl",
-  props: [
-      'label',
-      'ico'
-  ]
+  props: {
+      label: String,
+      ico: String,
+      link: String,
+  }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 a{
   display: flex;
-}
 p{
   font-weight: bold;
   color: #000;
-  padding-top: 5px;
-  padding-left: 10px;
+  padding-top: 2px;
   margin: 0;
 }
-a:hover p {
+}
+a:hover{
+p{
   color: #FCDC4C;
   transition: 0.3s;
 }
+}
 img{
   height: 25px;
+  padding-right: 10px;
 }
 
 </style>

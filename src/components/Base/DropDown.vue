@@ -63,12 +63,13 @@ export default {
 
   .drop-down{
     display: inline-block;
-    padding: 0px 20px 20px 0px;
     -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
     .drop-down__selected{
+      height: 100%;
+      width: 100%;
       span{
         font-weight: bold;
       }

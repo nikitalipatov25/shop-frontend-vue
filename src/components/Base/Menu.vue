@@ -5,8 +5,12 @@
         :key="index"
         :label="item.label"
         :ico="item.ico"
+        :link="item.link"
     />
-    <DropDown :type="'drop'" :list="dropList" :title="'Личный кабинет'"/>
+    <a class="menu__drop">
+      <img src="../../assets/user.png" alt="">
+      <DropDown :type="'drop'" :list="dropList" :title="'Личный кабинет'"/>
+    </a>
   </nav>
 </template>
 
@@ -30,18 +34,25 @@ export default {
       menu: [
         {
           ico: 'https://yt3.ggpht.com/ytc/AKedOLSl9gucL6qlUL8ocyolLte6pPU2CvjTPOOScyKg=s900-c-k-c0x00ffffff-no-rj',
-          label: 'Главная'
+          label: 'Главная',
+          link: '/'
         },
         {
           ico: 'https://yt3.ggpht.com/ytc/AKedOLSl9gucL6qlUL8ocyolLte6pPU2CvjTPOOScyKg=s900-c-k-c0x00ffffff-no-rj',
-          label: 'Каталог'
+          label: 'Каталог',
+          link: '/catalog'
         },
         {
           ico: 'https://yt3.ggpht.com/ytc/AKedOLSl9gucL6qlUL8ocyolLte6pPU2CvjTPOOScyKg=s900-c-k-c0x00ffffff-no-rj',
-          label: 'Корзина'
+          label: 'Корзина',
+          link: '/cart'
         },
       ],
       dropList: [
+        {
+          label: "Открыть",
+          link: "/personalarea"
+        },
         {
           label: "Войти",
           link: "/login"
@@ -66,6 +77,20 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.header-menu{
+  display: inline-grid;
+  grid-template-columns: repeat(4, auto);
+  justify-items: end;
+  align-items: center;
+}
+.menu__drop{
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-bottom: 1px;
+  img{
+    height: 25px;
+    padding-right: 10px;
+  }
+}
 </style>
