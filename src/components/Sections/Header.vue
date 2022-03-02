@@ -1,17 +1,18 @@
 <template>
   <header>
-    <div class="header__find">
-      <input type="text" class="find__input" placeholder="Поиск товаров в каталоге" v-model="searchText"/>
-      <div class="find__line" />
-      <div class="find__btn" title="найти" @click="searchProducts">
-        <img src="../../assets/loupe.png" alt="найти">
+    <div class="header__line">
+      <div class="header__find">
+        <input type="text" class="find__input" placeholder="Поиск товаров в каталоге" v-model="searchText"/>
+        <div class="find__line" />
+        <div class="find__btn" title="найти" @click="searchProducts">
+          <img src="../../assets/loupe.png" alt="найти">
+        </div>
       </div>
     </div>
-    <div class="header__container">
+    <div class="header__container container">
       <div class="header__logo">
         <Logo/>
       </div>
-
       <div class="header__menu">
         <Menu/>
       </div>
@@ -63,10 +64,12 @@ export default {
 
 <style lang="scss">
   header{
-    border: 1px solid red;
-    .header__find{
+    .header__line{
       background-color: #F3F3F3;
-      width: 100%;
+    }
+    .header__find{
+      width: 95%;
+      margin: 0 auto;
       height: 30px;
       display: grid;
       grid-template-columns: 200px 1px 20px;
@@ -100,6 +103,7 @@ export default {
       display: grid;
       grid-template-columns: repeat(2,1fr);
       align-items: center;
+      padding: 10px 0;
       .header__menu{
         display: grid;
         justify-content: end;

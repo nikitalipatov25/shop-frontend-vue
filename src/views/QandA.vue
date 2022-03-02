@@ -17,7 +17,7 @@
 
 <script>
 import Header from '../components/Sections/Header'
-import Footer from '../components/Foter'
+import Footer from '../components/Sections/Foter'
 
 export default {
   name: 'QandA',

@@ -88,6 +88,7 @@ export default {
   padding-top: 5px;
   padding-left: 10px;
   padding-bottom: 1px;
+  display: flex;
   img{
     height: 25px;
     padding-right: 10px;

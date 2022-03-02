@@ -2,10 +2,12 @@
     <div class="index">
       <Header/>
         <div class="body">
-          <h2>Наши акции</h2>
-          <index-corusel/>
+<!--          <h2>Наши акции</h2>-->
+<!--          <index-corusel/>-->
+          <!--          -->
           <h2>Наш каталог</h2>
           <IndexCatalog/>
+          <!--          -->
           <h2>Новинки</h2>
           <div v-for="product in newProducts" :key="product.id" >
             Товар {{product.name}} добавлен {{product.creationDate}}
@@ -21,16 +23,16 @@
 
 <script>
 import Header from '../components/Sections/Header'
-import Footer from '../components/Foter'
+import Footer from '../components/Sections/Foter'
 import IndexCatalog from "@/components/IndexCatalog"
-import IndexCorusel from '@/components/IndexCorusel'
+// import IndexCorusel from '@/components/IndexCorusel'
 
 import CatalogService from '../services/catalog.service'
 
 export default {
     name: 'Index',
   components: {
-    IndexCorusel,
+    // IndexCorusel,
     Header,
     Footer,
     IndexCatalog,
