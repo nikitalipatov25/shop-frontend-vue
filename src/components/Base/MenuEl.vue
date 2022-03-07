@@ -1,14 +1,13 @@
 <template>
   <div class="menu__menu-el">
     <a :href="link">
-      <img :src="ico" :alt="label">
+      <img :src="ico">
       <p>{{ label }}</p>
     </a>
   </div>
 </template>
 
 <script>
-import '../../assets/home.png'
 export default {
   name: "MenuEl",
   props: {

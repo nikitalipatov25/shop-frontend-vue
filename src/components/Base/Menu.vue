@@ -33,17 +33,17 @@ export default {
     return {
       menu: [
         {
-          ico: 'https://yt3.ggpht.com/ytc/AKedOLSl9gucL6qlUL8ocyolLte6pPU2CvjTPOOScyKg=s900-c-k-c0x00ffffff-no-rj',
+          ico: require('../../assets/home.png'),
           label: 'Главная',
           link: '/'
         },
         {
-          ico: 'https://yt3.ggpht.com/ytc/AKedOLSl9gucL6qlUL8ocyolLte6pPU2CvjTPOOScyKg=s900-c-k-c0x00ffffff-no-rj',
+          ico: require('../../assets/list.png'),
           label: 'Каталог',
           link: '/catalog'
         },
         {
-          ico: 'https://yt3.ggpht.com/ytc/AKedOLSl9gucL6qlUL8ocyolLte6pPU2CvjTPOOScyKg=s900-c-k-c0x00ffffff-no-rj',
+          ico: require('../../assets/shopping-cart.png'),
           label: 'Корзина',
           link: '/cart'
         },
@@ -77,17 +77,16 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .header-menu{
   display: inline-grid;
   grid-template-columns: repeat(4, auto);
   justify-items: end;
   align-items: center;
+  gap: 20px;
 }
 .menu__drop{
   padding-top: 5px;
-  padding-left: 10px;
-  padding-bottom: 1px;
   display: flex;
   img{
     height: 25px;

@@ -2,8 +2,8 @@
   <a href="/" class="logo" :class="[color === 'dark' ? darkTheme : '']">
     <img src="../../assets/logo.png" alt="">
     <div class="logo__title" >
-      <h2 class="title__bold">{{ titleBold }}</h2>
       <h2 class="title__regular">{{ titleRegular }}</h2>
+      <h2 class="title__bold">{{ titleBold }}</h2>
     </div>
   </a>
 </template>
@@ -17,8 +17,8 @@ export default {
   ],
   data(){
     return{
-      titleBold: 'Магазин для животных',
-      titleRegular: 'Любимый питомец',
+      titleRegular: 'Магазин для животных',
+      titleBold: 'Любимый питомец',
       darkTheme: 'logo-dark'
     }
   }

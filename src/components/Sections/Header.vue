@@ -2,7 +2,7 @@
   <header>
     <div class="header__line">
       <div class="header__find">
-        <input type="text" class="find__input" placeholder="Поиск товаров в каталоге" v-model="searchText"/>
+        <input type="text" class="find__input" placeholder="Поиск товаров" v-model="searchText"/>
         <div class="find__line" />
         <div class="find__btn" title="найти" @click="searchProducts">
           <img src="../../assets/loupe.png" alt="найти">
@@ -25,7 +25,6 @@
 
 <script>
 import { eventBus } from '../../main'
-import '../../assets/Style.scss'
 import Menu from "../Base/Menu";
 import Logo from "../Base/Logo";
 
