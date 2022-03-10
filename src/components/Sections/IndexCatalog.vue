@@ -13,7 +13,7 @@
 
 <script>
 import AnimalService from '@/services/animal.service'
-import Card from "./Card";
+import Card from "../Card";
 
 export default {
   components:{

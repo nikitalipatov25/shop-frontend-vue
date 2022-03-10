@@ -3,7 +3,10 @@
       <Header/>
         <div class="body">
           <h1 class="heading">Наши акции</h1>
-          <index-corusel/>
+          <Carousel
+            :carousel_data="testCarousel"
+
+          />
           <!--          -->
           <IndexCatalog/>
           <!--          -->
@@ -23,8 +26,8 @@
 <script>
 import Header from '../components/Sections/Header'
 import Footer from '../components/Sections/Foter'
-import IndexCatalog from "@/components/IndexCatalog"
-import IndexCorusel from '@/components/IndexCorusel'
+import IndexCatalog from "../components/Sections/IndexCatalog";
+import Carousel from "../components/Base/Carousel/Carousel";
 
 import '../assets/Style.scss'
 
@@ -33,16 +36,24 @@ import CatalogService from '../services/catalog.service'
 export default {
     name: 'Index',
   components: {
-    IndexCorusel,
     Header,
     Footer,
     IndexCatalog,
+    Carousel
 
   },
   data() {
       return {
         popularProducts: [],
-        newProducts: []
+        newProducts: [],
+        testCarousel: [
+          {name: 'img1', img: 'cats.jpg'},
+          {name: 'img2', img: 'fish.jpg'},
+          {name: 'img3', img: 'humsters.jpg'},
+          {name: 'img4', img: 'humsters.jpg'},
+          {name: 'img5', img: 'humsters.jpg'},
+          {name: 'img6', img: 'humsters.jpg'},
+        ]
       }
   },
   methods: {
