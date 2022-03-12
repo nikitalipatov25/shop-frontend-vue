@@ -86,7 +86,7 @@
 import CartItem from '../components/CartItem'
 import { eventBus } from '../main'
 import Header from '../components/Sections/Header'
-import Footer from '../components/Sections/Foter'
+import Footer from '../components/Sections/Footer'
 import CartService from '../services/cart.service'
 import OrdersService from '../services/orders.service'
 import UserService from '@/services/user.service'

@@ -1,48 +1,58 @@
 <template>
   <div class="catalog">
     <Header/>
-    <div class="body">
-      <div class="row">
-        <div class="col-2">
+    <main class="container">
+      <section class="heading">
+        <h1>Каталог</h1>
+      </section>
+      <section class="product_sort">
+<!--        <div class="col-3">-->
+<!--          <select class="form-select" aria-label="Default select example" @change="sortProducts($event)">-->
+<!--            <option selected value="name,ASC">По умолчанию</option>-->
+<!--            <option value="price,ASC">Сначала дешевле</option>-->
+<!--            <option value="price,DESC">Сначала дороже</option>-->
+<!--            <option value="rating,DESC">Сначала с высоким рейтингом</option>-->
+<!--          </select>-->
+<!--        </div>-->
+      </section>
+      <section class="product_card_section">
+        <div class="product_filter__wrapper">
           <newMenuInCatalog/>
         </div>
-        <div class="col-10">
-          <div class="catalog-nav">
-            <div class="row">
-              <div class="col-3">
-                <h1>Каталог</h1>
-              </div>
-              <div class="col-4">
-              </div>
-              <div class="col-3">
-                <select class="form-select" aria-label="Default select example" @change="sortProducts($event)">
-                  <option selected value="name,ASC">По умолчанию</option>
-                  <option value="price,ASC">Сначала дешевле</option>
-                  <option value="price,DESC">Сначала дороже</option>
-                  <option value="rating,DESC">Сначала с высоким рейтингом</option>
-                </select>
-              </div>
-            </div>
-          </div>
+        <div class="product_card_list__wrapper">
+          <div class="product_card_list">
             <product-card
                 v-for="product in products"
                 :key="product.id"
                 :product="product"
             />
+          </div>
+          <nav class="page">
+            <ul class="page__list">
+              <li class="list__el" @click="changePageNoIndex('first')">
+                <a class="el__content" >&laquo;</a>
+              </li>
+              <li class="list__el" @click="changePageNoIndex('previous')">
+                <a class="el__content" >Предыдущая</a>
+              </li>
+              <li class="list__el" @click="changePage(pageIndex)" v-for="pageIndex in filter.totalPages" :key="pageIndex">
+                <a class="el__content">{{ pageIndex }}</a>
+              </li>
+              <li class="list__el" @click="changePageNoIndex('next')">
+                <a class="el__content" >Следующая</a>
+              </li>
+              <li class="list__el" @click="changePageNoIndex('last')">
+                <a class="el__content" >&raquo;</a>
+              </li>
+            </ul>
+          </nav>
         </div>
-      </div>
-      <hr>
-      <nav aria-label="Page navigation">
-        <ul class="pagination">
-          <li @click="changePageNoIndex('first')" class="page-item"><a class="page-link" >&laquo;</a></li>
-          <li @click="changePageNoIndex('previous')" class="page-item"><a class="page-link" >Предыдущая</a></li>
-          <li @click="changePage(pageIndex)" class="page-item" v-for="pageIndex in filter.totalPages" :key="pageIndex"><a class="page-link">{{ pageIndex }}</a></li>
-          <li @click="changePageNoIndex('next')" class="page-item"><a class="page-link" >Следующая</a></li>
-          <li @click="changePageNoIndex('last')" class="page-item"><a class="page-link" >&raquo;</a></li>
-        </ul>
-      </nav>
-    </div>
-    <Footer/>
+      </section>
+
+
+
+  </main>
+  <Footer/>
   </div>
 </template>
 
@@ -50,7 +60,7 @@
 import ProductCard from '@/components/ProductCard'
 import newMenuInCatalog from "@/components/newMenuInCatalog";
 import Header from '../components/Sections/Header'
-import Footer from '../components/Sections/Foter'
+import Footer from '../components/Sections/Footer'
 import { eventBus } from '@/main'
 import CatalogService from '../services/catalog.service'
 
@@ -74,7 +84,7 @@ export default {
         priceFrom: 1,
         priceTo: 99999,
         pageNumber: 0,
-        pageSize: 4,
+        pageSize: 6,
         totalPages: null,
         sortBy: 'name',
         sortDirection: 'ASC',
@@ -153,3 +163,49 @@ methods: {
   }
 }
 </script>
+
+<style lang="scss">
+  .product_card_section{
+    display: grid;
+    justify-items: center;
+    row-gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(290px, auto));
+  }
+  .product_card_list{
+    min-width: 304px;
+    width: 70vw;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 20px 10px;
+    align-items: center;
+    justify-items: start;
+  }
+  @media (max-width: 768px) {
+    .product_card_list{
+      justify-items: center;
+    }
+  }
+  .product_filter__wrapper{
+    display: grid;
+    width: 100%;
+    //justify-self: end;
+    //width: 15vw;
+  }
+    .page{
+      display: grid;
+      width: 300px;
+      margin-top: 30px;
+      .page__list{
+        display: grid;
+        justify-items: center;
+        grid-template-columns: repeat(6, 1fr);
+        .list__el{
+          padding: 5px;
+          margin: 0;
+          border: 1px solid #ccc;
+          .el__content{
+          }
+        }
+      }
+    }
+</style>

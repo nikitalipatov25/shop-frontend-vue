@@ -54,7 +54,7 @@
 
 <script>
 import Header from '../components/Sections/Header'
-import Footer from '../components/Sections/Foter'
+import Footer from '../components/Sections/Footer'
 import ordersComponent from "@/components/ordersComponent";
 import OrderService from '@/services/orders.service'
 import UserService from '@/services/user.service'

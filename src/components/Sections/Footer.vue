@@ -4,7 +4,7 @@
 <!--          <li class="list-group-item" @click="$router.push({name: 'questions'})">Информация покупателям(ЧаВо)</li>-->
 <!--          <li class="list-group-item" @click="$router.push({name: 'sale'})">Скидки и акции</li>-->
 <!--          <li class="list-group-item" @click="$router.push({name: 'about'})">О магазине</li>-->
-  <div class="footer_section">
+  <footer class="footer_section">
     <div class="container">
       <div class="footer">
         <div class="footer__social">
@@ -53,7 +53,7 @@
         </h3>
       </div>
     </div>
-  </div>
+  </footer>
 </template>
 
 <script>

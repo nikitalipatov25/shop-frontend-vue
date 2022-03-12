@@ -25,7 +25,7 @@
 
 <script>
 import Header from '../components/Sections/Header'
-import Footer from '../components/Sections/Foter'
+import Footer from '../components/Sections/Footer'
 import IndexCatalog from "../components/Sections/IndexCatalog";
 import Carousel from "../components/Base/Carousel/Carousel";
 
