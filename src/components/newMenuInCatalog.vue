@@ -148,6 +148,7 @@ export default {
     user-select: none;
     .product_filter__filter{
       .filter{
+        cursor: pointer;
         padding: 5px 0;
         .filter__menu{
           .menu__el{
@@ -161,7 +162,7 @@ export default {
       .filter__price{
        .filter__menu{
          input{
-           width: 100px;
+           width: 50px;
          }
        }
       }

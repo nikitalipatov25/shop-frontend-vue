@@ -36,7 +36,7 @@
                 <a class="el__content" >Предыдущая</a>
               </li>
               <li class="list__el" @click="changePage(pageIndex)" v-for="pageIndex in filter.totalPages" :key="pageIndex">
-                <a class="el__content">{{ pageIndex }}</a>
+                <a class="el__content">{{pageIndex}} </a>
               </li>
               <li class="list__el" @click="changePageNoIndex('next')">
                 <a class="el__content" >Следующая</a>
@@ -180,11 +180,6 @@ methods: {
     align-items: center;
     justify-items: start;
   }
-  @media (max-width: 768px) {
-    .product_card_list{
-      justify-items: center;
-    }
-  }
   .product_filter__wrapper{
     display: grid;
     width: 100%;
@@ -192,6 +187,11 @@ methods: {
     //width: 15vw;
   }
     .page{
+      -ms-user-select: none;
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
       display: grid;
       width: 300px;
       margin-top: 30px;
@@ -200,12 +200,39 @@ methods: {
         justify-items: center;
         grid-template-columns: repeat(6, 1fr);
         .list__el{
-          padding: 5px;
-          margin: 0;
+          cursor: pointer;
+          padding: 5px 10px;
           border: 1px solid #ccc;
+          transition: .3s ease;
           .el__content{
+            font-weight: bold;
+          }
+          &:hover{
+            background-color: #3D3D3D;
+            color: #FFFFFF;
+            transition: .3s ease;
+            .el__content{
+              color: #FFFFFF;
+            }
           }
         }
       }
     }
+  @media (max-width: 768px) {
+    .product_filter__wrapper{
+      justify-items: center;
+    }
+    .product_card_list{
+      justify-items: center;
+    }
+    .page{
+
+      width: 200px;
+      .page__list{
+        .list__el{
+          padding: 1px 5px;
+        }
+      }
+    }
+  }
 </style>
