@@ -1,33 +1,51 @@
 <template>
-  <div class="product-page">
+  <div class="product">
     <Header/>
-    <div class="body">
-      <div class="category-nav">
-        <a href="#">{{ currentProduct.animal }}</a>
-        <a href="#">{{ currentProduct.category }}</a>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-5">
-            <img
-              :src="currentProduct.image"
-              :alt="currentProduct.name"
-              height="300px"
-            >
+    <main class="container">
+        <section class="product__about_section">
+          <div class="about__img">
+<!--            <img-->
+<!--              :src="currentProduct.image"-->
+<!--              :alt="currentProduct.name"-->
+<!--              height="300px"-->
+<!--            >-->
+            <img src="../assets/pngkey_com-cat-food-png-3432927.png" alt="">
           </div>
-          <div class="col-7">
-            <h1>{{ currentProduct.name }}</h1>
-            <p>Артикул товара: {{ currentProduct.id }}</p>
-            <hr>
-            <p>Описание: {{ currentProduct.description }}</p>
-            <hr>
-            <p>В наличии: {{ currentProduct.amount }} шт.</p>
-            <p><button class="btn btn-primary" @click="addProductToCart">Добавить в корзину: {{currentProduct.price}} руб.</button></p>
+          <div class="description">
+            <nav class=" product__category_nav">
+              <a href="#">{{ currentProduct.animal }}</a>
+              <span> >> </span>
+              <a href="#">{{ currentProduct.category }}</a>
+            </nav>
+            <div class=" product__heading">
+              <h1>{{ currentProduct.name }}</h1>
+            </div>
+            <div class="product__el product__id">
+              <p><span>Артикул товара:</span> {{ currentProduct.id }}</p>
+            </div>
+            <div class="product__el product__description">
+              <p>Описание: {{ currentProduct.description }} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus dui non turpis placerat, vitae molestie lorem hendrerit. Praesent quam risus, luctus id elit vitae, pretium consequat neque. Fusce at tempus eros. Integer rutrum pretium justo quis cursus. Integer tincidunt, neque condimentum sagittis gravida, sem leo malesuada quam, vel aliquet dolor elit vel sem. Phasellus eget dapibus magna. Phasellus sit amet purus tempor, accumsan dolor at, commodo quam. Donec augue velit, imperdiet sit amet commodo eget, euismod egestas lectus. Fusce eu scelerisque nulla. Integer aliquam mauris et consequat dignissim. Donec tincidunt nulla turpis, et sodales nunc tempus id. Praesent luctus rutrum sollicitudin. Vestibulum vulputate dui consequat, consectetur lacus quis, malesuada tortor. Donec pretium a turpis at iaculis. Nullam massa ligula, sagittis ut dui quis, convallis vestibulum ante. Vestibulum gravida scelerisque accumsan.
+              </p>
+            </div>
+            <div class="product__el product__amount">
+              <p><span>В наличии:</span> {{ currentProduct.amount }} шт.</p>
+            </div>
+            <div class="product__el product__price">
+              <h1>{{currentProduct.price}} ₽</h1>
+            </div>
+            <div class="product__el product__btn">
+              <Button
+                  :label="'Добавить'"
+                  :size="'medium'"
+                  :color="'color'"
+                  :click="addProductToCart"
+              />
+            </div>
           </div>
-        </div>
+        </section>
 
 
-        <section class="comment">
+        <section class="comment_section">
           <div class="row">
             <div class="col-12">
               <h1 class="title">
@@ -38,24 +56,28 @@
           <CommentForm />
           <CommentList :comments="comments"/>
         </section>
-      </div>
-    </div>
+    </main>
+    <Footer/>
   </div>
 </template>
 
 <script>
 import Header from '../components/Sections/Header'
+import Footer from "../components/Sections/Footer";
 import CommentForm from "../components/CommentForm";
 import CommentList from "../components/CommentList";
+import Button from "../components/Base/Button";
 
 import CatalogService from '../services/catalog.service'
-import CartService from "@/services/cart.service";
+import CartService from '../services/cart.service'
 import CommentService from '../services/comment.service'
 
 export default {
   name: 'ProductPage',
   components: {
     Header,
+    Footer,
+    Button,
     CommentForm,
     CommentList
   },
@@ -108,29 +130,71 @@ export default {
   },
     addProductToCart() {
       //Этот метот взят с компонента "productList". Там была использована шина событий (Не помню зачем).
-      CartService.addToCart(this.currentProduct.id);
+      CartService.addProductToCart(this.currentProduct.id);
     }
   }
 }
 </script>
 
-<style>
-.container h1 {
-  text-align: left;
-}
-.col-7 {
-  text-align: left;
-}
-.category-nav {
-  text-align: left;
-}
-.category-nav a {
-  margin-right: 25px;
-}
-.comment{
-  margin-top: 50px;
-}
-.comment h1{
-  text-align: center;
-}
+<style lang="scss">
+  .product{
+    .product__about_section{
+      margin-top: 20px;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      .about__img{
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        img{
+          height: 450px;
+        }
+      }
+      .description{
+        .product__el{
+          padding: 10px 0px;
+          span{
+            font-weight: bold;
+          }
+        }
+        .product__category_nav{
+          a,span{
+            color: #cccccc;
+          }
+        }
+        .product__heading{
+        }
+        .product__id{
+
+        }
+        .product__description{
+
+        }
+        .product__amount{
+        }
+        .product__price{
+
+        }
+        .product__btn{
+
+        }
+      }
+    }
+    @media (max-width: 768px) {
+      .product__btn{
+        display: grid;
+        justify-items: center;
+      }
+      .product__about_section{
+        .about__img {
+          img {
+            height: 300px;
+          }
+        }
+      }
+
+    }
+  }
+
 </style>

@@ -1,24 +1,36 @@
 <template>
     <div class="index">
       <Header/>
-        <div class="body">
-          <h1 class="heading">Наши акции</h1>
-          <Carousel
-            :carousel_data="testCarousel"
+        <main>
+          <section class="carousel_section">
+            <div class="heading">
+              <h1>Наши акции</h1>
+            </div>
+            <Carousel
+                :carousel_data="testCarousel"
 
-          />
-          <!--          -->
-          <IndexCatalog/>
-          <!--          -->
-          <h1 class="heading">Новинки</h1>
-          <div v-for="product in newProducts" :key="product.id" >
-            Товар {{product.name}} добавлен {{product.creationDate}}
-          </div>
-          <h1 class="heading">Популярные товары</h1>
-          <div v-for="product in popularProducts" :key="product.id" >
-            Товар {{product.name}} с рейтингом {{product.rating}} и {{product.reviews}} отзывами
-          </div>
-        </div>
+            />
+          </section>
+          <section class="catalog_section">
+            <IndexCatalog/>
+          </section>
+          <section class="new_product_section">
+            <div class="heading">
+              <h1>Новинки</h1>
+            </div>
+            <div v-for="(product,index) in newProducts" :key="index" >
+              Товар {{product.name}} добавлен {{product.creationDate}}
+            </div>
+          </section>
+          <section class="pop_product_section">
+            <div class="heading">
+              <h1 class="heading">Популярные товары</h1>
+            </div>
+            <div v-for="product in popularProducts" :key="product.id" >
+              Товар {{product.name}} с рейтингом {{product.rating}} и {{product.reviews}} отзывами
+            </div>
+          </section>
+        </main>
       <Footer/>
     </div>
 </template>
