@@ -1,5 +1,5 @@
 <template>
-  <div class="comment-list row" >
+  <div class="comment-list" >
     <CommentEl v-for="(comment, index) in comments" :key="index" :comment="comment"/>
   </div>
 </template>

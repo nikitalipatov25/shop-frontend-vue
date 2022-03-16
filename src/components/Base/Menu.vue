@@ -18,11 +18,6 @@
 import MenuEl from "./MenuEl";
 import DropDown from "./DropDown";
 
-function test() {
-  this.$store.dispatch('auth/logout');
-  this.$router.push('/login');
-}
-
 export default {
   name: "Menu",
   components: {
@@ -59,7 +54,7 @@ export default {
         },
         {
           label: "Выйти",
-          click: test
+          click: this.logOut
         },
         {
           label: "Регистрация",

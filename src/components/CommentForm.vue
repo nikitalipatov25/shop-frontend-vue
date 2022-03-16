@@ -1,16 +1,24 @@
 <template>
   <div class="comment-form">
-    <div class="row">
-      <div class="form__text-area col-12">
-        <textarea resize="none" placeholder="Оставьте комментарий!" v-model.trim="commentData.text" />
-      </div>
+    <div class="form__text-area">
+      <textarea resize="none" placeholder="Оставьте Ваш отзыв!" v-model.trim="commentData.text" />
     </div>
     <div class="row">
-      <div class="form__rating col-6">
-        <CommentDropDown v-model="commentData.rating"/>
+      <div class="form__rating">
+<!--        <CommentDropDown v-model="commentData.rating"/>-->
+        <DropDown
+            :type="'filter'"
+            :list="this.list"
+            :title="'Оценка'"
+        />
       </div>
-      <div class="form__button col-6">
-        <button @click="addComment" class="comment-button btn btn-primary">Оставить комментарий</button>
+      <div class="form__button">
+        <Button
+            :label="'Отправить'"
+            :size="'medium'"
+            :color="'color'"
+            :click="addComment"
+        />
       </div>
     </div>
   </div>
@@ -18,22 +26,48 @@
 
 <script>
 import CommentService from '@/services/comment.service'
-import CommentDropDown from "@/components/CommentDropDown";
+// import CommentDropDown from "@/components/CommentDropDown";
+import DropDown from "./Base/DropDown";
+import Button from "./Base/Button";
 
 export default {
   name: "CommentForm",
   components: {
-    CommentDropDown
+    // CommentDropDown,
+    DropDown,
+    Button
   },
   data() {
     return {
       commentData: {
         text: '',
-        rating: null
+        rating: null,
+        click: null
       },
+      list: [
+        {
+          label: 'Отлично',
+          click: this.someTest,
+        },
+        {
+          label: 'Хорошо',
+          click: this.someTest
+        },
+        {
+          label: 'Нормально',
+          click: this.someTest
+        },
+        {
+          label: 'Плохо',
+          click: this.someTest
+        },
+      ]
     }
   },
   methods: {
+    someTest() {
+      console.log(1)
+    },
     addComment() {
       if (this.commentData.text !== '' && this.commentData.rating !== null){
         CommentService.addNewComment(this.$route.params.id, this.commentData)
@@ -52,10 +86,19 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
   .comment-form{
     margin-top: 15px;
     width: 100%;
+    .row{
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      .form__button{
+        display: grid;
+        justify-self: end;
+      }
+    }
   }
   textarea{
     outline: none;
@@ -66,9 +109,5 @@ export default {
     height: 150px;
     font-size: 16px;
   }
-  .comment-button{
-    display: block;
-    margin-top: 15px;
-    margin-left: auto;
-  }
+
 </style>

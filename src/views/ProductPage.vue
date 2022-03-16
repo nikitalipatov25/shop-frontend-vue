@@ -2,60 +2,57 @@
   <div class="product">
     <Header/>
     <main class="container">
-        <section class="product__about_section">
-          <div class="about__img">
-<!--            <img-->
-<!--              :src="currentProduct.image"-->
-<!--              :alt="currentProduct.name"-->
-<!--              height="300px"-->
-<!--            >-->
-            <img src="../assets/pngkey_com-cat-food-png-3432927.png" alt="">
+      <section class="product__about_section">
+        <div class="about__img">
+            <img
+              :src="currentProduct.image"
+              :alt="currentProduct.name"
+              height="300px"
+            >
+<!--          <img src="../assets/pngkey_com-cat-food-png-3432927.png" alt="">-->
+        </div>
+        <div class="description">
+          <nav class=" product__category_nav">
+            <a href="#">{{ currentProduct.animal }}</a>
+            <span> >> </span>
+            <a href="#">{{ currentProduct.category }}</a>
+          </nav>
+          <div class=" product__heading">
+            <h1>{{ currentProduct.name }}</h1>
           </div>
-          <div class="description">
-            <nav class=" product__category_nav">
-              <a href="#">{{ currentProduct.animal }}</a>
-              <span> >> </span>
-              <a href="#">{{ currentProduct.category }}</a>
-            </nav>
-            <div class=" product__heading">
-              <h1>{{ currentProduct.name }}</h1>
-            </div>
-            <div class="product__el product__id">
-              <p><span>Артикул товара:</span> {{ currentProduct.id }}</p>
-            </div>
-            <div class="product__el product__description">
-              <p>Описание: {{ currentProduct.description }} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus dui non turpis placerat, vitae molestie lorem hendrerit. Praesent quam risus, luctus id elit vitae, pretium consequat neque. Fusce at tempus eros. Integer rutrum pretium justo quis cursus. Integer tincidunt, neque condimentum sagittis gravida, sem leo malesuada quam, vel aliquet dolor elit vel sem. Phasellus eget dapibus magna. Phasellus sit amet purus tempor, accumsan dolor at, commodo quam. Donec augue velit, imperdiet sit amet commodo eget, euismod egestas lectus. Fusce eu scelerisque nulla. Integer aliquam mauris et consequat dignissim. Donec tincidunt nulla turpis, et sodales nunc tempus id. Praesent luctus rutrum sollicitudin. Vestibulum vulputate dui consequat, consectetur lacus quis, malesuada tortor. Donec pretium a turpis at iaculis. Nullam massa ligula, sagittis ut dui quis, convallis vestibulum ante. Vestibulum gravida scelerisque accumsan.
-              </p>
-            </div>
-            <div class="product__el product__amount">
-              <p><span>В наличии:</span> {{ currentProduct.amount }} шт.</p>
-            </div>
-            <div class="product__el product__price">
-              <h1>{{currentProduct.price}} ₽</h1>
-            </div>
-            <div class="product__el product__btn">
-              <Button
-                  :label="'Добавить'"
-                  :size="'medium'"
-                  :color="'color'"
-                  :click="addProductToCart"
-              />
-            </div>
+          <div class="product__el product__id">
+            <p><span>Артикул товара:</span> {{ currentProduct.id }}</p>
           </div>
-        </section>
-
-
-        <section class="comment_section">
-          <div class="row">
-            <div class="col-12">
-              <h1 class="title">
-                Комментарии
-              </h1>
-            </div>
+          <div class="product__el product__description">
+            <p><span>Описание:</span> {{ currentProduct.description }}
+<!--              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus dui non turpis placerat, vitae molestie lorem hendrerit. Praesent quam risus, luctus id elit vitae, pretium consequat neque. Fusce at tempus eros. Integer rutrum pretium justo quis cursus. Integer tincidunt, neque condimentum sagittis gravida, sem leo malesuada quam, vel aliquet dolor elit vel sem. Phasellus eget dapibus magna. Phasellus sit amet purus tempor, accumsan dolor at, commodo quam. Donec augue velit, imperdiet sit amet commodo eget, euismod egestas lectus. Fusce eu scelerisque nulla. Integer aliquam mauris et consequat dignissim. Donec tincidunt nulla turpis, et sodales nunc tempus id. Praesent luctus rutrum sollicitudin. Vestibulum vulputate dui consequat, consectetur lacus quis, malesuada tortor. Donec pretium a turpis at iaculis. Nullam massa ligula, sagittis ut dui quis, convallis vestibulum ante. Vestibulum gravida scelerisque accumsan.-->
+            </p>
           </div>
-          <CommentForm />
-          <CommentList :comments="comments"/>
-        </section>
+          <div class="product__el product__amount">
+            <p><span>В наличии:</span> {{ currentProduct.amount }} шт.</p>
+          </div>
+          <div class="product__el product__price">
+            <h1>{{currentProduct.price}} ₽</h1>
+          </div>
+          <div class="product__el product__btn">
+            <Button
+                :label="'Добавить'"
+                :size="'medium'"
+                :color="'color'"
+                :click="addProductToCart"
+            />
+          </div>
+        </div>
+      </section>
+      <section class="comment_section">
+        <div class="heading">
+          <h1 class="title">
+            Отзывы
+            </h1>
+        </div>
+        <CommentForm />
+        <CommentList :comments="comments"/>
+      </section>
     </main>
     <Footer/>
   </div>
@@ -67,6 +64,7 @@ import Footer from "../components/Sections/Footer";
 import CommentForm from "../components/CommentForm";
 import CommentList from "../components/CommentList";
 import Button from "../components/Base/Button";
+
 
 import CatalogService from '../services/catalog.service'
 import CartService from '../services/cart.service'
@@ -139,7 +137,6 @@ export default {
 <style lang="scss">
   .product{
     .product__about_section{
-      margin-top: 20px;
       display: grid;
       gap: 10px;
       grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
@@ -148,7 +145,7 @@ export default {
         justify-items: center;
         align-items: center;
         img{
-          height: 450px;
+          height: 400px;
         }
       }
       .description{

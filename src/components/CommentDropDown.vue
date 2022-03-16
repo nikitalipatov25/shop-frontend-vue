@@ -1,12 +1,12 @@
 <template>
 <div class="comment__drop-down">
-  <b-dropdown  variant="info" text="Оцените продукт" class="m-md-2">
-    <b-dropdown-item @click="$emit('change', $event.target.value = 1)">Ужасно</b-dropdown-item>
-    <b-dropdown-item @click="$emit('change', $event.target.value = 2)">Пплохо</b-dropdown-item>
-    <b-dropdown-item @click="$emit('change', $event.target.value = 3)">Нормально</b-dropdown-item>
-    <b-dropdown-item @click="$emit('change', $event.target.value = 4)">Хорошо</b-dropdown-item>
-    <b-dropdown-item @click="$emit('change', $event.target.value = 5)">Отлично</b-dropdown-item>
-  </b-dropdown>
+  <ul >
+    <li @click="$emit('change', $event.target.value = 1)">Ужасно</li>
+    <li @click="$emit('change', $event.target.value = 2)">Пплохо</li>
+    <li @click="$emit('change', $event.target.value = 3)">Нормально</li>
+    <li @click="$emit('change', $event.target.value = 4)">Хорошо</li>
+    <li @click="$emit('change', $event.target.value = 5)">Отлично</li>
+  </ul>
 </div>
 </template>
 
