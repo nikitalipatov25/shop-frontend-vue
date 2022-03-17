@@ -1,11 +1,10 @@
 <template>
   <div class="comment-form">
     <div class="form__text-area">
-      <textarea resize="none" placeholder="Оставьте Ваш отзыв!" v-model.trim="commentData.text" />
+      <textarea resize="none" maxlength="254" placeholder="Оставьте Ваш отзыв!" v-model.trim="commentData.text" />
     </div>
     <div class="row">
       <div class="form__rating">
-<!--        <CommentDropDown v-model="commentData.rating"/>-->
         <DropDown
             :type="'filter'"
             :list="this.list"
@@ -26,14 +25,12 @@
 
 <script>
 import CommentService from '@/services/comment.service'
-// import CommentDropDown from "@/components/CommentDropDown";
 import DropDown from "./Base/DropDown";
 import Button from "./Base/Button";
 
 export default {
   name: "CommentForm",
   components: {
-    // CommentDropDown,
     DropDown,
     Button
   },
@@ -47,26 +44,42 @@ export default {
       list: [
         {
           label: 'Отлично',
-          click: this.someTest,
+          click: this.setFive,
         },
         {
           label: 'Хорошо',
-          click: this.someTest
+          click: this.setFour
         },
         {
           label: 'Нормально',
-          click: this.someTest
+          click: this.setThree
         },
         {
           label: 'Плохо',
-          click: this.someTest
+          click: this.setTwo
+        },
+        {
+          label: 'Ужасно',
+          click: this.setOne
         },
       ]
     }
   },
   methods: {
-    someTest() {
-      console.log(1)
+    setFive() {
+      this.commentData.rating = 5
+    },
+    setFour() {
+      this.commentData.rating = 4
+    },
+    setThree() {
+      this.commentData.rating = 3
+    },
+    setTwo() {
+      this.commentData.rating = 2
+    },
+    setOne() {
+      this.commentData.rating = 1
     },
     addComment() {
       if (this.commentData.text !== '' && this.commentData.rating !== null){
@@ -87,27 +100,43 @@ export default {
 </script>
 
 <style lang="scss">
-  .comment-form{
-    margin-top: 15px;
-    width: 100%;
-    .row{
-      margin-top: 10px;
+.comment-form{
+  margin-top: 15px;
+  width: 100%;
+  .form__text-area{
+    display: grid;
+    justify-items: center;
+    padding: 10px;
+    textarea{
+      outline: none;
+      -moz-appearance: none;
+      resize: none;
+      border: 1px solid #ccc;
+      border-radius: 15px;
+      padding: 10px;
+      //padding: 10px;
+      width: 100%;
+      height: 150px;
+    }
+  }
+  .row{
+    margin-top: 10px;
+    display: grid;
+    row-gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    .form__button{
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      justify-self: end;
+    }
+    @media (max-width: 426px) {
       .form__button{
-        display: grid;
-        justify-self: end;
+        justify-self: center;
       }
     }
   }
-  textarea{
-    outline: none;
-    -moz-appearance: none;
-    resize: none;
-    border: 1px solid #ccc;
-    width: 100%;
-    height: 150px;
-    font-size: 16px;
-  }
+}
+
+
+
 
 </style>
