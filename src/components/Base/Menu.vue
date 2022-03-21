@@ -83,6 +83,7 @@ export default {
 .menu__drop{
   padding-top: 5px;
   display: flex;
+  position: relative;
   img{
     height: 25px;
     padding-right: 10px;

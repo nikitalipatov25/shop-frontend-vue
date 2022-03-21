@@ -5,11 +5,13 @@
     </div>
     <div class="row">
       <div class="form__rating">
-        <DropDown
-            :type="'filter'"
-            :list="this.list"
-            :title="'Оценка'"
-        />
+        <div class="rating__drop">
+          <DropDown
+              :type="'filter'"
+              :list="this.list"
+              :title="'Оценка'"
+          />
+        </div>
       </div>
       <div class="form__button">
         <Button
@@ -124,6 +126,12 @@ export default {
     display: grid;
     row-gap: 15px;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    .form__rating{
+      width: 100px;
+      .rating__drop{
+        position: relative;
+      }
+    }
     .form__button{
       display: grid;
       justify-self: end;

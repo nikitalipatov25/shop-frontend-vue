@@ -1,5 +1,6 @@
 <template>
-  <div @mouseleave="isOpen = false" class="drop-down">
+<!--  <div @mouseleave="isOpen = false" class="drop-down">-->
+  <div  class="drop-down">
     <div @click="isOpen = !isOpen" class="drop-down__selected">
       <span v-if="type === 'filter'">
         {{ activeEl }}
@@ -79,6 +80,7 @@ export default {
     }
     .drop-down__body{
       position: absolute;
+      right: 5px;
       padding-top: 5px;
       transition: 0.3s;
       .list{

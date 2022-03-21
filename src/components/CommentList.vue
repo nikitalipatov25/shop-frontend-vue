@@ -14,10 +14,14 @@ export default {
   },
   props: [
     'comments'
-  ]
+  ],
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+  .comment-list{
+    margin-top: 20px;
+    display: grid;
+    justify-items: center;
+  }
 </style>
