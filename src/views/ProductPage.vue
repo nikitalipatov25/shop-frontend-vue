@@ -46,9 +46,7 @@
       </section>
       <section class="comment_section">
         <div class="heading">
-          <h1 class="title">
-            Отзывы
-            </h1>
+          <h1 class="title">Отзывы</h1>
         </div>
         <CommentForm />
         <CommentList :comments="comments"/>

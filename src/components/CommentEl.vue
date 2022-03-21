@@ -1,5 +1,38 @@
 <template>
   <div class="comment">
+    <div class="comment__modal">
+      <Modal :title="'Some'" @closeModal="closeCommentAddModal" v-if="isCommentAddModalVisible">
+        <template v-slot:content>
+          <div class="">
+            <div class="">
+              <form>
+                <div class="">
+<!--                  <DropDown-->
+<!--                      :type="'filter'"-->
+<!--                      :list="this.listRating"-->
+<!--                      :title="'Оценка'"-->
+<!--                  />-->
+                </div>
+                <div class="">
+                  <p class="">Текст:</p>
+                  <textarea v-model="modalData.text" v-text="fullText" resize="none" class=""></textarea>
+                </div>
+              </form>
+            </div>
+          </div>
+        </template>
+        <template v-slot:footer>
+          <div class="">
+            <Button
+                :label="'Отправить'"
+                :size="'small'"
+                :color="'color'"
+                :click="modifyComment"
+            />
+          </div>
+        </template>
+      </Modal>
+    </div>
 <!--    -->
     <div class="comment__body">
       <div class="comment__head">
@@ -35,8 +68,13 @@
       <div v-if="$store.state.auth.user.username === comment.userName">
         <button type="button" class="btn btn-primary" @click="$bvModal.show('modify-comment-modal')">Редактировать</button>
         <button type="button" class="btn btn-danger" @click="$bvModal.show('delete-comment-modal')">Удалить comment</button>
+
+        <button class="show-modal-button" @click="showCommentAddModal">Редактировать</button>
+
       </div>
     </div>
+
+
 <!--    -->
 <!--          <b-modal id="add-answer-modal" hide-footer title="Answer to comment">-->
 <!--            <div class="d-block text-left">-->
@@ -107,18 +145,45 @@ import CommentService from '@/services/comment.service'
 import AnswerService from '@/services/answer.service'
 import DropDown from "./Base/DropDown";
 import StarRating from "./Base/StarRating/StarRating";
+import Modal from "./Base/Modal";
+import Button from "./Base/Button";
 
 export default {
   name: "CommentEl",
   components: {
     DropDown,
-    StarRating
+    StarRating,
+    Modal,
+    Button
   },
   props: {
     comment: Object
   },
   data() {
     return {
+      listRating: [
+        {
+          label: 'Отлично',
+          click: this.setFive,
+        },
+        {
+          label: 'Хорошо',
+          click: this.setFour
+        },
+        {
+          label: 'Нормально',
+          click: this.setThree
+        },
+        {
+          label: 'Плохо',
+          click: this.setTwo
+        },
+        {
+          label: 'Ужасно',
+          click: this.setOne
+        },
+      ],
+      isCommentAddModalVisible: false,
       isAppear: false,
       isButtonVisible: false,
       fullText: this.comment.text,
@@ -147,7 +212,7 @@ export default {
         },
         {
           label: 'Удалить',
-          click: null
+          click: this.deleteComment
         },
       ]
     }
@@ -157,6 +222,27 @@ export default {
     this.sliceText()
   },
   methods: {
+    setOne(){
+      this.modalData.rating = 1
+    },
+    setTwo(){
+      this.modalData.rating = 2
+    },
+    setThree(){
+      this.modalData.rating = 3
+    },
+    setFour(){
+      this.modalData.rating = 4
+    },
+    setFive(){
+      this.modalData.rating = 5
+    },
+    showCommentAddModal(){
+      this.isCommentAddModalVisible = true
+    },
+    closeCommentAddModal(){
+      this.isCommentAddModalVisible = false
+    },
     modifyComment() {
       if (this.modalData.text !== this.fullText) {
         CommentService.modifyNewComment(this.comment.productId, this.modalData)
@@ -193,9 +279,12 @@ export default {
 </script>
 
 <style lang="scss">
-
 .comment{
   width: 100%;
+  .comment__modal{
+    display: grid;
+    justify-items: center;
+  }
   .comment__body{
     min-height: 100px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
