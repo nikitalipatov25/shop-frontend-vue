@@ -1,23 +1,19 @@
 <template>
   <div class="comment">
     <div class="comment__modal">
-      <Modal :title="'Some'" @closeModal="closeCommentAddModal" v-if="isCommentAddModalVisible">
+      <Modal :title="'Редактирование'" @closeModal="closeCommentAddModal" v-if="isCommentAddModalVisible">
         <template v-slot:content>
-          <div class="">
-            <div class="">
-              <form>
-                <div class="">
-<!--                  <DropDown-->
-<!--                      :type="'filter'"-->
-<!--                      :list="this.listRating"-->
-<!--                      :title="'Оценка'"-->
-<!--                  />-->
-                </div>
-                <div class="">
-                  <p class="">Текст:</p>
-                  <textarea v-model="modalData.text" v-text="fullText" resize="none" class=""></textarea>
-                </div>
-              </form>
+          <div class="wrapper">
+            <div class="text">
+              <p class="">Текст:</p>
+              <textarea v-model="modalData.text" v-text="fullText" resize="none" class=""></textarea>
+            </div>
+            <div class="rating">
+              <DropDown
+                  :type="'filter'"
+                  :list="listRating"
+                  :title="'Оценка'"
+              />
             </div>
           </div>
         </template>
@@ -28,6 +24,7 @@
                 :size="'small'"
                 :color="'color'"
                 :click="modifyComment"
+
             />
           </div>
         </template>
@@ -51,8 +48,15 @@
         </div>
         <div class="head__el comment__drop">
           <DropDown
+              v-if="$store.state.auth.user.username === comment.userName"
               :type="'drop'"
-              :list="list"
+              :list="listCommentAddAuth"
+              :title="'. . .'"
+          />
+          <DropDown
+              v-else
+              :type="'drop'"
+              :list="listCommentAdd"
               :title="'. . .'"
           />
         </div>
@@ -66,10 +70,8 @@
         </p>
       </div>
       <div v-if="$store.state.auth.user.username === comment.userName">
-        <button type="button" class="btn btn-primary" @click="$bvModal.show('modify-comment-modal')">Редактировать</button>
-        <button type="button" class="btn btn-danger" @click="$bvModal.show('delete-comment-modal')">Удалить comment</button>
 
-        <button class="show-modal-button" @click="showCommentAddModal">Редактировать</button>
+        <button type="button" class="btn btn-danger" @click="$bvModal.show('delete-comment-modal')">Удалить comment</button>
 
       </div>
     </div>
@@ -183,7 +185,7 @@ export default {
           click: this.setOne
         },
       ],
-      isCommentAddModalVisible: false,
+      isCommentAddModalVisible: true,
       isAppear: false,
       isButtonVisible: false,
       fullText: this.comment.text,
@@ -201,10 +203,10 @@ export default {
         answerToUser: '',
         text: ''
       },
-      list: [
+      listCommentAddAuth: [
         {
           label: 'Редактировать',
-          click: null,
+          click: this.showCommentAddModal,
         },
         {
           label: 'Ответить',
@@ -213,6 +215,12 @@ export default {
         {
           label: 'Удалить',
           click: this.deleteComment
+        },
+      ],
+      listCommentAdd: [
+        {
+          label: 'Ответить',
+          click: null
         },
       ]
     }
@@ -244,7 +252,7 @@ export default {
       this.isCommentAddModalVisible = false
     },
     modifyComment() {
-      if (this.modalData.text !== this.fullText) {
+      if ((this.modalData.text !== this.fullText && this.modalData.text !== undefined) && this.modalData.rating !== undefined) {
         CommentService.modifyNewComment(this.comment.productId, this.modalData)
       } else {
         alert('Измените комментарий')
@@ -279,12 +287,36 @@ export default {
 </script>
 
 <style lang="scss">
+.comment__modal{
+  display: grid;
+  justify-items: center;
+  .wrapper{
+    display: grid;
+  }
+  .text{
+    display: grid;
+    justify-items: start;
+    align-items: start;
+    grid-template-columns: 60px auto;
+    textarea{
+      outline: none;
+      -moz-appearance: none;
+      resize: none;
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 80px;
+      width: 90%;
+    }
+  }
+  .rating{
+    width: 100px;
+    position: relative;
+  }
+}
+
 .comment{
   width: 100%;
-  .comment__modal{
-    display: grid;
-    justify-items: center;
-  }
+
   .comment__body{
     min-height: 100px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);

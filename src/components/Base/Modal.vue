@@ -1,9 +1,7 @@
 <template>
   <div class="modal">
     <div class="modal__header">
-      <div class="heading">
-        <h3 class="title">{{ title }}</h3>
-      </div>
+        <h2 class="title">{{ title }}</h2>
       <span class="cross" @click="closeModal">
         <img src="../../assets/cross.png" alt="">
       </span>
@@ -56,6 +54,8 @@ export default {
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+    display: grid;
+    row-gap: 20px;
     &__header{
       display: grid;
       .cross{
@@ -69,12 +69,11 @@ export default {
       }
     }
     &__content{
-      display: grid;
-      justify-content: start;
-      align-items: start;
+
     }
     &__footer{
-
+      display: grid;
+      justify-items: center;
     }
   }
 </style>

@@ -116,7 +116,6 @@ export default {
       border: 1px solid #ccc;
       border-radius: 15px;
       padding: 10px;
-      //padding: 10px;
       width: 100%;
       height: 150px;
     }
