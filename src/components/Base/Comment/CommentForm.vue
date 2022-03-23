@@ -27,8 +27,8 @@
 
 <script>
 import CommentService from '@/services/comment.service'
-import DropDown from "./Base/DropDown";
-import Button from "./Base/Button";
+import DropDown from "../DropDown";
+import Button from "../Button";
 
 export default {
   name: "CommentForm",

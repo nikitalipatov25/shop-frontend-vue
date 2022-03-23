@@ -59,8 +59,8 @@
 <script>
 import Header from '../components/Sections/Header'
 import Footer from "../components/Sections/Footer";
-import CommentForm from "../components/CommentForm";
-import CommentList from "../components/CommentList";
+import CommentForm from "../components/Base/Comment/CommentForm";
+import CommentList from "../components/Base/Comment/CommentList";
 import Button from "../components/Base/Button";
 
 

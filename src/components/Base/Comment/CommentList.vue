@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import CommentEl from "../components/CommentEl";
+import CommentEl from "./CommentEl";
 
 export default {
   name: "CommentList",

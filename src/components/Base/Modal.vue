@@ -61,6 +61,7 @@ export default {
   row-gap: 20px;
   &__header{
     display: grid;
+    grid-template-columns: repeat(2, 1fr);
     .cross{
       cursor: pointer;
       position: absolute;

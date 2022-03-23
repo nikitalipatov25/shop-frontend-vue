@@ -108,6 +108,12 @@
       </div>
     </div>
 
+    <div class="comment__answer" v-if="comment.answers.length !== 0">
+      <div class="answer__el" v-for="answer in comment.answers" :key="answer.id">
+        <Answer :answer="answer"/>
+      </div>
+    </div>
+
 
 <!--    -->
 
@@ -120,15 +126,14 @@
 <!--            <button type="button" class="btn btn-danger" @click="$bvModal.hide('modify-answer-modal')">Закрыть</button>-->
 <!--          </div>-->
 <!--        </b-modal>-->
-
-    <div class="answers" v-if="comment.answers.length !== 0">
-      <h2>answers</h2>
-      <div v-for="answer in comment.answers" :key="answer.id">
-        {{answer}}
-        <button v-if="$store.state.auth.user.username === answer.userName" type="button" class="btn btn-danger" @click="deleteAnswer(answer.id)">Удалить answer</button>
-        <button v-if="$store.state.auth.user.username === answer.userName" type="button" class="btn btn-warning" @click="$bvModal.show('modify-answer-modal')">Изменить answer</button>
-      </div>
-    </div>
+<!---->
+<!--    <div class="answers" v-if="comment.answers.length !== 0">-->
+<!--      <div v-for="answer in comment.answers" :key="answer.id">-->
+<!--        {{answer}}-->
+<!--        <button v-if="$store.state.auth.user.username === answer.userName" type="button" class="btn btn-danger" @click="deleteAnswer(answer.id)">Удалить answer</button>-->
+<!--        <button v-if="$store.state.auth.user.username === answer.userName" type="button" class="btn btn-warning" @click="$bvModal.show('modify-answer-modal')">Изменить answer</button>-->
+<!--      </div>-->
+<!--    </div>-->
 
   </div>
 </template>
@@ -137,10 +142,11 @@
 
 import CommentService from '@/services/comment.service'
 import AnswerService from '@/services/answer.service'
-import DropDown from "./Base/DropDown";
-import StarRating from "./Base/StarRating/StarRating";
-import Modal from "./Base/Modal";
-import Button from "./Base/Button";
+import DropDown from "../DropDown";
+import StarRating from "../StarRating/StarRating";
+import Modal from "../Modal";
+import Button from "../Button";
+import Answer from "./Answer";
 
 export default {
   name: "CommentEl",
@@ -148,7 +154,8 @@ export default {
     DropDown,
     StarRating,
     Modal,
-    Button
+    Button,
+    Answer
   },
   props: {
     comment: Object
@@ -295,6 +302,20 @@ export default {
 </script>
 
 <style lang="scss">
+
+.comment__answer{
+  border-left: 1px dashed #000000;
+  margin-top: 20px;
+  padding: 10px 0;
+  display: grid;
+  row-gap: 20px;
+  .answer__el{
+    display: grid;
+    justify-items: start;
+    padding-left: 10px;
+  }
+}
+
 
 .fade-enter-active, .fade-leave-active {
   transition: opacity .3s;
