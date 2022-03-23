@@ -1,36 +1,73 @@
 <template>
   <div class="comment">
     <div class="comment__modal">
-      <Modal :title="'Редактирование'" @closeModal="closeCommentAddModal" v-if="isCommentAddModalVisible">
-        <template v-slot:content>
-          <div class="wrapper">
-            <div class="text">
-              <p class="">Текст:</p>
-              <textarea v-model="modalData.text" v-text="fullText" resize="none" class=""></textarea>
+      <transition name="fade">
+        <Modal :title="'Редактирование'" @closeModal="closeCommentAddModal" v-if="isCommentAddModalVisible">
+          <template v-slot:content>
+            <div class="wrapper">
+              <label class="text">
+                <textarea v-model="modalData.text" v-text="fullText" resize="none" class=""></textarea>
+              </label>
+              <div class="rating">
+                <DropDown
+                    :type="'filter'"
+                    :list="listRating"
+                    :title="'Оценка'"
+                />
+              </div>
             </div>
-            <div class="rating">
-              <DropDown
-                  :type="'filter'"
-                  :list="listRating"
-                  :title="'Оценка'"
+          </template>
+          <template v-slot:footer>
+            <div class="">
+              <Button
+                  :label="'Отправить'"
+                  :size="'small'"
+                  :color="'color'"
+                  :click="modifyComment"
               />
             </div>
-          </div>
-        </template>
-        <template v-slot:footer>
-          <div class="">
-            <Button
-                :label="'Отправить'"
-                :size="'small'"
-                :color="'color'"
-                :click="modifyComment"
-
-            />
-          </div>
-        </template>
-      </Modal>
+          </template>
+        </Modal>
+        <Modal :title="'Удаление'" @closeModal="closeCommentDelModal" v-if="isCommentDelModalVisible">
+          <template v-slot:content>
+            <p>Вы действительно хотите удалить комментарий?</p>
+          </template>
+          <template v-slot:footer>
+            <div class="">
+              <Button
+                  :label="'Удалить'"
+                  :size="'small'"
+                  :color="'color'"
+                  :click="deleteComment"
+              />
+            </div>
+          </template>
+        </Modal>
+        <Modal :title="'Ответ'" @closeModal="closeAnswerAddModal" v-if="isAnswerAddModalVisible">
+          <template v-slot:content>
+            <div class="wrapper">
+              <h3>{{ comment.userName + ':' }}</h3>
+              <p v-text="fullText">{{ modalData.text }}</p>
+              <h3>Ваш ответ:</h3>
+              <label class="text">
+                <textarea v-model="answer.text"></textarea>
+              </label>
+            </div>
+          </template>
+          <template v-slot:footer>
+            <div class="">
+              <Button
+                  :label="'Отправить'"
+                  :size="'small'"
+                  :color="'color'"
+                  :click="addAnswer"
+              />
+            </div>
+          </template>
+        </Modal>
+      </transition>
     </div>
-<!--    -->
+
     <div class="comment__body">
       <div class="comment__head">
         <div class="head__el comment__info">
@@ -69,51 +106,12 @@
         </span>
         </p>
       </div>
-      <div v-if="$store.state.auth.user.username === comment.userName">
-
-        <button type="button" class="btn btn-danger" @click="$bvModal.show('delete-comment-modal')">Удалить comment</button>
-
-      </div>
     </div>
 
 
 <!--    -->
-<!--          <b-modal id="add-answer-modal" hide-footer title="Answer to comment">-->
-<!--            <div class="d-block text-left">-->
-<!--              <div class="modify-body">-->
-<!--                    <label class="col-form-label">Answer to {{comment.userName}}</label>-->
-<!--                    <textarea v-model="answer.text" resize="none"></textarea>-->
-<!--                  </div>-->
-<!--                <button class="btn btn-success" @click="addAnswer">Ответить</button>-->
-<!--                <button type="button" class="btn btn-danger" @click="$bvModal.hide('add-answer-modal')">Закрыть</button>-->
-<!--              </div>-->
-<!--          </b-modal>-->
+
 <!---->
-<!--          <b-modal id="modify-comment-modal" hide-footer title="Модифицировать comment">-->
-<!--            <div class="d-block text-left">-->
-<!--              <div class="modify-body">-->
-<!--                <form>-->
-<!--                  <div class="mb-3">-->
-<!--                    <CommentDropDown v-model="modalData.rating" />-->
-<!--                  </div>-->
-<!--                  <div class="mb-3">-->
-<!--                    <label class="col-form-label">Message:</label>-->
-<!--                    <textarea v-model="modalData.text" v-text="fullText" resize="none" class="form-control"></textarea>-->
-<!--                  </div>-->
-<!--                </form>-->
-<!--                <button class="btn btn-success" @click="modifyComment">Модифицировать comment</button>-->
-<!--                <button type="button" class="btn btn-danger" @click="$bvModal.hide('modify-comment-modal')">Закрыть</button>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </b-modal>-->
-<!--          -->
-<!--          <b-modal id="delete-comment-modal" hide-footer title="Удалить comment">-->
-<!--            <div class="d-block text-left">-->
-<!--              <strong>Вы действительно хотите удалить комментарий?</strong>-->
-<!--              <button class="btn btn-success" @click="deleteComment">Удалить comment</button>-->
-<!--              <button type="button" class="btn btn-danger" @click="$bvModal.hide('delete-comment-modal')">Закрыть</button>-->
-<!--            </div>-->
-<!--          </b-modal>-->
 <!--          -->
 <!--        <b-modal id="modify-answer-modal" hide-footer title="modify">-->
 <!--          <div class="d-block text-left">-->
@@ -123,21 +121,15 @@
 <!--          </div>-->
 <!--        </b-modal>-->
 
-<!---------------------------------------------------------------->
-<!---------------------------------------------------------------->
-<!---------------------------------------------------------------->
     <div class="answers" v-if="comment.answers.length !== 0">
       <h2>answers</h2>
       <div v-for="answer in comment.answers" :key="answer.id">
         {{answer}}
         <button v-if="$store.state.auth.user.username === answer.userName" type="button" class="btn btn-danger" @click="deleteAnswer(answer.id)">Удалить answer</button>
         <button v-if="$store.state.auth.user.username === answer.userName" type="button" class="btn btn-warning" @click="$bvModal.show('modify-answer-modal')">Изменить answer</button>
-
-
-
       </div>
-
     </div>
+
   </div>
 </template>
 
@@ -185,7 +177,9 @@ export default {
           click: this.setOne
         },
       ],
-      isCommentAddModalVisible: true,
+      isCommentAddModalVisible: false,
+      isCommentDelModalVisible: false,
+      isAnswerAddModalVisible: false,
       isAppear: false,
       isButtonVisible: false,
       fullText: this.comment.text,
@@ -210,17 +204,17 @@ export default {
         },
         {
           label: 'Ответить',
-          click: null
+          click: this.showAnswerAddModal
         },
         {
           label: 'Удалить',
-          click: this.deleteComment
+          click: this.showCommentDelModal
         },
       ],
       listCommentAdd: [
         {
           label: 'Ответить',
-          click: null
+          click: this.showAnswerAddModal
         },
       ]
     }
@@ -251,15 +245,29 @@ export default {
     closeCommentAddModal(){
       this.isCommentAddModalVisible = false
     },
+    showCommentDelModal(){
+      this.isCommentDelModalVisible = true
+    },
+    closeCommentDelModal(){
+      this.isCommentDelModalVisible = false
+    },
+    showAnswerAddModal(){
+      this.isAnswerAddModalVisible = true
+    },
+    closeAnswerAddModal(){
+      this.isAnswerAddModalVisible = false
+    },
     modifyComment() {
       if ((this.modalData.text !== this.fullText && this.modalData.text !== undefined) && this.modalData.rating !== undefined) {
         CommentService.modifyNewComment(this.comment.productId, this.modalData)
+        this.isCommentAddModalVisible = false
       } else {
         alert('Измените комментарий')
       }
     },
     deleteComment() {
       CommentService.deleteNewComment(this.comment.productId)
+      this.isCommentDelModalVisible = false
     },
     addAnswer(){
       this.answer.answerToUser = this.comment.userName;
@@ -287,22 +295,33 @@ export default {
 </script>
 
 <style lang="scss">
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
+}
+
+
+
 .comment__modal{
   display: grid;
   justify-items: center;
   .wrapper{
     display: grid;
+    gap: 10px;
   }
   .text{
     display: grid;
     justify-items: start;
     align-items: start;
-    grid-template-columns: 60px auto;
     textarea{
       outline: none;
       -moz-appearance: none;
       resize: none;
       border: 1px solid #ccc;
+      border-radius: 15px;
       padding: 10px;
       height: 80px;
       width: 90%;
@@ -355,6 +374,10 @@ export default {
         cursor: pointer;
         display: block;
         font-weight: bold;
+      }
+      p{
+        font-style: italic;
+
       }
     }
   }
