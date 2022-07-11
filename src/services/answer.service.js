@@ -13,7 +13,7 @@ class AnswerService {
         return axios.post(API_URL, payload, { headers: authHeader() })
     }
     deleteAnswer(id){
-        return axios.delete(API_URL + id + 'answer', { headers: authHeader() })
+        return axios.delete(API_URL + id, { headers: authHeader() })
     }
     getAnswers(id){
         return axios.get(API_URL + id + 'answer', { headers: authHeader() })

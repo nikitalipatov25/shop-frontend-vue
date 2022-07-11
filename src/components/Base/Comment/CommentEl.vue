@@ -187,6 +187,7 @@ export default {
       isCommentAddModalVisible: false,
       isCommentDelModalVisible: false,
       isAnswerAddModalVisible: false,
+      isAnswerDelModalVisible: false,
       isAppear: false,
       isButtonVisible: false,
       fullText: this.comment.text,
@@ -223,7 +224,8 @@ export default {
           label: 'Ответить',
           click: this.showAnswerAddModal
         },
-      ]
+      ],
+
     }
   },
   created() {
@@ -281,12 +283,6 @@ export default {
       this.answer.productId = this.comment.productId;
       AnswerService.addAnswer(this.answer)
     },
-    modifyAnswer(answerId) {
-      console.log(answerId);
-    },
-    deleteAnswer(answerId) {
-      console.log(answerId);
-    },
     visibleButton(){
       if(this.comment.text.length > 150){
         return this.isButtonVisible = true
@@ -312,7 +308,8 @@ export default {
   .answer__el{
     display: grid;
     justify-items: start;
-    padding-left: 10px;
+    margin-left: 10px;
+    position: relative;
   }
 }
 
