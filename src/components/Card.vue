@@ -54,6 +54,7 @@ export default {
 
     }
     &:hover{
+      box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.25);
       transform: scale(1.05);
       transition: 0.3s;
     }

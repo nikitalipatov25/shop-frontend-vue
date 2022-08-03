@@ -1,19 +1,19 @@
 <template>
   <div class="cart-item_mob">
-    <div class="row">
+    <div class="row row_img">
       <div class="item__el item__image">
         <img
             :src="'http://localhost:8080/files/' + product.product.image"
             alt="">
       </div>
     </div>
-    <div class="row">
+    <div class="row row_inf">
       <div class="item__el item__label">
         <h3>{{ product.product.name }}</h3>
       </div>
-      <div class="row">
+      <div class="row row_price-counter">
         <div class="item__el item__total-price">
-          <h3>{{ product.product.price * product.amount }} руб.</h3>
+          <h3>{{ product.product.price * product.amount }} &#x20bd; </h3>
         </div>
         <div class="item__el item__counter">
           <button type="button" class="" v-on:click="subQuantity">-</button>
@@ -23,12 +23,13 @@
       </div>
     </div>
     <div class="row row_del">
-      <div class="item__el item__del">
-        <button type="button" @click="deleteProductFromCart">D</button>
+      <div class="item__el item__del" @click="deleteProductFromCart">
+          <img src="../assets/cross.png"  >
       </div>
       <div class="item__el item__select">
         <!--   checkbox для удаления    -->
         <input @change="setDelList(isChecked, product.productId)" v-model="isChecked" type="checkbox">
+
       </div>
     </div>
 
@@ -88,21 +89,34 @@ export default {
 
 <style lang="scss">
   .cart-item_mob{
-    width: 280px;
+    min-width: 280px;
     padding: 20px 10px;
     margin: 20px 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-items: center;
     align-items: center;
-    column-gap: 20px;
+    column-gap: 10px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
     border-radius: 25px;
     transition: 0.3s;
     &:hover{
       box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.25);
-      transform: scale(1.05);
+      transform: scale(1.01);
       transition: 0.3s;
+    }
+    .row_inf{
+      display: grid;
+      grid-template-rows: auto auto;
+      justify-items: start;
+      gap: 10px;
+      .row_price-counter{
+        display: grid;
+        grid-template-columns: 60px auto;
+        justify-items: start;
+        align-items: center;
+        gap: 15px;
+      }
     }
     .row_del{
       width: 100%;
@@ -115,14 +129,17 @@ export default {
     .item__el{
       text-align: center;
     }
-    .item__image{
-      img{
-        //max-height: 150px;
-        //max-width: 150px;
-        height: 100px;
-        width: 100px;
+    .row_img{
+      .item__image{
+        display: grid;
+        justify-items: start;
+        img{
+          height: 80px;
+          width: 55px;
+        }
       }
     }
+
     .item__label{
       h3{
         color: #1BB0CE;
@@ -130,7 +147,7 @@ export default {
     }
     .item__counter{
       display: grid;
-      grid-template-columns: 10px 80px 10px;
+      grid-template-columns: 10px 60px 10px;
       align-items: center;
       justify-items: center;
       button{
@@ -139,6 +156,12 @@ export default {
         border-radius: 25px;
         cursor: pointer;
         background: none;
+      }
+    }
+    .item__del{
+      img{
+        cursor: pointer;
+        height: 15px;
       }
     }
   }
