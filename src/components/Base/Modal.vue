@@ -43,12 +43,12 @@ export default {
 <style lang="scss">
 
 .modal{
-  max-height: 300px;
+  max-height: 550px;
   overflow-y: auto;
   z-index: 9;
   position: fixed;
   top: 50px;
-  width: 70vw;
+  max-width: 70vw;
   padding: 20px;
   background: #FFFFFF;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);

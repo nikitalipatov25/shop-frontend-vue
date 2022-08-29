@@ -1,5 +1,96 @@
 <template>
   <div class="cart">
+    <div class="cart__modal">
+      <Modal :title="'Оформление'" @closeModal="closeOrderModal" v-if="isOrderModalVisible">
+        <template v-slot:content>
+          <form class="cart__modal-form">
+            <h3>Ваш зкаказ:</h3>
+            <div class="cart__modal-sec cart__modal-order">
+              <div class="order__list" v-for="product in products"
+                   :key="product.id"
+                   :product="product"
+              >
+                <p>Товар: {{product.product.name}} - {{product.amount}} шт. </p>
+              </div>
+            </div>
+
+            <h3>Личные данные:</h3>
+            <div class="cart__modal-sec cart__modal-info">
+              <label>
+                <select class="" v-model="defaultOrderType">
+                  <option
+                      v-for="type in orderType"
+                      :value="type.value"
+                      :key="type.value"
+                  >
+                    {{type.value}}
+                  </option>
+                </select>
+              </label>
+              <div class="info-el" v-if="defaultOrderType === 'Доставка'">
+                <label>
+                  <span>Адрес:</span>
+                  <input :disabled="inputStatus" type="text" class="form-control" v-model="order.address">
+                </label>
+              </div>
+              <div class="info-el">
+                <label>
+                  <span>Фамилия покупателя:</span>
+                  <input :disabled="inputStatus" type="text" class="form-control"  v-model="order.surname">
+                </label>
+              </div>
+              <div class="info-el">
+                <label>
+                  <span>Имя покупателя:</span>
+                  <input :disabled="inputStatus" type="text" class="form-control"  v-model="order.name">
+                </label>
+              </div>
+              <div class="info-el">
+                <label>
+                  <span>Отчество покупателя:</span>
+                  <input :disabled="inputStatus" type="text" class="form-control"  v-model="order.secondName">
+                </label>
+              </div>
+              <div class="info-el">
+                <label>
+                  <span>Телефон:</span>
+                  <input :disabled="inputStatus" type="tel" class="form-control"  v-model="order.phoneNumber">
+                </label>
+              </div>
+              <div class="">
+                <label>
+                  <input type="checkbox" @change="changeOrderInfo">
+                  <span>Изменить данные заказа</span>
+                </label>
+              </div>
+              <div class="">
+                <label>
+                  <input type="checkbox" @change="saveOrderInfo">
+                  <span>Изменить данные в личном кабинете</span>
+                </label>
+              </div>
+              <div class="">
+                <p>*Оплата производится наличными и только при получении товара</p>
+              </div>
+            </div>
+            <div class="cart__modal-sec cart__modal-total">
+              <p>Итого:</p>
+              <h3>{{ cart.priceWithDiscount }} &#x20bd;</h3>
+            </div>
+          </form>
+        </template>
+        <template v-slot:footer>
+          <div class="">
+            <Button
+                :label="'Оформить'"
+                :size="'small'"
+                :color="'color'"
+                :click="orderProducts"
+            />
+          </div>
+        </template>
+      </Modal>
+    </div>
     <Header/>
     <main class="container">
       <article class="row">
@@ -73,10 +164,14 @@
                 :label="'Оплатить'"
                 :size="'small'"
                 :color="'color'"
+                :click="showOrderModal"
             />
           </div>
         </section>
       </article>
+
+
+
     </main>
     <div class="body">
 
@@ -156,6 +251,8 @@ import Footer from '../components/Sections/Footer'
 import CartItemMob from '../components/CartItemMob'
 import CartItemDesk from "../components/CartItemDesk";
 import Button from "../components/Base/Button";
+import Modal from "../components/Base/Modal";
+
 import CartService from '../services/cart.service'
 import OrdersService from '../services/orders.service'
 import UserService from '@/services/user.service'
@@ -166,11 +263,13 @@ export default {
     CartItemDesk,
     Button,
     CartItemMob,
+    Modal,
     Header,
     Footer
   },
   data() {
     return {
+      isOrderModalVisible: false,
       small: false,
       delList: [],
       cart: {
@@ -218,6 +317,12 @@ export default {
     window.removeEventListener('resize', this.onResize)
   },
   methods: {
+    showOrderModal(){
+      this.isOrderModalVisible = true
+    },
+    closeOrderModal(){
+      this.isOrderModalVisible = false
+    },
     onResize() {
       this.small = window.innerWidth <= 767;
     },
@@ -287,10 +392,11 @@ export default {
           }
       )
     },
-    orderProducts() {
+    async orderProducts() {
       this.order.orderType = this.defaultOrderType;
-      OrdersService.createOrder(this.order);
-      this.$bvModal.hide('order-modal');
+      await OrdersService.createOrder(this.order);
+      await this.getNewCart();
+      await this.closeOrderModal();
     },
   }
 }
@@ -299,6 +405,35 @@ export default {
 <style lang="scss">
 
 .cart{
+  .cart__modal{
+    display: grid;
+    justify-items: center;
+    .cart__modal-form{
+      display: grid;
+      gap: 10px;
+      .cart__modal-sec{
+        display: grid;
+        gap: 5px;
+        .info-el{
+          label{
+            display: inline-grid;
+            input{
+              outline: none;
+              -moz-appearance: none;
+              border: 1px solid #ccc;
+              border-radius: 15px;
+              padding: 5px;
+            }
+          }
+        }
+      }
+      .cart__modal-total{
+        grid-template-columns: 50px 100px;
+      }
+    }
+
+  }
+
   .border{
     padding: 15px;
     border: 1px solid #ccc;
