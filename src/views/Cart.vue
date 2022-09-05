@@ -3,7 +3,7 @@
     <div class="cart__modal">
       <Modal :title="'Оформление'" @closeModal="closeOrderModal" v-if="isOrderModalVisible">
         <template v-slot:content>
-          <form class="cart__modal-form">
+          <form class="modal-form">
             <h3>Ваш зкаказ:</h3>
             <div class="cart__modal-sec cart__modal-order">
               <div class="order__list" v-for="product in products"
@@ -13,7 +13,6 @@
                 <p>Товар: {{product.product.name}} - {{product.amount}} шт. </p>
               </div>
             </div>
-
             <h3>Личные данные:</h3>
             <div class="cart__modal-sec cart__modal-info">
               <label>
@@ -97,7 +96,6 @@
         <section class="heading">
           <h1>Корзина</h1>
         </section>
-
         <section v-if="!small && cart.numberOfProductsInCart > 0" class="cart-list_desk ">
           <table>
             <tr>
@@ -127,7 +125,6 @@
             </div>
           </div>
         </section>
-
         <section v-else-if="small && cart.numberOfProductsInCart > 0" class="cart-list_mob">
           <cart-item-mob
               v-for="product in products"
@@ -136,11 +133,9 @@
               :setDelList="setDelList"
           />
         </section>
-
         <section v-else-if="cart.numberOfProductsInCart === 0" class="cart-list_void">
           <h1>В корзине нет товаров</h1>
         </section>
-
       </article>
       <article class="row">
         <section class="heading">
@@ -169,77 +164,7 @@
           </div>
         </section>
       </article>
-
-
-
     </main>
-    <div class="body">
-
-
-<!--        <div class="col-5">-->
-<!--          <p>Товаров в корзине: {{ cart.numberOfProductsInCart }}</p>-->
-<!--          <p>Цена без скидки: {{ cart.priceWithoutDiscount }} руб.</p>-->
-<!--          <p>Ваша скидка: {{ cart.discount }}</p>-->
-<!--          <p>Цена с учетом скидки: {{ cart.priceWithDiscount }} руб.</p>-->
-
-
-<!--          <b-button variant="primary" @click="$bvModal.show('order-modal')" >Оформить покупку</b-button>-->
-<!--        </div>-->
-
-<!--&lt;!&ndash;    Начинается модальное окно&ndash;&gt;-->
-
-<!--        <b-modal id="order-modal" hide-footer title="Оформить покупку">-->
-<!--          <div class="d-block text-left">-->
-<!--            <form>-->
-<!--              <p>Ваш зкаказ:</p>-->
-<!--                <div v-for="product in products"-->
-<!--                  :key="product.id"-->
-<!--                  :product="product"-->
-<!--                >-->
-<!--                  <p>Товар: {{product.product.name}} - {{product.amount}} шт. </p>-->
-<!--              </div>-->
-<!--              <select class="form-select" v-model="defaultOrderType">-->
-<!--                <option-->
-<!--                  v-for="type in orderType"-->
-<!--                  :value="type.value"-->
-<!--                  :key="type"-->
-<!--                >-->
-<!--                  {{type.value}}-->
-<!--                </option>-->
-<!--              </select>-->
-<!--              <div class="mb-3" v-if="defaultOrderType === 'Доставка'">-->
-<!--                <label  class="form-label">Адрес</label>-->
-<!--                <input :disabled="inputStatus" type="text" class="form-control" v-model="order.address">-->
-<!--              </div>-->
-<!--              <div class="mb-3">-->
-<!--                <label  class="form-label">Фамилия покупателя</label>-->
-<!--                <input :disabled="inputStatus" type="text" class="form-control"  v-model="order.surname">-->
-<!--              </div>-->
-<!--              <div class="mb-3">-->
-<!--                <label  class="form-label">Имя покупателя</label>-->
-<!--                <input :disabled="inputStatus" type="text" class="form-control"  v-model="order.name">-->
-<!--              </div>-->
-<!--              <div class="mb-3">-->
-<!--                <label  class="form-label">Отчество покупателя</label>-->
-<!--                <input :disabled="inputStatus" type="text" class="form-control"  v-model="order.secondName">-->
-<!--              </div>-->
-<!--              <div class="mb-3">-->
-<!--                <label  class="form-label">Телефон</label>-->
-<!--                <input :disabled="inputStatus" type="text" class="form-control"  v-model="order.phoneNumber">-->
-<!--              </div>-->
-<!--                <p><input type="checkbox" @change="changeOrderInfo">Изменить данные заказа</p>-->
-<!--                <p><input type="checkbox" @change="saveOrderInfo">Изменить данные в личном кабинете</p>-->
-<!--                <p>*Оплата производится наличными и только при получении товара</p>-->
-<!--            </form>-->
-<!--          </div>-->
-<!--          <b-button @click="orderProducts" variant="success">Оформить</b-button>-->
-<!--          <b-button @click="$bvModal.hide('add-modal')" variant="danger">Закрыть</b-button>-->
-<!--        </b-modal>-->
-
-<!-- &lt;!&ndash; Модальное окно закончилось &ndash;&gt;-->
-
-<!--      </div>-->
-    </div>
     <Footer/>
   </div>
 </template>
@@ -408,7 +333,7 @@ export default {
   .cart__modal{
     display: grid;
     justify-items: center;
-    .cart__modal-form{
+    .modal-form{
       display: grid;
       gap: 10px;
       .cart__modal-sec{
