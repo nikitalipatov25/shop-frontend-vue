@@ -3,11 +3,11 @@
     <Header/>
     <div class="body">
       <h1>{{text}}</h1>
-        <sale-list
-        v-for="sale in sales"
-        :key="sale.id"
-        :sale="sale"
-        />
+      <sale-list
+          v-for="sale in sales"
+          :key="sale.id"
+          :sale="sale"
+      />
     </div>
     <Footer/>
   </div>

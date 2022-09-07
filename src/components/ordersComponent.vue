@@ -3,8 +3,8 @@
     <div class="orders-component__modal">
       <Modal :title="'Изменение'" @closeModal="closeOrderModal" v-if="isOrderModalVisible">
         <template v-slot:content>
-          <div class="d-block text-left">-->
-            <p>Измените статус заказа</p>
+          <div class="d-block text-left">
+            <p>Измените статус заказа:</p>
             <select class="form-select" @change="selectStatus($event)">
               <option selected>Выберете статус заказа</option>
               <option v-for="status in statuses" :key="status">{{status}}</option>
