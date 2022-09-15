@@ -14,24 +14,24 @@
         <Logo/>
       </div>
       <div class="header__menu">
-        <Menu/>
+<!--        <Menu/>-->
+        <HMenu />
       </div>
-<!--      <div>-->
-<!--        <span class="badge badge-success">{{ itemsInCart }}</span>-->
-<!--      </div>-->
     </div>
   </header>
 </template>
 
 <script>
+import HMenu from "../HMenu";
 import { eventBus } from '../../main'
-import Menu from "../Base/Menu";
+// import Menu from "../Base/Menu";
 import Logo from "../Base/Logo";
 
 export default {
   name: "Header",
   components:{
-    Menu,
+    HMenu,
+    // Menu,
     Logo
   },
   data() {

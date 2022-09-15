@@ -29,10 +29,10 @@ p{
 }
 }
 a:hover{
-p{
-  color: #FCDC4C;
-  transition: 0.3s;
-}
+  p{
+    color: #FCDC4C;
+    transition: 0.3s;
+  }
 }
 img{
   height: 25px;
