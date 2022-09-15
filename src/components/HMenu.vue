@@ -106,8 +106,10 @@ export default {
   left: 0;
   transition: 0.3s;
   .cancel{
-    padding: 10px 0px 0px 10px;
+    display: grid;
+    justify-items: end;
     img{
+      padding: 30px 30px 0px 0px;
       height: 30px;
     }
   }
