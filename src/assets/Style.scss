@@ -29,6 +29,11 @@ h1{
   font-family: 'Cabin', sans-serif;
 }
 
+h1.sale-font{
+  @include adaptive-font(70, 15);
+  line-height: 5vw;
+}
+
 h2{
   @include adaptive-font(30, 16);
 

@@ -1,15 +1,19 @@
 <template>
   <div class="q-and-a">
     <Header/>
-    <div class="body">
-      <h1>{{text}}</h1>
-      Work in progress...
-      Как зарегистрироваться?
-      Как офрмить заказ?
-      Как получить скидку на заказ?
-      Как связатья ссотрудниками магазина?
-      Как оформить возврат?
-    </div>
+    <main class="container">
+      <section class="heading">
+        <h1>{{text}}</h1>
+      </section>
+      <section class="q-a">
+        Work in progress...
+        <h2>Как зарегистрироваться?</h2>
+        <h2>Как офрмить заказ?</h2>
+        <h2>Как получить скидку на заказ?</h2>
+        <h2>Как связатья ссотрудниками магазина?</h2>
+        <h2>Как оформить возврат?</h2>
+      </section>
+    </main>
     <Footer/>
   </div>
 
@@ -32,3 +36,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.q-a{
+  display: grid;
+  grid-template-columns: auto;
+  gap: 10px;
+}
+</style>
