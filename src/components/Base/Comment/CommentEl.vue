@@ -319,7 +319,6 @@ export default {
     display: grid;
     justify-items: start;
     margin-left: 30px;
-    position: relative;
   }
 }
 
@@ -356,6 +355,7 @@ export default {
     }
   }
   .rating{
+    padding-left: 20px;
     width: 100px;
     position: relative;
   }

@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="answer__modal">
       <transition name="fade">
-        <Modal :title="'Удаление'" @closeModal="closeAnswerDelModal" v-show="isAnswerDelModalVisible">
+        <Modal :title="'Удаление'" @closeModal="closeAnswerDelModal" v-if="isAnswerDelModalVisible">
           <template v-slot:content>
             <p>Вы действительно хотите удалить ответ?</p>
           </template>
@@ -122,11 +122,10 @@ export default {
 <style scoped lang="scss">
 .wrapper{
   width: 100%;
-  position: relative;
   .answer__modal{
     display: grid;
     justify-items: center;
-    margin-left: -10px;
+    margin-left: -60px;
     .wrapper{
       display: grid;
       gap: 10px;
