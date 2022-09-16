@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="answer__modal">
       <transition name="fade">
-        <Modal :title="'Удаление'" @closeModal="closeAnswerDelModal" v-if="isAnswerDelModalVisible">
+        <Modal :title="'Удаление'" @closeModal="closeAnswerDelModal" v-show="isAnswerDelModalVisible">
           <template v-slot:content>
             <p>Вы действительно хотите удалить ответ?</p>
           </template>
@@ -56,7 +56,7 @@
 import DropDown from "../DropDown";
 import Modal from "../Modal";
 import Button from "../Button";
-//
+
 export default {
   name: "Answer",
   components:{
@@ -69,11 +69,11 @@ export default {
   },
   data(){
     return{
-      isAnswerDelModalVisible: false,
       isAppear: false,
       isButtonVisible: false,
       fullText: this.answer.text,
       shortText: '',
+      isAnswerDelModalVisible: false,
       listAnswer: [
         {
           label: 'Редактировать',

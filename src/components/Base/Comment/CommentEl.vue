@@ -110,7 +110,7 @@
 
     <div class="comment__answer" v-if="comment.answers.length !== 0">
       <div class="answer__el" v-for="answer in comment.answers" :key="answer.id">
-        <Answer :answer="answer"/>
+        <Answer  :answer="answer"/>
       </div>
     </div>
 
@@ -248,19 +248,28 @@ export default {
     setFive(){
       this.modalData.rating = 5
     },
+    closeAllModal(){
+      this.isCommentAddModalVisible = false
+      this.isCommentDelModalVisible = false
+      this.isAnswerAddModalVisible = false
+      this.isAnswerDelModalVisible = false
+    },
     showCommentAddModal(){
+      this.closeAllModal()
       this.isCommentAddModalVisible = true
     },
     closeCommentAddModal(){
       this.isCommentAddModalVisible = false
     },
     showCommentDelModal(){
+      this.closeAllModal()
       this.isCommentDelModalVisible = true
     },
     closeCommentDelModal(){
       this.isCommentDelModalVisible = false
     },
     showAnswerAddModal(){
+      this.closeAllModal()
       this.isAnswerAddModalVisible = true
     },
     closeAnswerAddModal(){
@@ -302,13 +311,14 @@ export default {
 .comment__answer{
   border-left: 1px dashed #000000;
   margin-top: 20px;
+  margin-left: 30px;
   padding: 10px 0;
   display: grid;
   row-gap: 20px;
   .answer__el{
     display: grid;
     justify-items: start;
-    margin-left: 10px;
+    margin-left: 30px;
     position: relative;
   }
 }
