@@ -15,12 +15,12 @@
 <!--          </select>-->
 <!--        </div>-->
       </section>
-      <section class="product_card_section">
+      <section class="card_section">
         <div class="product_filter__wrapper">
           <newMenuInCatalog/>
         </div>
         <div class="product_card_list__wrapper">
-          <div class="product_card_list">
+          <div class="card_list card_list-catalog">
             <product-card
                 v-for="product in products"
                 :key="product.id"
@@ -165,20 +165,25 @@ methods: {
 </script>
 
 <style lang="scss">
-  .product_card_section{
+  .card_section{
     display: grid;
     justify-items: center;
     row-gap: 30px;
     grid-template-columns: repeat(auto-fit, minmax(290px, auto));
   }
-  .product_card_list{
+  .card_list{
     min-width: 304px;
-    width: 70vw;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
     gap: 20px 10px;
     align-items: center;
-    justify-items: start;
+  }
+  .card_list-catalog{
+    width: 70vw;
+    justify-items: left;
+  }
+  .card_list-index{
+    justify-items: left;
   }
   .product_filter__wrapper{
     display: grid;
@@ -222,7 +227,7 @@ methods: {
     .product_filter__wrapper{
       justify-items: center;
     }
-    .product_card_list{
+    .card_list{
       justify-items: center;
     }
     .page{

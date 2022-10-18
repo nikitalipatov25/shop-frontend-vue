@@ -46,16 +46,6 @@ export default {
   created() {
     this.q()
   },
-  watch: {
-    closeModal: function() {
-      if(this.isOpen){
-        document.documentElement.style.overflow = 'hidden'
-        return
-      }
-
-      document.documentElement.style.overflow = 'auto'
-    }
-  }
 }
 </script>
 

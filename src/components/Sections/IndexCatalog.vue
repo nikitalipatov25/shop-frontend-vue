@@ -1,5 +1,5 @@
 <template>
-  <div class="catalog container">
+  <div class="catalog">
     <h1 class="heading">Наш каталог</h1>
     <div class="catalog__card-list">
       <Card v-for="(item, index) in animals"

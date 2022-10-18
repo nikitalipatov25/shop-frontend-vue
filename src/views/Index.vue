@@ -1,33 +1,46 @@
 <template>
   <div class="index">
     <Header/>
-    <main>
+    <main class="container">
       <section class="carousel_section">
-        <div class="heading">
+        <section class="heading">
           <h1>Наши акции</h1>
-        </div>
+        </section>
         <Carousel
             :carousel_data="testCarousel"
-
         />
       </section>
       <section class="catalog_section">
         <IndexCatalog/>
       </section>
       <section class="new_product_section">
-        <div class="heading">
+        <section class="heading">
           <h1>Новинки</h1>
-        </div>
-        <div v-for="(product,index) in newProducts" :key="index" >
-          Товар {{product.name}} добавлен {{product.creationDate}}
+        </section>
+<!--        <div v-for="(product,index) in newProducts" :key="index" >-->
+<!--          Товар {{product.name}} добавлен {{product.creationDate}}-->
+<!--        </div>-->
+        <div class="card_list card_list-index">
+          <product-card
+              v-for="product in newProducts"
+              :key="product.id"
+              :product="product"
+          />
         </div>
       </section>
       <section class="pop_product_section">
-        <div class="heading">
-          <h1 class="heading">Популярные товары</h1>
-        </div>
-        <div v-for="product in popularProducts" :key="product.id" >
-          Товар {{product.name}} с рейтингом {{product.rating}} и {{product.reviews}} отзывами
+        <section class="heading">
+          <h1>Популярные товары</h1>
+        </section>
+<!--        <div v-for="product in popularProducts" :key="product.id" >-->
+<!--          Товар {{product.name}} с рейтингом {{product.rating}} и {{product.reviews}} отзывами-->
+<!--        </div>-->
+        <div class="card_list card_list-index">
+          <product-card
+              v-for="product in popularProducts"
+              :key="product.id"
+              :product="product"
+          />
         </div>
       </section>
     </main>
@@ -38,6 +51,7 @@
 <script>
 import Header from '../components/Sections/Header'
 import Footer from '../components/Sections/Footer'
+import ProductCard from "../components/ProductCard";
 import IndexCatalog from "../components/Sections/IndexCatalog";
 import Carousel from "../components/Base/Carousel/Carousel";
 
@@ -50,8 +64,9 @@ export default {
   components: {
     Header,
     Footer,
+    ProductCard,
     IndexCatalog,
-    Carousel
+    Carousel,
 
   },
   data() {
