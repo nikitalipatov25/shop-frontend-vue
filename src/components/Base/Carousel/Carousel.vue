@@ -2,13 +2,11 @@
   <div class="container">
     <div class="carousel" >
       <CarouselItem
-          v-for="(item, index) in carousel_data"
-          :key="index"
-          :index="index"
+          v-for="item in carousel_data"
+          :key="item.id"
           :item_data="item"
-          :currentSlideIndex="currentSlideIndex"
       >
-        <p class="carousel__item-content">{{item.name}}</p>
+<!--        <p class="carousel__item-content"><img :src="'http://localhost:8080/files/' + item.image"></p>-->
       </CarouselItem>
     </div>
     <button @click="prevSlide">Prev</button>
@@ -27,7 +25,6 @@ export default {
   props:{
     carousel_data:{
       type: Array,
-      default: () => []
     }
   },
   data(){

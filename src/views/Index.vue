@@ -4,7 +4,8 @@
     <main class="container">
       <section class="carousel_section">
         <section class="heading">
-          <h1>Наши акции</h1>
+<!--          {{testCarousel}}-->
+          <h1>Акции</h1>
         </section>
         <Carousel
             :carousel_data="testCarousel"
@@ -17,9 +18,6 @@
         <section class="heading">
           <h1>Новинки</h1>
         </section>
-<!--        <div v-for="(product,index) in newProducts" :key="index" >-->
-<!--          Товар {{product.name}} добавлен {{product.creationDate}}-->
-<!--        </div>-->
         <div class="card_list card_list-index">
           <product-card
               v-for="product in newProducts"
@@ -32,9 +30,6 @@
         <section class="heading">
           <h1>Популярные товары</h1>
         </section>
-<!--        <div v-for="product in popularProducts" :key="product.id" >-->
-<!--          Товар {{product.name}} с рейтингом {{product.rating}} и {{product.reviews}} отзывами-->
-<!--        </div>-->
         <div class="card_list card_list-index">
           <product-card
               v-for="product in popularProducts"
@@ -58,6 +53,7 @@ import Carousel from "../components/Base/Carousel/Carousel";
 import '../assets/Style.scss'
 
 import CatalogService from '../services/catalog.service'
+import saleService from "@/services/sale.service";
 
 export default {
     name: 'Index',
@@ -73,17 +69,24 @@ export default {
       return {
         popularProducts: [],
         newProducts: [],
-        testCarousel: [
-          {name: 'img1', img: 'cats.jpg'},
-          {name: 'img2', img: 'fish.jpg'},
-          {name: 'img3', img: 'humsters.jpg'},
-          {name: 'img4', img: 'humsters.jpg'},
-          {name: 'img5', img: 'humsters.jpg'},
-          {name: 'img6', img: 'humsters.jpg'},
-        ]
+        testCarousel: undefined
+        // testCarousel: [
+        //   {name: 'img1', img: 'cats.jpg'},
+        //   {name: 'img2', img: 'fish.jpg'},
+        //   {name: 'img3', img: 'humsters.jpg'},
+        //   {name: 'img4', img: 'humsters.jpg'},
+        //   {name: 'img5', img: 'humsters.jpg'},
+        //   {name: 'img6', img: 'humsters.jpg'},
+        // ]
       }
   },
   methods: {
+      testCor() {
+        saleService.getSales().then(
+            response => {
+              this.testCarousel = response.data.content
+            })
+      },
     getPopularProducts() {
       CatalogService.getPopularProducts().then(
           response => {
@@ -98,6 +101,7 @@ export default {
     }
   },
   created() {
+      this.testCor()
       this.getPopularProducts();
       this.getNewProducts();
   }

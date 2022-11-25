@@ -16,7 +16,7 @@ class CatalogService {
         return axios.post( API_URL + 'filter', payload)
     }
 
-    getAllProductsFromCatalog(page = 0, size = 4, sortBy) {
+    getAllProductsFromCatalog(page = 0, size = 4, sortBy = 'name') {
         pagination = 'page=' + page + '&size=' + size;
         return axios.get(API_URL + '?' + pagination + '&sort=' + sortBy);
     }
@@ -25,17 +25,35 @@ class CatalogService {
         return axios.get(API_URL + productUUID)
     }
 
-    addProductToCatalog(payload) {
-        return axios.post(API_URL + 'add', payload, { headers: authHeader()})
+    addProductToCatalog(name, description, amount, image, price, category) {
+        let formData = new FormData();
+        formData.append("name", name);
+        formData.append("description", description);
+        formData.append("amount", amount);
+        formData.append("image", image);
+        formData.append("price", price);
+        formData.append("category", category);
+        return axios.post(API_URL + 'add', formData, { headers: authHeader()})
+    }
+    modifyProductInCatalog(id, name, description, amount, image, price, category) {
+        let formData = new FormData();
+        formData.append("name", name);
+        formData.append("description", description);
+        formData.append("amount", amount);
+        formData.append("image", image);
+        formData.append("price", price);
+        formData.append("category", category);
+        return axios.put(API_URL + 'modify/' + id, formData, { headers: authHeader()})
     }
 
     deleteProductFromCatalog(productUUID) {
         return axios.delete(API_URL + 'delete/' + productUUID, { headers: authHeader()})
     }
 
-    modifyProductInCatalog(productUUID, payload) {
-        return axios.put(API_URL + 'modify/' + productUUID, payload, { headers: authHeader()})
-    }
+    // modifyProductInCatalog(productUUID, formdata) {
+    //
+    //     return axios.put(API_URL + 'modify/' + productUUID, formdata, { headers: authHeader()})
+    // }
 
     getOneProduct(productId) {
         return axios.get(API_URL + productId, { headers: authHeader()})

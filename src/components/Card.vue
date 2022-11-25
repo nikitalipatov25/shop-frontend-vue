@@ -2,8 +2,8 @@
   <div class="card" @click="openCatalogCategory(name)">
     <div class="card-wrapper">
       <div class="card__item card__img">
-        <!--      <img :src="'http://localhost:8080/files/' + img">-->
-        <img :src="require('../assets/pngwing_com_3.png')">
+<!--              <img :src="'http://localhost:8080/files/' + image">-->
+        <img :src=image>
       </div>
       <div class="card__item card__title">
         <h1>{{ name }}</h1>
@@ -17,7 +17,7 @@ export default {
   name: "Card",
   props:{
     name: String,
-    img: String,
+    image: String,
     color: String
   },
   methods:{

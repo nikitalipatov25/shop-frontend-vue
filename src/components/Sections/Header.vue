@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div class="header__line">
+    <div class="header__line" v-if="test === true">
       <div class="header__find">
         <input type="text" class="find__input" placeholder="Поиск товаров" v-model="searchText"/>
         <div class="find__line" />
@@ -28,6 +28,12 @@ import { eventBus } from '../../main'
 import Logo from "../Base/Logo";
 
 export default {
+  props: {
+    test: {
+      type: Boolean,
+      value: false
+    }
+  },
   name: "Header",
   components:{
     HMenu,

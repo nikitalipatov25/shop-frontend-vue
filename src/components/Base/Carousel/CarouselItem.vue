@@ -1,6 +1,9 @@
 <template>
   <div class="carousel__item" :class="index === currentSlideIndex ? 'carousel__item-active' : 'carousel__item-none'">
-      <slot></slot>
+      <slot>
+        {{item_data.name}}
+       <img :src="'http://localhost:8080/files/' + item_data.image">
+      </slot>
   </div>
 </template>
 
@@ -9,10 +12,8 @@
 export default {
   name: "CarouselItem",
   props:{
-    index: Number,
     item_data:{
       type: Object,
-      default: () => {}
     },
     currentSlideIndex: Number
   },

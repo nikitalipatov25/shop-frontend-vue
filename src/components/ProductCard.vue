@@ -3,7 +3,7 @@
     <div class="product_card__preview">
       <a @click="$router.push({ name: 'product-page', params: { id: product.id } })">
         <div class="preview__status">
-          <ProductCircle v-if="product.sale !== null" class="sale" :type="'sale'" :label="product.sale.discount"/>
+          <ProductCircle v-if="product.sale !== 'Товар не участвует в акции'" class="sale" :type="'sale'" :label="productSaleDiscount"/>
           <ProductCircle v-if="product.rating >= 4.5" class="rating" :type="'rating'" :label="product.rating" />
         </div>
         <div class="preview__img">
@@ -24,7 +24,7 @@
       <div class="info__title info__el">
         <a href=""><h3>{{ product.name }}</h3></a>
       </div>
-      <div v-if="product.sale !== null" class="info__price info__price-sale info__el">
+      <div v-if="product.sale !== 'Товар не участвует в акции'" class="info__price info__price-sale info__el">
         <h3>{{ priceWithDiscount + ' ' + '₽' }}</h3>
       </div>
       <div v-else class="info__price info__el">
@@ -58,6 +58,7 @@
 import CartService from '../services/cart.service'
 import ProductCircle from "./Base/ProductCircle";
 import Button from "./Base/Button";
+// import SaleService from "@/services/sale.service";
 
 export default {
   components:{
@@ -67,18 +68,31 @@ export default {
   props: {
     product: {
       type: Object
+    },
+    sale: {
+      type: Object
     }
   },
   data() {
     return {
       priceWithDiscount: 0,
-      isDevMode: false
+      productSaleDiscount: 0,
+      isDevMode: false,
+      saleName: '',
+      salePrice: ''
     }
   },
   methods: {
     calculateDiscount() {
-      if (this.product.sale !== null) {
-        this.priceWithDiscount = (this.product.price / 100) * (100 - this.product.sale.discount);
+      if (this.product.sale !== 'Товар не участвует в акции') {
+        // SaleService.getSaleByName(this.product.name).then(
+        //     response => {
+        //       this.saleName = response
+        //     }
+        // )
+        this.priceWithDiscount = this.product.discountPrice
+        this.productSaleDiscount = 100 - this.product.discountPrice * 100 / this.product.price
+        //this.priceWithDiscount = (this.product.price / 100) * (100 - this.product.sale.discount);
       }
 
     },

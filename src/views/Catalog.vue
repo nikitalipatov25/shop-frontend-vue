@@ -1,19 +1,13 @@
 <template>
   <div class="catalog">
-    <Header/>
+    <Header
+    :test="test"
+    />
     <main class="container">
       <section class="heading">
         <h1>Каталог</h1>
       </section>
       <section class="product_sort">
-<!--        <div class="col-3">-->
-<!--          <select class="form-select" aria-label="Default select example" @change="sortProducts($event)">-->
-<!--            <option selected value="name,ASC">По умолчанию</option>-->
-<!--            <option value="price,ASC">Сначала дешевле</option>-->
-<!--            <option value="price,DESC">Сначала дороже</option>-->
-<!--            <option value="rating,DESC">Сначала с высоким рейтингом</option>-->
-<!--          </select>-->
-<!--        </div>-->
       </section>
       <section class="card_section">
         <div class="product_filter__wrapper">
@@ -25,6 +19,7 @@
                 v-for="product in products"
                 :key="product.id"
                 :product="product"
+                :sale="sales"
             />
           </div>
           <nav class="page">
@@ -63,6 +58,7 @@ import Header from '../components/Sections/Header'
 import Footer from '../components/Sections/Footer'
 import { eventBus } from '@/main'
 import CatalogService from '../services/catalog.service'
+import SaleService from "@/services/sale.service";
 
 export default {
   name: 'Catalog',
@@ -79,7 +75,7 @@ export default {
       productsFromServer: {},
       text: 'Все товары',
       filter: {
-        animal: null,
+        sale: false,
         categories: null,
         priceFrom: 1,
         priceTo: 99999,
@@ -89,16 +85,31 @@ export default {
         sortBy: 'name',
         sortDirection: 'ASC',
         searchText: null,
-      }
-
+      },
+      sales: undefined,
+      test: true
     }
   },
 methods: {
+    getSales() {
+      SaleService.getSales().then(
+          response => {
+            this.sales = response.data.content
+          })
+    },
+    getProducts() {
+      CatalogService.getAllProductsFromCatalog(this.pageNumber, this.pageSize, this.sortBy).then(
+          response => {
+            this.products = response.data.content;
+            console.log(response);
+          }
+      );
+    },
+
   getFilteredProducts() {
     CatalogService.getByUserFilter(this.filter).then(
         response => {
           this.productsFromServer = response;
-          console.log(this.productsFromServer);
           this.products = this.productsFromServer.data.content;
           this.filter.totalPages = this.productsFromServer.data.totalPages;
         }
@@ -140,15 +151,18 @@ methods: {
   },
 },
   created() {
+    this.getSales()
     this.getFilteredProducts()
+    // this.getProducts();
     eventBus.$on('createUserFilter', payload => {
-      this.filter.animal = payload.animal;
+      this.filter.sale = payload.isSale;
       this.filter.categories = payload.categories;
       this.filter.priceFrom = payload.priceFrom;
       this.filter.priceTo = payload.priceTo;
       this.getFilteredProducts();
     });
     eventBus.$on('searchProducts', data => {
+      this.$router.push('/catalog')
       this.filter.searchText = data;
       this.getFilteredProducts()
     });

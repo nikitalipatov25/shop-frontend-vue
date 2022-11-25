@@ -141,12 +141,10 @@
 <script>
 
 import CommentService from '@/services/comment.service'
-import AnswerService from '@/services/answer.service'
 import DropDown from "../DropDown";
 import StarRating from "../StarRating/StarRating";
 import Modal from "../Modal";
 import Button from "../Button";
-import Answer from "./Answer";
 
 export default {
   name: "CommentEl",
@@ -155,7 +153,6 @@ export default {
     StarRating,
     Modal,
     Button,
-    Answer
   },
   props: {
     comment: Object
@@ -286,11 +283,6 @@ export default {
     deleteComment() {
       CommentService.deleteNewComment(this.comment.productId)
       this.isCommentDelModalVisible = false
-    },
-    addAnswer(){
-      this.answer.answerToUser = this.comment.userName;
-      this.answer.productId = this.comment.productId;
-      AnswerService.addAnswer(this.answer)
     },
     visibleButton(){
       if(this.comment.text.length > 150){

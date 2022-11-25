@@ -58,7 +58,6 @@
 
 <script>
 import {eventBus} from "@/main";
-import AnimalService from "@/services/animal.service";
 import Logo from "../Base/Logo";
 
 export default {
@@ -75,12 +74,6 @@ export default {
     }
   },
   methods: {
-    getAnimals() {
-      AnimalService.getAnimals().then(
-          response => {
-            this.animals = response.data;
-          })
-    },
     openCatalogCategory(catalogParameter) {
       if (this.$route.name === 'catalog-page') {
         eventBus.$emit('openCatalogCategory', catalogParameter)
@@ -89,9 +82,6 @@ export default {
       }
     }
   },
-  created() {
-    this.getAnimals()
-  }
 }
 </script>
 

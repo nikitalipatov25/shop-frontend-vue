@@ -5,11 +5,10 @@
       <section class="product__about_section">
         <div class="about__img">
             <img
-              :src="currentProduct.image"
+              :src="'http://localhost:8080/files/' + currentProduct.image"
               :alt="currentProduct.name"
               height="300px"
             >
-<!--          <img src="../assets/pngkey_com-cat-food-png-3432927.png" alt="">-->
         </div>
         <div class="description">
           <nav class=" product__category_nav">
@@ -25,7 +24,6 @@
           </div>
           <div class="product__el product__description">
             <p><span>Описание:</span> {{ currentProduct.description }}
-<!--              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus dui non turpis placerat, vitae molestie lorem hendrerit. Praesent quam risus, luctus id elit vitae, pretium consequat neque. Fusce at tempus eros. Integer rutrum pretium justo quis cursus. Integer tincidunt, neque condimentum sagittis gravida, sem leo malesuada quam, vel aliquet dolor elit vel sem. Phasellus eget dapibus magna. Phasellus sit amet purus tempor, accumsan dolor at, commodo quam. Donec augue velit, imperdiet sit amet commodo eget, euismod egestas lectus. Fusce eu scelerisque nulla. Integer aliquam mauris et consequat dignissim. Donec tincidunt nulla turpis, et sodales nunc tempus id. Praesent luctus rutrum sollicitudin. Vestibulum vulputate dui consequat, consectetur lacus quis, malesuada tortor. Donec pretium a turpis at iaculis. Nullam massa ligula, sagittis ut dui quis, convallis vestibulum ante. Vestibulum gravida scelerisque accumsan.-->
             </p>
           </div>
           <div class="product__el product__amount">
@@ -62,8 +60,6 @@ import Footer from "../components/Sections/Footer";
 import CommentForm from "../components/Base/Comment/CommentForm";
 import CommentList from "../components/Base/Comment/CommentList";
 import Button from "../components/Base/Button";
-
-
 import CatalogService from '../services/catalog.service'
 import CartService from '../services/cart.service'
 import CommentService from '../services/comment.service'
@@ -125,8 +121,11 @@ export default {
       )
   },
     addProductToCart() {
-      //Этот метот взят с компонента "productList". Там была использована шина событий (Не помню зачем).
-      CartService.addProductToCart(this.currentProduct.id);
+      let cartDTO = {
+        "productId": this.currentProduct.id,
+        "amount": 1
+      }
+      CartService.addProductToCart(cartDTO);
     }
   }
 }
