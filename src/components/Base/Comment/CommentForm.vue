@@ -29,6 +29,7 @@
 import CommentService from '@/services/comment.service'
 import DropDown from "../DropDown";
 import Button from "../Button";
+import {eventBus} from "@/main";
 
 export default {
   name: "CommentForm",
@@ -83,16 +84,12 @@ export default {
     setOne() {
       this.commentData.rating = 1
     },
-    addComment() {
+    async addComment() {
       if (this.commentData.text !== '' && this.commentData.rating !== null){
-        CommentService.addNewComment(this.$route.params.id, this.commentData)
-            .then(
-                response => {
-                  console.log(response.data)
-                }
-            )
+        await CommentService.addNewComment(this.$route.params.id, this.commentData)
         this.commentData.text = ''
         this.commentData.rating = null
+        eventBus.$emit('reloadComments')
       } else {
         alert('Оставьте комментарий и оцените продукт')
       }

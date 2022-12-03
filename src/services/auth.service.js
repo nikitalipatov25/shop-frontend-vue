@@ -28,14 +28,14 @@ class AuthService {
     }
 
     register(user) {
-        return axios.post(API_URL + 'signup', {
+        let payload = {
             username: user.username,
             email: user.email,
             password: user.password,
             surname: user.surname,
-            name: user.name,
-            secondName: user.secondname
-        });
+            name: user.name
+        }
+        return axios.post(API_URL + 'signup', payload);
     }
 }
 

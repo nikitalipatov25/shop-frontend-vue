@@ -46,12 +46,6 @@
               </div>
               <div class="info-el">
                 <label>
-                  <span>Отчество покупателя:</span>
-                  <input :disabled="inputStatus" type="text" class="form-control"  v-model="order.secondName">
-                </label>
-              </div>
-              <div class="info-el">
-                <label>
                   <span>Телефон:</span>
                   <input :disabled="inputStatus" type="tel" class="form-control"  v-model="order.phoneNumber">
                 </label>
@@ -61,15 +55,6 @@
                   <input type="checkbox" @change="changeOrderInfo">
                   <span>Изменить данные заказа</span>
                 </label>
-              </div>
-              <div class="">
-                <label>
-                  <input type="checkbox" @change="saveOrderInfo">
-                  <span>Изменить данные в личном кабинете</span>
-                </label>
-              </div>
-              <div class="">
-                <p>*Оплата производится наличными и только при получении товара</p>
               </div>
             </div>
             <div class="cart__modal-sec cart__modal-total">
@@ -208,11 +193,8 @@ export default {
         orderType: '',
         surname: '',
         name: '',
-        secondName: '',
         address: '',
         phoneNumber: '',
-        changeData: false,
-        saveData: false
       },
       text: 'Корзина',
       products: [],
@@ -282,17 +264,12 @@ export default {
     },
     changeOrderInfo() {
       this.inputStatus = !this.inputStatus;
-      this.order.changeData = !this.order.changeData;
-    },
-    saveOrderInfo() {
-      this.order.saveData = !this.order.saveData;
     },
     getUserInformation() {
       UserService.getUser().then(
           response => {
             this.order.surname = response.data.surname;
             this.order.name = response.data.name;
-            this.order.secondName = response.data.secondName;
             this.order.address = response.data.address;
             this.order.phoneNumber = response.data.phoneNumber;
           }
@@ -301,7 +278,7 @@ export default {
     getNewCart() {
       CartService.getNewCart().then(
           response => {
-            this.products = response.data.content;
+            this.products = response.data;
             this.getCartSummary();
             this.addProductsToOrder();
           }

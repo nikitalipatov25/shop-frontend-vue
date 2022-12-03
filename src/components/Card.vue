@@ -22,7 +22,6 @@ export default {
   },
   methods:{
     openCatalogCategory(catalogParameter) {
-      // console.log(catalogParameter)
       this.$router.push({ name: 'catalog-page', params: {catalogParameter: catalogParameter} });
     }
   }

@@ -12,8 +12,7 @@
         </div>
         <div class="description">
           <nav class=" product__category_nav">
-            <a href="#">{{ currentProduct.animal }}</a>
-            <span> >> </span>
+            <span> > </span>
             <a href="#">{{ currentProduct.category }}</a>
           </nav>
           <div class=" product__heading">
@@ -29,15 +28,23 @@
           <div class="product__el product__amount">
             <p><span>В наличии:</span> {{ currentProduct.amount }} шт.</p>
           </div>
-          <div class="product__el product__price">
+          <div class="product__el product__price" v-if="currentProduct.discountPrice <= 0">
             <h1>{{currentProduct.price}} ₽</h1>
           </div>
+          <div class="product__el product__price" v-else>
+            <h1>{{currentProduct.discountPrice}} ₽</h1>
+          </div>
           <div class="product__el product__btn">
-            <Button
+            <Button v-if="!currentProduct.isInCart"
                 :label="'Добавить'"
                 :size="'medium'"
                 :color="'color'"
                 :click="addProductToCart"
+            />
+            <Button v-else
+                    :label="'Товар в корзине'"
+                    :size="'medium'"
+                    :color="'color'"
             />
           </div>
         </div>
@@ -63,6 +70,7 @@ import Button from "../components/Base/Button";
 import CatalogService from '../services/catalog.service'
 import CartService from '../services/cart.service'
 import CommentService from '../services/comment.service'
+import {eventBus} from "@/main";
 
 export default {
   name: 'ProductPage',
@@ -82,26 +90,40 @@ export default {
         image: '',
         description: '',
         amount: '',
-        animal: '',
-        category: ''
+        discountPrice: '',
+        category: '',
+        isInCart: false
       },
       comments: null,
-      answers: null
+      products: []
     }
   },
   created() {
     this.currentProduct.id = this.$route.params.id;
     this.getProductFromCatalog();
+    this.getUserProducts();
     this.getComments()
+    eventBus.$on('reloadComments', this.getComments)
   },
   methods: {
-    getComments() {
-      CommentService.getNewComments(this.currentProduct.id)
+    async getUserProducts() {
+      await CartService.getUserProducts().then(
+          response => this.products = response.data
+      )
+      this.isInCart()
+    },
+    isInCart() {
+      for (let i = 0; i < this.products.length; i++) {
+        if (this.currentProduct.id === this.products[i]) {
+          this.currentProduct.isInCart = true
+        }
+      }
+    },
+    async getComments() {
+      await CommentService.getNewComments(this.currentProduct.id)
           .then(
               response => {
-                this.comments = response.data.content
-                // this.answers = response.data.content
-                console.log(this.comments)
+                this.comments = response.data
               }
           )
     },
@@ -113,21 +135,20 @@ export default {
           this.currentProduct.image = response.data.image;
           this.currentProduct.description = response.data.description;
           this.currentProduct.amount = response.data.amount;
-          this.currentProduct.animal = response.data.animal;
+          this.currentProduct.discountPrice = response.data.discountPrice
           this.currentProduct.category = response.data.category;
-          // this.comments = response.data.comments;
-          // this.answers = response.data.answers;
         }
       )
   },
-    addProductToCart() {
+    async addProductToCart() {
       let cartDTO = {
         "productId": this.currentProduct.id,
         "amount": 1
       }
-      CartService.addProductToCart(cartDTO);
+      await CartService.addProductToCart(cartDTO);
+      await this.getUserProducts()
     }
-  }
+  },
 }
 </script>
 
