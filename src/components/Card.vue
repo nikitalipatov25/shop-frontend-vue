@@ -23,6 +23,7 @@ export default {
   methods:{
     openCatalogCategory(catalogParameter) {
       this.$router.push({ name: 'catalog-page', params: {catalogParameter: catalogParameter} });
+      //test
     }
   }
 }
