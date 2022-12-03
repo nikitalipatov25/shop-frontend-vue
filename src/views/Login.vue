@@ -1,15 +1,14 @@
 <template>
-  <div class="col-md-12">
+  <div class="login">
     <div class="card card-container">
-      <img
-          id="profile-img"
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          class="profile-img-card"
-      />
-      <form name="form" @submit.prevent="handleLogin">
+      <div class="login__logo">
+        <Logo color="light" />
+      </div>
+      <form class="login__form" name="form" @submit.prevent="handleLogin">
         <div class="form-group">
           <label for="username">Введите Ваш логин</label>
           <input
+              id="username"
               v-model="user.username"
               v-validate="'required'"
               type="text"
@@ -25,9 +24,11 @@
         <div class="form-group">
           <label for="password">Введите Ваш пароль</label>
           <input
+              id="password"
               v-model="user.password"
               v-validate="'required'"
               type="password"
+              autocomplete="on"
               class="form-control"
               name="password"
           />
@@ -37,15 +38,19 @@
               role="alert"
           >Необходимо указать пароль!</div>
         </div>
-        <div class="form-group">
-          <button class="btn btn-primary btn-block" :disabled="loading">
-            <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-            <span>Войти</span>
-          </button>
-          <button class="btn btn-primary btn-block" :disabled="loading" @click="$router.push('/register')">
-            <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-            <span>Зарегистрироваться</span>
-          </button>
+        <div class="form-group form__button">
+          <Button
+              :label="'Войти'"
+              :size="'small'"
+              :color="'color'"
+              :click="handleLogin"
+          />
+          <Button
+              :label="'Зарегистрироваться'"
+              :size="'small'"
+              :color="'color'"
+              :click="() => $router.push('/register')"
+          />
         </div>
         <div class="form-group">
           <div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
@@ -56,10 +61,16 @@
 </template>
 
 <script>
+import Button from "../components/Base/Button";
+import Logo from "../components/Base/Logo";
 import User from '../models/user';
 
 export default {
   name: 'Login',
+  components:{
+    Logo,
+    Button
+  },
   data() {
     return {
       user: new User('', ''),
@@ -106,37 +117,51 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.login{
+  margin-top: 30px;
+  width: 100%;
+  display: grid;
+  justify-items: center;
+}
+
+.login__logo{
+  pointer-events: none;
+}
+
+.login__form{
+  display: grid;
+  gap: 15px;
+}
 label {
-  display: block;
-  margin-top: 10px;
+  display: grid;
+}
+input{
+  outline: none;
+  -moz-appearance: none;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  padding: 5px;
 }
 
 .card-container.card {
-  max-width: 350px !important;
-  padding: 40px 40px;
+  max-width: 310px;
+  padding: 20px;
+  display: grid;
+  gap: 10px;
+}
+.card{
+  border-radius: 15px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
+  position: relative;
+  height: 400px;
+
 }
 
-.card {
-  background-color: #f7f7f7;
-  padding: 20px 25px 30px;
-  margin: 0 auto 25px;
-  margin-top: 50px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+.form__button{
+  display: grid;
+  gap: 10px;
 }
 
-.profile-img-card {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 10px;
-  display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-}
+
 </style>

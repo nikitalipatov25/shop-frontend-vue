@@ -7,7 +7,6 @@ import ProductPage from '@/views/ProductPage'
 import PersonalArea from '@/views/PersonalArea'
 import Cart from '@/views/Cart.vue'
 import Sale from "@/views/Sale";
-import QandA from "@/views/QandA";
 import About from "@/views/About";
 import Login from "@/views/Login";
 import Register from "@/views/Register";
@@ -47,11 +46,6 @@ export const router = new Router({
           path: '/sale',
           name: 'sale',
           component: Sale
-      },
-      {
-          path: '/questions',
-          name: 'questions',
-          component: QandA
       },
       {
           path: '/about',

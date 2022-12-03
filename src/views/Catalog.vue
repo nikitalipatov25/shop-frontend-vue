@@ -1,58 +1,64 @@
 <template>
   <div class="catalog">
-    <Header/>
-    <div class="body">
-      <div class="row">
-        <div class="col-2">
+    <Header
+    :test="test"
+    />
+    <main class="container">
+      <section class="heading">
+        <h1>Каталог</h1>
+      </section>
+      <section class="product_sort">
+      </section>
+      <section class="card_section">
+        <div class="product_filter__wrapper">
           <newMenuInCatalog/>
         </div>
-        <div class="col-10">
-          <div class="catalog-nav">
-            <div class="row">
-              <div class="col-3">
-                <h1>Каталог</h1>
-              </div>
-              <div class="col-4">
-              </div>
-              <div class="col-3">
-                <select class="form-select" aria-label="Default select example" @change="sortProducts($event)">
-                  <option selected value="name,ASC">По умолчанию</option>
-                  <option value="price,ASC">Сначала дешевле</option>
-                  <option value="price,DESC">Сначала дороже</option>
-                  <option value="rating,DESC">Сначала с высоким рейтингом</option>
-                </select>
-              </div>
-            </div>
-          </div>
+        <div class="product_card_list__wrapper">
+          <div class="card_list card_list-catalog">
             <product-card
                 v-for="product in products"
                 :key="product.id"
                 :product="product"
+                :sale="sales"
             />
+          </div>
+          <nav class="page">
+            <ul class="page__list">
+              <li class="list__el" @click="changePageNoIndex('first')">
+                <a class="el__content" >&laquo;</a>
+              </li>
+              <li class="list__el" @click="changePageNoIndex('previous')">
+                <a class="el__content" >Предыдущая</a>
+              </li>
+              <li class="list__el" @click="changePage(pageIndex)" v-for="pageIndex in filter.totalPages" :key="pageIndex">
+                <a class="el__content">{{pageIndex}} </a>
+              </li>
+              <li class="list__el" @click="changePageNoIndex('next')">
+                <a class="el__content" >Следующая</a>
+              </li>
+              <li class="list__el" @click="changePageNoIndex('last')">
+                <a class="el__content" >&raquo;</a>
+              </li>
+            </ul>
+          </nav>
         </div>
-      </div>
-      <hr>
-      <nav aria-label="Page navigation">
-        <ul class="pagination">
-          <li @click="changePageNoIndex('first')" class="page-item"><a class="page-link" >&laquo;</a></li>
-          <li @click="changePageNoIndex('previous')" class="page-item"><a class="page-link" >Предыдущая</a></li>
-          <li @click="changePage(pageIndex)" class="page-item" v-for="pageIndex in filter.totalPages" :key="pageIndex"><a class="page-link">{{ pageIndex }}</a></li>
-          <li @click="changePageNoIndex('next')" class="page-item"><a class="page-link" >Следующая</a></li>
-          <li @click="changePageNoIndex('last')" class="page-item"><a class="page-link" >&raquo;</a></li>
-        </ul>
-      </nav>
-    </div>
-    <Footer/>
+      </section>
+
+
+
+  </main>
+  <Footer/>
   </div>
 </template>
 
 <script>
 import ProductCard from '@/components/ProductCard'
 import newMenuInCatalog from "@/components/newMenuInCatalog";
-import Header from '../components/Header'
-import Footer from '../components/Foter'
+import Header from '../components/Sections/Header'
+import Footer from '../components/Sections/Footer'
 import { eventBus } from '@/main'
 import CatalogService from '../services/catalog.service'
+import SaleService from "@/services/sale.service";
 
 export default {
   name: 'Catalog',
@@ -69,26 +75,41 @@ export default {
       productsFromServer: {},
       text: 'Все товары',
       filter: {
-        animal: null,
+        sale: false,
         categories: null,
         priceFrom: 1,
         priceTo: 99999,
         pageNumber: 0,
-        pageSize: 4,
+        pageSize: 6,
         totalPages: null,
         sortBy: 'name',
         sortDirection: 'ASC',
         searchText: null,
-      }
-
+      },
+      sales: undefined,
+      test: true
     }
   },
 methods: {
+    getSales() {
+      SaleService.getSales().then(
+          response => {
+            this.sales = response.data.content
+          })
+    },
+    getProducts() {
+      CatalogService.getAllProductsFromCatalog(this.pageNumber, this.pageSize, this.sortBy).then(
+          response => {
+            this.products = response.data.content;
+            console.log(response);
+          }
+      );
+    },
+
   getFilteredProducts() {
     CatalogService.getByUserFilter(this.filter).then(
         response => {
           this.productsFromServer = response;
-          console.log(this.productsFromServer);
           this.products = this.productsFromServer.data.content;
           this.filter.totalPages = this.productsFromServer.data.totalPages;
         }
@@ -130,15 +151,18 @@ methods: {
   },
 },
   created() {
+    this.getSales()
     this.getFilteredProducts()
+    // this.getProducts();
     eventBus.$on('createUserFilter', payload => {
-      this.filter.animal = payload.animal;
+      this.filter.sale = payload.isSale;
       this.filter.categories = payload.categories;
       this.filter.priceFrom = payload.priceFrom;
       this.filter.priceTo = payload.priceTo;
       this.getFilteredProducts();
     });
     eventBus.$on('searchProducts', data => {
+      this.$router.push('/catalog')
       this.filter.searchText = data;
       this.getFilteredProducts()
     });
@@ -153,3 +177,81 @@ methods: {
   }
 }
 </script>
+
+<style lang="scss">
+  .card_section{
+    display: grid;
+    justify-items: center;
+    row-gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(290px, auto));
+  }
+  .card_list{
+    min-width: 304px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 20px 10px;
+    align-items: center;
+  }
+  .card_list-catalog{
+    width: 70vw;
+    justify-items: left;
+  }
+  .card_list-index{
+    justify-items: left;
+  }
+  .product_filter__wrapper{
+    display: grid;
+    width: 100%;
+    //justify-self: end;
+    //width: 15vw;
+  }
+    .page{
+      -ms-user-select: none;
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+      display: grid;
+      width: 300px;
+      margin-top: 30px;
+      .page__list{
+        display: grid;
+        justify-items: center;
+        grid-template-columns: repeat(6, 1fr);
+        .list__el{
+          cursor: pointer;
+          padding: 5px 10px;
+          border: 1px solid #ccc;
+          transition: .3s ease;
+          .el__content{
+            font-weight: bold;
+          }
+          &:hover{
+            background-color: #3D3D3D;
+            color: #FFFFFF;
+            transition: .3s ease;
+            .el__content{
+              color: #FFFFFF;
+            }
+          }
+        }
+      }
+    }
+  @media (max-width: 768px) {
+    .product_filter__wrapper{
+      justify-items: center;
+    }
+    .card_list{
+      justify-items: center;
+    }
+    .page{
+
+      width: 200px;
+      .page__list{
+        .list__el{
+          padding: 1px 5px;
+        }
+      }
+    }
+  }
+</style>

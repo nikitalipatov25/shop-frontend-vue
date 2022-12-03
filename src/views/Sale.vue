@@ -1,22 +1,25 @@
 <template>
   <div class="deals">
     <Header/>
-    <div class="body">
-      <h1>{{text}}</h1>
+    <main class="container">
+      <section class="heading">
+        <h1>{{text}}</h1>
+      </section>
+      <section class="sale">
         <sale-list
-        v-for="sale in sales"
-        :key="sale.id"
-        :sale="sale"
+            v-for="sale in sales"
+            :key="sale.id"
+            :sale="sale"
         />
-    </div>
+      </section>
+    </main>
     <Footer/>
   </div>
-
 </template>
 
 <script>
-import Header from '../components/Header'
-import Footer from '../components/Foter'
+import Header from '../components/Sections/Header'
+import Footer from '../components/Sections/Footer'
 import SaleService from '@/services/sale.service'
 import SaleList from "@/components/SaleList";
 
@@ -48,3 +51,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.sale{
+  min-width: 304px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 20px 10px;
+  align-items: center;
+  justify-items: start;
+}
+</style>
