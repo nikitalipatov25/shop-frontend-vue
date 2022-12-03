@@ -44,6 +44,12 @@
           :color="'translucent'"
       />
       <Button
+          v-else-if="check"
+          :label="'Товар в корзине'"
+          :size="'small'"
+          :color="'color'"
+      />
+      <Button
           v-else
           :label="'Добавить'"
           :size="'small'"
@@ -58,7 +64,7 @@
 import CartService from '../services/cart.service'
 import ProductCircle from "./Base/ProductCircle";
 import Button from "./Base/Button";
-// import SaleService from "@/services/sale.service";
+import {eventBus} from "@/main";
 
 export default {
   components:{
@@ -70,11 +76,16 @@ export default {
       type: Object
     },
     sale: {
-      type: Object
+      type: Array
+    },
+    productUUID: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
     return {
+      isInCart: false,
       priceWithDiscount: 0,
       productSaleDiscount: 0,
       isDevMode: false,
@@ -85,23 +96,28 @@ export default {
   methods: {
     calculateDiscount() {
       if (this.product.sale !== 'Товар не участвует в акции') {
-        // SaleService.getSaleByName(this.product.name).then(
-        //     response => {
-        //       this.saleName = response
-        //     }
-        // )
         this.priceWithDiscount = this.product.discountPrice
         this.productSaleDiscount = 100 - this.product.discountPrice * 100 / this.product.price
-        //this.priceWithDiscount = (this.product.price / 100) * (100 - this.product.sale.discount);
       }
-
     },
-    addProductToCart() {
+    async addProductToCart() {
       let cartDTO = {
         "productId": this.product.id,
         "amount": 1
       }
-      CartService.addProductToCart(cartDTO);
+      await CartService.addProductToCart(cartDTO);
+      eventBus.$emit('reloadCard')
+    }
+  },
+  computed: {
+    check: function () {
+      let isInCart = false
+      for (let i = 0; i < this.productUUID.length; i++) {
+        if (this.product.id === this.productUUID[i]) {
+          isInCart = true
+        }
+      }
+      return isInCart
     }
   },
   created() {

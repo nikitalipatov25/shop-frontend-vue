@@ -45,7 +45,7 @@ export default {
    getOrders() {
      OrdersService.getOrders().then(
          response => {
-           this.orders = response.data.content
+           this.orders = response.data
          }
      )
    },

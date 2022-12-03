@@ -43,28 +43,6 @@
             </div>
           </template>
         </Modal>
-        <Modal :title="'Ответ'" @closeModal="closeAnswerAddModal" v-if="isAnswerAddModalVisible">
-          <template v-slot:content>
-            <div class="wrapper">
-              <h3>{{ comment.userName + ':' }}</h3>
-              <p v-text="fullText">{{ modalData.text }}</p>
-              <h3>Ваш ответ:</h3>
-              <label class="text">
-                <textarea v-model="answer.text"></textarea>
-              </label>
-            </div>
-          </template>
-          <template v-slot:footer>
-            <div class="">
-              <Button
-                  :label="'Отправить'"
-                  :size="'small'"
-                  :color="'color'"
-                  :click="addAnswer"
-              />
-            </div>
-          </template>
-        </Modal>
       </transition>
     </div>
 
@@ -107,34 +85,6 @@
         </p>
       </div>
     </div>
-
-    <div class="comment__answer" v-if="comment.answers.length !== 0">
-      <div class="answer__el" v-for="answer in comment.answers" :key="answer.id">
-        <Answer  :answer="answer"/>
-      </div>
-    </div>
-
-
-<!--    -->
-
-<!---->
-<!--          -->
-<!--        <b-modal id="modify-answer-modal" hide-footer title="modify">-->
-<!--          <div class="d-block text-left">-->
-<!--            <input type="text" v-model:="answer.text">-->
-<!--            <button class="btn btn-success" @click="modifyAnswer(answer.id)">Modify</button>-->
-<!--            <button type="button" class="btn btn-danger" @click="$bvModal.hide('modify-answer-modal')">Закрыть</button>-->
-<!--          </div>-->
-<!--        </b-modal>-->
-<!---->
-<!--    <div class="answers" v-if="comment.answers.length !== 0">-->
-<!--      <div v-for="answer in comment.answers" :key="answer.id">-->
-<!--        {{answer}}-->
-<!--        <button v-if="$store.state.auth.user.username === answer.userName" type="button" class="btn btn-danger" @click="deleteAnswer(answer.id)">Удалить answer</button>-->
-<!--        <button v-if="$store.state.auth.user.username === answer.userName" type="button" class="btn btn-warning" @click="$bvModal.show('modify-answer-modal')">Изменить answer</button>-->
-<!--      </div>-->
-<!--    </div>-->
-
   </div>
 </template>
 
@@ -189,18 +139,9 @@ export default {
       isButtonVisible: false,
       fullText: this.comment.text,
       shortText: '',
-      payload: {
-        text: 'answer'
-      },
-      answers: null,
       modalData: {
         text: this.fullText,
         rating: this.rating
-      },
-      answer: {
-        productId: '',
-        answerToUser: '',
-        text: ''
       },
       listCommentAddAuth: [
         {
@@ -208,21 +149,10 @@ export default {
           click: this.showCommentAddModal,
         },
         {
-          label: 'Ответить',
-          click: this.showAnswerAddModal
-        },
-        {
           label: 'Удалить',
           click: this.showCommentDelModal
         },
       ],
-      listCommentAdd: [
-        {
-          label: 'Ответить',
-          click: this.showAnswerAddModal
-        },
-      ],
-
     }
   },
   created() {
@@ -264,13 +194,6 @@ export default {
     },
     closeCommentDelModal(){
       this.isCommentDelModalVisible = false
-    },
-    showAnswerAddModal(){
-      this.closeAllModal()
-      this.isAnswerAddModalVisible = true
-    },
-    closeAnswerAddModal(){
-      this.isAnswerAddModalVisible = false
     },
     modifyComment() {
       if ((this.modalData.text !== this.fullText && this.modalData.text !== undefined) && this.modalData.rating !== undefined) {

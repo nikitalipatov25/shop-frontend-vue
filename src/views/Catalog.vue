@@ -20,6 +20,7 @@
                 :key="product.id"
                 :product="product"
                 :sale="sales"
+                :productUUID="productsUUID"
             />
           </div>
           <nav class="page">
@@ -59,6 +60,7 @@ import Footer from '../components/Sections/Footer'
 import { eventBus } from '@/main'
 import CatalogService from '../services/catalog.service'
 import SaleService from "@/services/sale.service";
+import CartService from "@/services/cart.service";
 
 export default {
   name: 'Catalog',
@@ -70,13 +72,14 @@ export default {
   },
   data() {
     return {
+      productsUUID: [],
       content: {},
       products: [],
       productsFromServer: {},
       text: 'Все товары',
       filter: {
         sale: false,
-        categories: null,
+        categories: [],
         priceFrom: 1,
         priceTo: 99999,
         pageNumber: 0,
@@ -91,6 +94,13 @@ export default {
     }
   },
 methods: {
+    getUserProducts() {
+      CartService.getUserProducts().then(
+          response => {
+            this.productsUUID = response.data
+          }
+      )
+    },
     getSales() {
       SaleService.getSales().then(
           response => {
@@ -101,7 +111,6 @@ methods: {
       CatalogService.getAllProductsFromCatalog(this.pageNumber, this.pageSize, this.sortBy).then(
           response => {
             this.products = response.data.content;
-            console.log(response);
           }
       );
     },
@@ -151,8 +160,15 @@ methods: {
   },
 },
   created() {
+    if (this.$route.params.catalogParameter !== undefined) {
+      this.filter.categories.push(this.$route.params.catalogParameter)
+    }
+    if (this.$route.params.isDeal === 'true') {
+      this.filter.sale = true
+    }
     this.getSales()
     this.getFilteredProducts()
+    this.getUserProducts()
     // this.getProducts();
     eventBus.$on('createUserFilter', payload => {
       this.filter.sale = payload.isSale;
@@ -174,7 +190,8 @@ methods: {
       this.filter.pageNumber = data;
       this.getFilteredProducts()
     });
-  }
+    eventBus.$on('reloadCard', this.getUserProducts)
+  },
 }
 </script>
 

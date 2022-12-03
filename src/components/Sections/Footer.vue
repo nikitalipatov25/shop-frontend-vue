@@ -1,9 +1,4 @@
 <template>
-<!--          <li class="list-group-item" @click="openCatalogCategory('empty')">Все товары</li>-->
-<!--          <li class="list-group-item" v-for="animal in animals" :key="animal">{{animal.name}}</li>-->
-<!--          <li class="list-group-item" @click="$router.push({name: 'questions'})">Информация покупателям(ЧаВо)</li>-->
-<!--          <li class="list-group-item" @click="$router.push({name: 'sale'})">Скидки и акции</li>-->
-<!--          <li class="list-group-item" @click="$router.push({name: 'about'})">О магазине</li>-->
   <footer class="footer_section">
     <div class="container">
       <div class="footer">
@@ -19,10 +14,11 @@
           <ul class="link__list">
             <li
                 class="list__el"
-                v-for="(item, index) in animals"
+                v-for="(item, index) in category"
                 :key="index"
+
             >
-              <a href="">{{ item.name }}</a>
+              <a @click="openCatalogCategory(item.name)">{{ item.name }}</a>
             </li>
           </ul>
         </div>
@@ -38,14 +34,14 @@
             </li>
           </ul>
         </div>
-        <div class="footer__about footer__el">
-          <h2>Информация для покупателя</h2>
-          <ul class="link__list">
-            <li class="list__el"><a href="" @click="$router.push({name: 'questions'})">F.A.Q.</a></li>
-            <li class="list__el"><a href="" @click="$router.push({name: 'about'})">О магазине</a></li>
-            <li class="list__el"><a href="" @click="$router.push({name: 'sale'})">Скидки</a></li>
-          </ul>
-        </div>
+<!--        <div class="footer__about footer__el">-->
+<!--          <h2>Информация для покупателя</h2>-->
+<!--          <ul class="link__list">-->
+<!--            <li class="list__el"><a href="" @click="$router.push({name: 'questions'})">F.A.Q.</a></li>-->
+<!--            <li class="list__el"><a href="" @click="$router.push({name: 'about'})">О магазине</a></li>-->
+<!--            <li class="list__el"><a href="" @click="$router.push({name: 'sale'})">Скидки</a></li>-->
+<!--          </ul>-->
+<!--        </div>-->
       </div>
       <div class="footer_section__copyright">
         <h3>
@@ -57,8 +53,8 @@
 </template>
 
 <script>
-import {eventBus} from "@/main";
 import Logo from "../Base/Logo";
+import CategoryService from "@/services/category.service";
 
 export default {
   components:{
@@ -66,22 +62,32 @@ export default {
   },
   data() {
     return {
-      animals: {},
+      category: {},
       contacts:[
-        'Address : Patricia C. Amedee 4401 Waldeck Street Grapevine Nashville, Tx 76051',
-        'Phone: +7 (999) 999 99 99'
+        'Санкт-Петербург,\n' +
+        '190103, 10-я Красноармейская, 22,\n' +
+        'литер А, пом. 1-Н, 6-й этаж',
+        '8-800-301-76-27, с 7:00 до 24:00 по мск.\n' +
+        'Звонок по России бесплатный',
+        'help@favouritepet.ru'
       ],
     }
   },
   methods: {
     openCatalogCategory(catalogParameter) {
-      if (this.$route.name === 'catalog-page') {
-        eventBus.$emit('openCatalogCategory', catalogParameter)
-      } else {
-        this.$router.push({name: 'catalog-page', params: {catalogParameter: catalogParameter}});
-      }
+      this.$router.push({ name: 'catalog-page', params: {catalogParameter: catalogParameter} });
+    },
+    getCategories() {
+      CategoryService.getCategoriesSet().then(
+          response => {
+            this.category = response.data
+          }
+      )
     }
   },
+  created() {
+    this.getCategories()
+  }
 }
 </script>
 

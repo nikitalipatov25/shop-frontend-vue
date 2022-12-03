@@ -6,8 +6,8 @@ import authHeader from "@/services/auth-header";
 
 let API_URL;
 if (process.env.NODE_ENV === 'development') {
-    API_URL = 'http://localhost:8080/comments/'
-} else API_URL = 'https://hand-made-shop.herokuapp.com/comments/'
+    API_URL = 'http://localhost:8080/newcomments/'
+} else API_URL = 'https://hand-made-shop.herokuapp.com/newcomments/'
 
 class CommentService {
 
@@ -16,7 +16,7 @@ class CommentService {
     }
 
     addNewComment(productId, payload) {
-        return axios.post('http://localhost:8080/newcomments/' + productId, payload, { headers: authHeader() })
+        return axios.post(API_URL + productId, payload, { headers: authHeader() })
     }
 
     modifyNewComment(productId, payload) {

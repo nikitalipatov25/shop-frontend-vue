@@ -18,12 +18,6 @@
             </div>
             <div class="info-el">
               <label>
-                <span>Введите Ваше отчество (при наличии):</span>
-                <input type="text" v-model="user.secondName">
-              </label>
-            </div>
-            <div class="info-el">
-              <label>
                 <span>Введите адрес доставки:</span>
                 <input type="text" v-model="user.address">
               </label>
@@ -31,7 +25,7 @@
             <div class="info-el">
               <label>
                 <span>Введите Ваш номер телефона:</span>
-                <input type="tel" v-model="user.phone">
+                <input type="tel" v-model="user.phoneNumber">
               </label>
             </div>
           </form>
@@ -60,8 +54,7 @@
           <div class="wrapper">
             <p><span>Фамилия:</span> {{user.surname}}</p>
             <p><span>Имя:</span> {{user.name}}</p>
-            <p><span>Отчество:</span> {{user.secondName}}</p>
-            <p><span>Телефон:</span> {{user.phone}}</p>
+            <p><span>Телефон:</span> {{user.phoneNumber}}</p>
             <p><span>Эл. адрес:</span> {{user.email}}</p>
             <p><span>Адрес доставки:</span> {{user.address}}</p>
             <div class="edit">
@@ -115,8 +108,7 @@ export default {
       user: {
         name: 'Укажите имя',
         surname: 'Укажите фамилию',
-        secondName: 'Отсутствует',
-        phone: 'Укажите телефон',
+        phoneNumber: 'Укажите телефон',
         email: '',
         address: 'Укажите адрес доставки'
       },
@@ -155,7 +147,7 @@ export default {
     getOrders() {
       OrderService.getOrders().then(
           response => {
-            this.orders = response.data.content;
+            this.orders = response.data;
           }
       )
     },
@@ -167,9 +159,6 @@ export default {
             }
             if (response.data.surname !== null) {
               this.user.surname = response.data.surname;
-            }
-            if (response.data.secondName !== null) {
-              this.user.secondName = response.data.secondName;
             }
             if (response.data.phoneNumber !== null) {
               this.user.phone = response.data.phoneNumber;
