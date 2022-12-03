@@ -39,6 +39,10 @@ class CartService {
         return axios.delete(API_URL + 'selected', { data: payload, headers: authHeader() })
     }
 
+    getUserProducts() {
+        return axios.get(API_URL + 'products', { headers: authHeader()})
+    }
+
 }
 
 export default new CartService()

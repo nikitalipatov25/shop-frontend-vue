@@ -1,16 +1,60 @@
 <template>
-  <div class="col-md-12">
+  <div class="register">
     <div class="card card-container">
-      <img
-          id="profile-img"
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          class="profile-img-card"
-      />
-      <form name="form" @submit.prevent="handleRegister">
-        <div v-if="!successful">
+      <div class="reg__logo">
+        <Logo color="light" />
+      </div>
+      <div class="reg__form">
+        <div class="reg__form" v-if="!successful">
+          <div class="form-group">
+            <label for="username">Придумайте логин</label>
+            <input
+                id="username"
+                v-model="user.username"
+                v-validate="'required|min:3|max:20'"
+                type="text"
+                class="form-control"
+                name="username"
+            />
+            <div
+                v-if="submitted && errors.has('username')"
+                class="alert-danger"
+            >{{errors.first('username')}}</div>
+          </div>
+          <div class="form-group">
+            <label for="password">Приумайте пароль</label>
+            <input
+                id="password"
+                v-model="user.password"
+                v-validate="'required|min:6|max:40'"
+                type="password"
+                class="form-control"
+                name="password"
+            />
+            <div
+                v-if="submitted && errors.has('password')"
+                class="alert-danger"
+            >{{errors.first('password')}}</div>
+          </div>
+          <div class="form-group">
+            <label for="email">Укажите Ваш эл. адрес</label>
+            <input
+                id="email"
+                v-model="user.email"
+                v-validate="'required|email|max:50'"
+                type="email"
+                class="form-control"
+                name="email"
+            />
+            <div
+                v-if="submitted && errors.has('email')"
+                class="alert-danger"
+            >{{errors.first('email')}}</div>
+          </div>
           <div class="form-group">
             <label for="surname">Укажите Вашу фамилию</label>
             <input
+                id="surname"
                 v-model="user.surname"
                 v-validate="'required|min:2|max:30'"
                 type="text"
@@ -25,6 +69,7 @@
           <div class="form-group">
             <label for="name">Укажите Ваше имя</label>
             <input
+                id="name"
                 v-model="user.name"
                 v-validate="'required|min:2|max:16'"
                 type="text"
@@ -36,85 +81,46 @@
                 class="alert-danger"
             >{{errors.first('name')}}</div>
           </div>
-          <div class="form-group">
-            <label for="secondname">Укажите Ваше отчество (при наличии)</label>
-            <input
-                v-model="user.secondname"
-                v-validate="'required|min:0|max:16'"
-                type="text"
-                class="form-control"
-                name="secondname"
+          <div class="form-group form__button">
+            <Button
+                :label="'Зарегистрироваться'"
+                :size="'small'"
+                :color="'color'"
+                :click="handleRegister"
             />
-            <div
-                v-if="submitted && errors.has('secondname')"
-                class="alert-danger"
-            >{{errors.first('secondname')}}</div>
-          </div>
-          <div class="form-group">
-            <label for="username">Придумайте логин</label>
-            <input
-                v-model="user.username"
-                v-validate="'required|min:3|max:20'"
-                type="text"
-                class="form-control"
-                name="username"
-            />
-            <div
-                v-if="submitted && errors.has('username')"
-                class="alert-danger"
-            >{{errors.first('username')}}</div>
-          </div>
-          <div class="form-group">
-            <label for="email">Укажите Ваш эл. адрес</label>
-            <input
-                v-model="user.email"
-                v-validate="'required|email|max:50'"
-                type="email"
-                class="form-control"
-                name="email"
-            />
-            <div
-                v-if="submitted && errors.has('email')"
-                class="alert-danger"
-            >{{errors.first('email')}}</div>
-          </div>
-          <div class="form-group">
-            <label for="password">Приумайте пароль</label>
-            <input
-                v-model="user.password"
-                v-validate="'required|min:6|max:40'"
-                type="password"
-                class="form-control"
-                name="password"
-            />
-            <div
-                v-if="submitted && errors.has('password')"
-                class="alert-danger"
-            >{{errors.first('password')}}</div>
-          </div>
-          <div class="form-group">
-            <button class="btn btn-primary btn-block">Зарегистрироваться</button>
           </div>
         </div>
-      </form>
+      </div>
 
-      <div
-          v-if="message"
-          class="alert"
-          :class="successful ? 'alert-success' : 'alert-danger'"
-      >{{message}}</div>
+      <div v-if="message" class="alert" :class="successful ? 'alert-success' : 'alert-danger'">
+        {{message}}
+        <div class="form-group form__button">
+          <Button
+              :label="'Войти'"
+              :size="'small'"
+              :color="'color'"
+              :click="signIn"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import Button from "../components/Base/Button";
+import Logo from "../components/Base/Logo";
 import User from '../models/user';
 
 export default {
   name: 'Register',
+  components:{
+    Logo,
+    Button
+  },
   data() {
     return {
-      user: new User('', '', '', '', '', ''),
+      user: new User('', '', '', '', ''),
       submitted: false,
       successful: false,
       message: ''
@@ -131,6 +137,9 @@ export default {
     }
   },
   methods: {
+    signIn() {
+      this.$router.push('/login')
+    },
     handleRegister() {
       this.message = '';
       this.submitted = true;
@@ -140,7 +149,6 @@ export default {
               data => {
                 this.message = data.message;
                 this.successful = true;
-                this.$router.push('/login');
               },
               error => {
                 this.message =
@@ -152,15 +160,38 @@ export default {
           );
         }
       });
-    }
+   }
   }
 };
 </script>
 
 <style scoped>
+
+.register{
+  margin-top: 30px;
+  width: 100%;
+  display: grid;
+  justify-items: center;
+}
+
+.reg__logo{
+  pointer-events: none;
+}
+
+.reg__form{
+  display: grid;
+  gap: 15px;
+}
+
 label {
-  display: block;
-  margin-top: 10px;
+  display: grid;
+}
+input{
+  outline: none;
+  -moz-appearance: none;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  padding: 5px;
 }
 
 .card-container.card {
@@ -168,26 +199,22 @@ label {
   padding: 40px 40px;
 }
 
-.card {
-  background-color: #f7f7f7;
-  padding: 20px 25px 30px;
-  margin: 0 auto 25px;
-  margin-top: 50px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+.card-container.card {
+  max-width: 310px;
+  padding: 20px;
+  display: grid;
+  gap: 10px;
+}
+.card{
+  border-radius: 15px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
+  position: relative;
 }
 
-.profile-img-card {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 10px;
-  display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
+.form__button{
+  display: grid;
+  gap: 10px;
 }
+
+
 </style>

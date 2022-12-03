@@ -1,0 +1,103 @@
+//imports
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;700&family=Montserrat:wght@400;700&family=Raleway:wght@400;700&display=swap');
+
+//variables
+$maxWidth: 1440;
+
+//mixins
+@mixin adaptive-font($pcSize, $mobSize){
+  $addSize: $pcSize - $mobSize;
+  $addMobSize: $addSize + $addSize * 0.7;
+  @media (max-width: 767px) {
+    font-size: calc(#{$mobSize + px} + #{$addMobSize} * ((100vw - 320px) / #{$maxWidth}));
+  }
+  @media (min-width: 767px) {
+    font-size: calc(#{$mobSize + px} + #{$addSize} * (100vw / #{$maxWidth}));
+  }
+}
+
+//tags
+*{
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+h1{
+  @include adaptive-font(40, 18);
+  font-weight: bold;
+  font-family: 'Cabin', sans-serif;
+}
+
+h1.sale-font{
+  @include adaptive-font(70, 15);
+  line-height: 5vw;
+}
+
+h2{
+  @include adaptive-font(30, 16);
+
+}
+
+h3{
+  @include adaptive-font(20, 14);
+}
+
+h2,h3,h4,h5{
+  font-family: 'Raleway', sans-serif;
+  margin: 0;
+}
+
+a{
+  color: #000;
+  text-decoration: none;
+}
+
+a, p, span, textarea, input{
+  font-family: 'Montserrat', sans-serif;
+  @include adaptive-font(16, 12);
+  margin: 0;
+}
+
+ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+li{
+  margin: 0;
+}
+
+input{
+  border: none;
+}
+
+textarea{
+  resize: none;
+  border: none;
+}
+
+//classes
+.container{
+  width: 95%;
+  margin: 0 auto;
+}
+
+.heading{
+  h1{
+    margin: 20px 0;
+    text-align: left!important;
+  }
+  h2{
+    margin: 10px 0;
+  }
+}
+
+//media
+@media (max-width: 767px) {
+  .header-menu{
+    display: none;
+  }
+}
+
+

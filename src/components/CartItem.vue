@@ -1,34 +1,37 @@
 <template>
-  <div class="cart-item">
+  <div class="cart-item_mob">
     <div class="row">
-      <div class="col-1">
-      </div>
-      <div class="col-3">
+      <div class="item__el item__image">
         <img
-          :src="'http://localhost:8080/files/' + product.product.image"
-          width="200px"
-          height="200px"
-          alt="">
-      </div>
-      <div class="col-2">
-        {{ product.product.name }}
-        На складе {{product.product.amount}} шт.
-      </div>
-      <div class="col-3">
-        {{ product.product.price }} руб.
-        <button type="button" class="btn btn-primary" v-on:click="addQuantity">+</button>
-        {{ product.amount }} шт.
-        <button type="button" class="btn btn-primary" v-on:click="subQuantity">-</button>
-      </div>
-      <div class="col-2">
-        <!--   checkbox для удаления    -->
-        <input @change="setDelList(isChecked, product.productId)" v-model="isChecked" type="checkbox">
-        {{ isChecked }}
-        <br>
-        <button type="button" class="btn btn-danger" @click="deleteProductFromCart">Удалить</button>
+            :src="'http://localhost:8080/files/' + product.product.image"
+            alt="">
       </div>
     </div>
-    <hr>
+    <div class="row">
+      <div class="item__el item__label">
+        <h3>{{ product.product.name }}</h3>
+      </div>
+      <div class="row">
+        <div class="item__el item__total-price">
+          <h3>{{ product.product.price * product.amount }} руб.</h3>
+        </div>
+        <div class="item__el item__counter">
+          <button type="button" class="" v-on:click="subQuantity">-</button>
+          <h3>{{ product.amount }} шт.</h3>
+          <button type="button" class="" v-on:click="addQuantity">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="row row_del">
+      <div class="item__el item__del">
+        <button type="button" @click="deleteProductFromCart">D</button>
+      </div>
+      <div class="item__el item__select">
+        <!--   checkbox для удаления    -->
+        <input @change="setDelList(isChecked, product.productId)" v-model="isChecked" type="checkbox">
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -82,3 +85,61 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .cart-item_mob{
+    width: 280px;
+    padding: 20px 10px;
+    margin: 20px 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
+    column-gap: 20px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 25px;
+    transition: 0.3s;
+    &:hover{
+      box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.25);
+      transform: scale(1.05);
+      transition: 0.3s;
+    }
+    .row_del{
+      width: 100%;
+      height: 100%;
+      display: grid;
+      gap: 15px;
+      grid-template-rows: 15px 15px;
+
+    }
+    .item__el{
+      text-align: center;
+    }
+    .item__image{
+      img{
+        //max-height: 150px;
+        //max-width: 150px;
+        height: 100px;
+        width: 100px;
+      }
+    }
+    .item__label{
+      h3{
+        color: #1BB0CE;
+      }
+    }
+    .item__counter{
+      display: grid;
+      grid-template-columns: 10px 80px 10px;
+      align-items: center;
+      justify-items: center;
+      button{
+        font-size: 30px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        background: none;
+      }
+    }
+  }
+</style>

@@ -15,20 +15,38 @@ class PromotionsService {
         return axios.get(API_URL + "get", { headers: authHeader()})
     }
 
-    createSale(saleDTO) {
-        return axios.post(API_URL + "add", saleDTO, { headers: authHeader()})
+    createSale(name, image, date, expirationDate, discount, products) {
+        let formData = new FormData();
+        formData.append("name", name);
+        formData.append("image", image);
+        formData.append("date", date);
+        formData.append("expirationDate", expirationDate);
+        formData.append("discount", discount);
+        formData.append("products", products);
+        return axios.post(API_URL + "add", formData, { headers: authHeader()})
     }
 
     getSale(saleId) {
         return axios.get(API_URL + "get/" + saleId)
     }
 
+    getSaleByName(name) {
+        return axios.get(API_URL + "get/" + name)
+    }
+
     deleteSale(saleId) {
         return axios.delete(API_URL + "delete/" + saleId, { headers: authHeader()})
     }
 
-    modifySale(saleDTO) {
-        return axios.put(API_URL + "modify", saleDTO, { headers: authHeader()})
+    modifySale(id, name, image, date, expirationDate, discount, products) {
+        let formData = new FormData();
+        formData.append("name", name);
+        formData.append("image", image);
+        formData.append("date", date);
+        formData.append("expirationDate", expirationDate);
+        formData.append("discount", discount);
+        formData.append("products", products);
+        return axios.put(API_URL + "modify/" + id, formData, { headers: authHeader()})
     }
 
 }
