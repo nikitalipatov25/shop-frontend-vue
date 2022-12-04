@@ -52,7 +52,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .sale{
   min-width: 304px;
   display: grid;
