@@ -145,9 +145,10 @@ export default {
       width: 100%;
     }
     .preview__status{
+      padding-left: 10px;
       position: relative;
       .sale{
-        right: 70px;
+        //right: 10px;
       }
       .rating {
         right: 5px;
@@ -159,7 +160,9 @@ export default {
       align-items: center;
       justify-items: center;
       img{
-        height: 260px;
+        border-radius: 25px;
+        height: 100%;
+        width: 100%;
       }
     }
     &:hover{
