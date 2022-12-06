@@ -27,21 +27,6 @@ class CommentService {
         return axios.delete('http://localhost:8080/newcomments/' + productId, { headers: authHeader() })
     }
 
-    getComments(id){
-        return axios.get(API_URL + id, { headers: authHeader() })
-    }
-
-    generateComment(id, payload){
-        return axios.post(API_URL + id, payload, { headers: authHeader() })
-    }
-
-    updateComment(id, comment){
-        return axios.put(API_URL + id, comment, { headers: authHeader() })
-    }
-
-    deleteComment(id){
-        return axios.delete(API_URL + id, { headers: authHeader() })
-    }
 }
 
 export default new CommentService()

@@ -1,28 +1,5 @@
 <template>
   <div class="orders-component">
-    <div class="orders-component__modal">
-      <Modal :title="'Изменение'" @closeModal="closeOrderModal" v-if="isOrderModalVisible">
-        <template v-slot:content>
-          <div class="d-block text-left">
-            <p>Измените статус заказа:</p>
-            <select class="form-select" @change="selectStatus($event)">
-              <option selected>Выберете статус заказа</option>
-              <option v-for="status in statuses" :key="status">{{status}}</option>
-            </select>
-          </div>
-        </template>
-        <template v-slot:footer>
-          <div class="">
-            <Button
-                :label="'Изменить'"
-                :size="'small'"
-                :color="'color'"
-                :click="modifyOrder"
-            />
-          </div>
-        </template>
-      </Modal>
-    </div>
 
     <div class="accordion" >
       <div class="accordion__header" v-on:click="changeVisible">
@@ -47,8 +24,9 @@
           >
             <p>{{productsInfo}}</p>
           </div>
-          <div class="edit">
-            <h3 @click="showOrderModal">Редактировать заказ</h3>
+          <div class="edit" v-if="order.orderStatus !== 'Завершен'">
+            <h3 @click="cancelOrder">Отменить заказ</h3>
+            <h3 @click="confirmReceipt">Подтвердить полуение</h3>
           </div>
         </div>
       </div>
@@ -57,15 +35,11 @@
 </template>
 
 <script>
-import Modal from "./Base/Modal";
-import Button from "../components/Base/Button";
-
 import OrderService from '@/services/orders.service'
+import {eventBus} from "@/main";
 
 export default {
   components:{
-    Modal,
-    Button
   },
   props: {
     order: {
@@ -76,53 +50,30 @@ export default {
     return {
       isOrderModalVisible: false,
       isVisible: false,
-      statuses: ['Возврат', 'Отмена'],
-      status: '',
-      orderDTO: {
-        orderId: this.order.orderId,
-        orderStatus: ''
-      }
     }
   },
   computed: {
     orderType() {
       return {
-        placed: this.order.orderStatus === 'Оформлен',
+        placed: this.order.orderStatus === 'Завершен',
         cancelled: this.order.orderStatus === 'Отмена',
         refund: this.order.orderStatus === 'Возврат',
       }
     }
   },
   methods: {
-    showOrderModal(){
-      this.isOrderModalVisible = true
+    async cancelOrder() {
+      await OrderService.cancelOrder(this.order.orderId)
+      eventBus.$emit('reloadOrders')
     },
-    closeOrderModal(){
-      this.isOrderModalVisible = false
-    },
-    async modifyOrder() {
-      this.order.orderStatus = this.status
-      this.orderDTO.orderStatus = this.status
-      console.log(this.status)
-      await OrderService.modifyOrderStatus(this.orderDTO)
-    },
-    selectStatus(event) {
-      this.status = event.target.value;
-    },
-    getOrders() {
-      OrderService.getOrders().then(
-          response => {
-            this.orders = response.data.content;
-          }
-      )
+    async confirmReceipt() {
+      await OrderService.confirmReceipt(this.order.orderId)
+      eventBus.$emit('reloadOrders')
     },
     changeVisible() {
       this.isVisible = !this.isVisible
     }
-  },
-  updated() {
-    this.getOrders()
-  },
+  }
 }
 </script>
 

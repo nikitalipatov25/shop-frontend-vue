@@ -11,9 +11,9 @@
             >
         </div>
         <div class="description">
-          <nav class=" product__category_nav">
+          <nav class=" product__category_nav" @click="openCatalogCategory(currentProduct.category)">
             <span> > </span>
-            <a href="#">{{ currentProduct.category }}</a>
+            <a>{{ currentProduct.category }}</a>
           </nav>
           <div class=" product__heading">
             <h1>{{ currentProduct.name }}</h1>
@@ -106,6 +106,9 @@ export default {
     eventBus.$on('reloadComments', this.getComments)
   },
   methods: {
+    openCatalogCategory(catalogParameter) {
+      this.$router.push({ name: 'catalog-page', params: {catalogParameter: catalogParameter} });
+    },
     async getUserProducts() {
       await CartService.getUserProducts().then(
           response => this.products = response.data

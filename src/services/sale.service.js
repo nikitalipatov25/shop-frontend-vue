@@ -26,14 +26,6 @@ class PromotionsService {
         return axios.post(API_URL + "add", formData, { headers: authHeader()})
     }
 
-    getSale(saleId) {
-        return axios.get(API_URL + "get/" + saleId)
-    }
-
-    getSaleByName(name) {
-        return axios.get(API_URL + "get/" + name)
-    }
-
     deleteSale(saleId) {
         return axios.delete(API_URL + "delete/" + saleId, { headers: authHeader()})
     }

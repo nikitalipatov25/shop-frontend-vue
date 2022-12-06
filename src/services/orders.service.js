@@ -19,13 +19,14 @@ class OrdersService {
         return axios.get(API_URL + "get", { headers: authHeader()})
     }
 
-    getOrder(orderId) {
-        return axios.get(API_URL + "get/" + orderId, { headers: authHeader()})
+    cancelOrder(id) {
+        return axios.delete(API_URL + "cancel/" + id, { headers: authHeader()})
     }
 
-    getOrderStatusesList() {
-        return axios.get(API_URL + "status", { headers: authHeader()})
+    confirmReceipt(id) {
+        return axios.get(API_URL + "confirm/" + id, { headers: authHeader()})
     }
+
 
     modifyOrderStatus(orderStatusDTO) {
         return axios.put(API_URL + "modify", orderStatusDTO, { headers: authHeader()})
