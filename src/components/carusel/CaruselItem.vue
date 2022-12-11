@@ -1,24 +1,45 @@
 <template>
-  <div class="carusel-item" @click="openCatalogDeals()">
-    <img :src="'http://localhost:8080/files/' + item_data.image">
-    <p>{{item_data.name}}</p>
-    <p>с {{item_data.date}}  по {{item_data.expirationDate}}</p>
-    <p>Скидка {{item_data.discount}}%</p>
+  <div class="carousel__item" :class="index === currentSlideIndex ? 'carousel__item-active' : 'carousel__item-none'">
+    <div class="carousel__item__content">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: {
-    item_data: {
+  name: "CarouselItem",
+  props:{
+    index: Number,
+    item_data:{
       type: Object,
       default: () => {}
-    }
+    },
+    currentSlideIndex: Number
   },
-  methods: {
-    openCatalogDeals() {
-      this.$router.push({ name: 'catalog-page', params: {isDeal: 'true'} });
-    }
-  }
 }
 </script>
+
+<style lang="scss">
+.carousel__item{
+  position: absolute;
+  height: 80%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  .carousel__item__content{
+    display: block;
+    margin: 0 auto;
+    height: 100%;
+  }
+
+}
+.carousel__item-active{
+  opacity: 1;
+  transition-duration: .3s;
+}
+.carousel__item-none{
+  opacity: 0;
+  transition-duration: .3s;
+}
+</style>

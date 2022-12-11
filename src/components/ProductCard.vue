@@ -160,6 +160,7 @@ export default {
       align-items: center;
       justify-items: center;
       img{
+        object-fit: cover;
         border-radius: 25px;
         height: 100%;
         width: 100%;
