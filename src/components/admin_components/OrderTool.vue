@@ -1,8 +1,10 @@
 <template>
   <div class="order-tool">
+    <div class="heading">
+      <h2>Заказы</h2>
+    </div>
 
 
-    <h2>Заказы</h2>
 
     <section class="cart-list_desk ">
       <table>
@@ -13,13 +15,15 @@
           <td><h4>Общая стоимость</h4></td>
           <td><h4>Тип</h4></td>
           <td><h4>Статус</h4></td>
+          <td><h4>Статус</h4></td>
         </tr>
+        <admin-order-desk
+            v-for="order in orders"
+            :key="order.orderId"
+            :order="order"
+        />
       </table>
-      <admin-order-desk
-          v-for="order in orders"
-          :key="order.orderId"
-          :order="order"
-      />
+
     </section>
   </div>
 </template>

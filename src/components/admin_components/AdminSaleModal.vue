@@ -14,8 +14,7 @@
             <p>Введите дату начала акции: <input v-model="sale.date"></p>
             <p>Введите дату окончания акции: <input v-model="sale.expirationDate"></p>
             <p>Введите скидку: <input v-model="sale.discount"></p>
-            <p>Выберете продукты</p>
-            {{saleProducts}}
+            <p>Выберете продукты: <span>{{ saleProducts.length === 0 ? "Не один из товаров не выбран" : saleProducts  }}</span></p>
             <div v-for="item in products" :key="item.id">
               <input type="checkbox" v-model="saleProducts" :value="item.id"> {{item.name}}
             </div>
