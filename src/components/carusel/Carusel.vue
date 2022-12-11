@@ -119,7 +119,6 @@ export default {
   }
   .content__text{
     padding-top: 10px;
-    height: 100%;
     text-align: center;
   }
 

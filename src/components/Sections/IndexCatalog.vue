@@ -1,6 +1,8 @@
 <template>
   <div class="catalog">
-    <h1 class="heading">Каталог</h1>
+    <div class="heading">
+      <h1>Каталог</h1>
+    </div>
     <div class="catalog__card-list">
       <Card v-for="(item, index) in categories"
             :key="index"
