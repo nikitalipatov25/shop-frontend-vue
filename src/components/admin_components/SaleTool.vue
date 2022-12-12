@@ -1,6 +1,9 @@
 <template>
   <div class="sale-tool">
-    <h2>Акции</h2>
+    <div class="heading">
+      <h2>Акции</h2>
+    </div>
+
 
     <button @click="showModal">Добавить акцию</button>
 

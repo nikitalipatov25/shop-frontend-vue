@@ -1,13 +1,15 @@
 <template>
   <div class="admin">
     <Header/>
-      <div class="body">
-        <h1>Панель администратора</h1>
+      <main class="container">
+        <section class="heading">
+          <h1>Панель администратора</h1>
+        </section>
         <CatalogTool/>
         <Animal_categoryTool/>
         <SaleTool></SaleTool>
         <OrderTool></OrderTool>
-      </div>
+      </main>
     <Footer/>
   </div>
 </template>

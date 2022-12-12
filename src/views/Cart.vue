@@ -241,7 +241,6 @@ export default {
     setDelList(isChecked, productId) {
       if (isChecked === true) {
         this.delList.push(productId)
-        console.log('add', this.delList);
         isChecked = false;
       } else {
         this.delList.forEach((item, index) => {
@@ -249,7 +248,6 @@ export default {
             this.delList.splice(index, 1)
           }
         })
-        console.log('del', this.delList)
       }
     },
     async delAll(){
@@ -278,7 +276,7 @@ export default {
     getNewCart() {
       CartService.getNewCart().then(
           response => {
-            this.products = response.data;
+            this.products = response.data.content;
             this.getCartSummary();
             this.addProductsToOrder();
           }

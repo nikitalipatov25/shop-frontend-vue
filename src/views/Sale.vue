@@ -46,8 +46,8 @@ export default {
       )
     },
   },
-   created() {
-     this.getSales()
+  created() {
+    this.getSales()
   }
 }
 </script>

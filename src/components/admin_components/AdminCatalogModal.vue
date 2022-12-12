@@ -14,10 +14,12 @@
             <p>Введите описание товара: <input v-model="product.description"></p>
             <p>Введите количество товара: <input v-model="product.amount"></p>
             <p>Введите цену товара: <input v-model="product.price"></p>
-            <p>Выберите категорию товара: </p>
-            <select v-model="productCategory">
-              <option v-for="item in categories" :key="item.id" @click="productCategory = item.name">{{item.name}}</option>
-            </select>
+            <p>Выберите категорию товара:
+              <select v-model="productCategory">
+                <option v-for="item in categories" :key="item.id" @click="productCategory = item.name">{{item.name}}</option>
+              </select>
+            </p>
+
             <p><label class="btn btn-default p-0"><input type="file" accept="image/*" ref="file" @change="selectImage"/></label></p>
             <div v-if="previewImage === undefined">
               <p><img  :src="'http://localhost:8080/files/' + product.image" alt="" height="100" width="100"/></p>
@@ -154,6 +156,15 @@ export default {
 .modal-body {
   position: relative;
   padding: 20px 10px;
+  display: grid;
+  gap: 20px;
+}
+input{
+  outline: none;
+  -moz-appearance: none;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  padding: 5px;
 }
 
 .btn-close {

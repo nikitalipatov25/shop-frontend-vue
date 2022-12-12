@@ -113,12 +113,6 @@ export default {
         address: 'Укажите адрес доставки'
       },
       orders: '',
-      statuses: ['Возврат', 'Отмена'],
-      status: '',
-      orderDTO: {
-        orderId: '',
-        orderStatus: ''
-      }
     }
   },
   methods: {
@@ -127,18 +121,6 @@ export default {
     },
     closePersonModal(){
       this.isPersonModalVisible = false
-    },
-    modifyOrderEvent() {
-      this.$bvModal.show('modify-order-modal');
-    },
-    async modifyOrder() {
-      this.orderDTO.orderStatus = this.status;
-      await OrderService.modifyOrderStatus(this.orderDTO)
-      this.$bvModal.hide('modify-order-modal');
-      this.getOrders();
-    },
-    selectStatus(event) {
-      this.status = event.target.value;
     },
     async modifyUser() {
       await UserService.modifyUser(this.user);
@@ -175,10 +157,7 @@ export default {
   created() {
     this.getUserProfile();
     this.getOrders();
-    eventBus.$on('modifyOrderEvent', order => {
-      this.orderDTO.orderId = order;
-      this.modifyOrderEvent();
-    })
+    eventBus.$on('reloadOrders', this.getOrders)
   },
 }
 </script>

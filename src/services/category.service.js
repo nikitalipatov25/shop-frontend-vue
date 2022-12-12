@@ -10,10 +10,6 @@ if (process.env.NODE_ENV === 'development') {
 
 class CategoryService {
 
-    // getCategory(categoryUUID) {
-    //     return axios.get(API_URL + 'get/' + categoryUUID)
-    // }
-
     getCategoriesSet() {
         return axios.get(API_URL + 'get')
     }

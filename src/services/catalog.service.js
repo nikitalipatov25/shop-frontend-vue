@@ -50,15 +50,6 @@ class CatalogService {
         return axios.delete(API_URL + 'delete/' + productUUID, { headers: authHeader()})
     }
 
-    // modifyProductInCatalog(productUUID, formdata) {
-    //
-    //     return axios.put(API_URL + 'modify/' + productUUID, formdata, { headers: authHeader()})
-    // }
-
-    getOneProduct(productId) {
-        return axios.get(API_URL + productId, { headers: authHeader()})
-    }
-
     getPopularProducts() {
         return axios.get(API_URL + 'popular')
     }

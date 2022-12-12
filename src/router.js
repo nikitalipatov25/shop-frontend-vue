@@ -6,8 +6,6 @@ import Catalog from '@/views/Catalog'
 import ProductPage from '@/views/ProductPage'
 import PersonalArea from '@/views/PersonalArea'
 import Cart from '@/views/Cart.vue'
-import Sale from "@/views/Sale";
-import About from "@/views/About";
 import Login from "@/views/Login";
 import Register from "@/views/Register";
 import Admin from "@/views/Admin";
@@ -41,16 +39,6 @@ export const router = new Router({
           path: '/cart',
           name: 'cart',
           component: Cart
-      },
-      {
-          path: '/sale',
-          name: 'sale',
-          component: Sale
-      },
-      {
-          path: '/about',
-          name: 'about',
-          component: About
       },
       {
           path: '/login',

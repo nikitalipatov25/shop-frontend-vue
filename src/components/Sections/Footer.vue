@@ -34,14 +34,6 @@
             </li>
           </ul>
         </div>
-<!--        <div class="footer__about footer__el">-->
-<!--          <h2>Информация для покупателя</h2>-->
-<!--          <ul class="link__list">-->
-<!--            <li class="list__el"><a href="" @click="$router.push({name: 'questions'})">F.A.Q.</a></li>-->
-<!--            <li class="list__el"><a href="" @click="$router.push({name: 'about'})">О магазине</a></li>-->
-<!--            <li class="list__el"><a href="" @click="$router.push({name: 'sale'})">Скидки</a></li>-->
-<!--          </ul>-->
-<!--        </div>-->
       </div>
       <div class="footer_section__copyright">
         <h3>

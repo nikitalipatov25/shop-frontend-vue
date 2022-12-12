@@ -133,6 +133,7 @@ export default {
 
 .product_card{
   width: 280px;
+  min-height: 430px;
   .product_card__preview{
     height: 295px;
     box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.25);
@@ -160,6 +161,7 @@ export default {
       align-items: center;
       justify-items: center;
       img{
+        object-fit: cover;
         border-radius: 25px;
         height: 100%;
         width: 100%;
