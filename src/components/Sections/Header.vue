@@ -14,7 +14,6 @@
         <Logo/>
       </div>
       <div class="header__menu">
-<!--        <Menu/>-->
         <HMenu />
       </div>
     </div>
@@ -24,7 +23,6 @@
 <script>
 import HMenu from "../HMenu";
 import { eventBus } from '../../main'
-// import Menu from "../Base/Menu";
 import Logo from "../Base/Logo";
 
 export default {
@@ -37,7 +35,6 @@ export default {
   name: "Header",
   components:{
     HMenu,
-    // Menu,
     Logo
   },
   data() {
@@ -61,7 +58,6 @@ export default {
   },
   created() {
     this.user = this.$store.state.auth.user;
-    console.log(this.user.username);
     eventBus.$on('addCountedItemsToBadge', this.addCountedItemsToBadge)
   }
 }

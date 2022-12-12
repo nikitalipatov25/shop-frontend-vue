@@ -106,60 +106,6 @@ export default {
 }
 </script>
 
-<!--<style lang="scss">-->
-<!--.admin-order_desk{-->
-<!--  width: 280px;-->
-
-<!--  .order__modal{-->
-<!--    display: grid;-->
-<!--    justify-items: center;-->
-<!--    .modal-form{-->
-<!--      display: grid;-->
-<!--      gap: 10px;-->
-<!--      .cart__modal-sec{-->
-<!--        display: grid;-->
-<!--        gap: 5px;-->
-<!--        .info-el{-->
-<!--          label{-->
-<!--            display: inline-grid;-->
-<!--            input{-->
-<!--              outline: none;-->
-<!--              -moz-appearance: none;-->
-<!--              border: 1px solid #ccc;-->
-<!--              border-radius: 15px;-->
-<!--              padding: 5px;-->
-<!--            }-->
-<!--          }-->
-<!--        }-->
-<!--      }-->
-<!--    }-->
-
-<!--  }-->
-
-
-
-<!--  .row_del{-->
-<!--    width: 100%;-->
-<!--    height: 100%;-->
-<!--  }-->
-<!--  .item__el{-->
-<!--    text-align: center;-->
-<!--  }-->
-<!--  .item__image{-->
-<!--    img{-->
-<!--      //max-height: 150px;-->
-<!--      //max-width: 150px;-->
-<!--      height: 80px;-->
-<!--      width: 80px;-->
-<!--    }-->
-<!--  }-->
-<!--  .item__label{-->
-<!--    h4{-->
-<!--      color: #1BB0CE;-->
-<!--    }-->
-<!--  }-->
-<!--}-->
-<!--</style>-->
 
 <style lang="scss">
 .order-admin__modal{

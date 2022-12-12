@@ -46,7 +46,6 @@ export default {
   methods: {
     showModal() {
       this.isModalVisible = true;
-      console.log(this.category)
     },
     closeModal() {
       this.isModalVisible = false;

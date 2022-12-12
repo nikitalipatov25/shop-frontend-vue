@@ -29,19 +29,11 @@ export default {
     }
   },
   methods: {
-    // getAnimals() {
-    //   AnimalService.getAnimals().then(
-    //       response => {
-    //         this.animals = response.data;
-    //       })
-    // },
 
     getCategories() {
       CategoryService.getCategoriesSet().then(
           response => {
             this.categories = response.data
-            console.log(response.data)
-
           }
       )
 
@@ -49,12 +41,10 @@ export default {
 
     // РАЗОБРАТЬСЯ!
     openCatalogCategory(catalogParameter) {
-      // console.log(catalogParameter)
       this.$router.push({ name: 'catalog-page', params: {catalogParameter: catalogParameter} });
     }
   },
   created() {
-    // this.getAnimals()
     this.getCategories()
   }
 }

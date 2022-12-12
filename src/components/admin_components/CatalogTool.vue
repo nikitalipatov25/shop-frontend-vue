@@ -95,7 +95,6 @@ export default {
     getCatalog() {
       CatalogService.getAllProductsFromCatalog(0,Number.MAX_SAFE_INTEGER,this.sortBy).then(
           response => {
-            console.log(response.data);
             this.products = response.data.content
           }
       )

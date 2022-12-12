@@ -54,7 +54,7 @@ export default {
   },
   methods: {
    getOrders() {
-     OrdersService.getOrders().then(
+     OrdersService.getAllUserOrders().then(
          response => {
            this.orders = response.data
          })

@@ -19,6 +19,10 @@ class OrdersService {
         return axios.get(API_URL + "get", { headers: authHeader()})
     }
 
+    getAllUserOrders() {
+        return axios.get(API_URL + "getall", { headers: authHeader()})
+    }
+
     cancelOrder(id) {
         return axios.delete(API_URL + "cancel/" + id, { headers: authHeader()})
     }

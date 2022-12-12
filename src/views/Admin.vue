@@ -1,5 +1,5 @@
 <template>
-  <div class="admin">
+  <div class="admin" v-if="isAdmin">
     <Header/>
       <main class="container">
         <section class="heading">
@@ -30,6 +30,24 @@ export default {
     CatalogTool,
     SaleTool,
     OrderTool
+  },
+  data() {
+    return {
+      isAdmin: false
+    }
+  },
+  methods: {
+    isAdminCheck() {
+      if (this.$store.state.auth.user.roles[0] === 'ROLE_ADMIN') {
+        this.isAdmin = true
+      }
+    }
+  },
+  computed: {
+
+  },
+  created() {
+    this.isAdminCheck()
   }
 }
 </script>

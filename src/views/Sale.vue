@@ -41,7 +41,6 @@ export default {
       SaleService.getSales().then(
           response => {
             this.sales = response.data.content
-            console.log(this.sales)
           }
       )
     },
