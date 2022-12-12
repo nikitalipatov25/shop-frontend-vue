@@ -1,6 +1,8 @@
 <template>
     <div class="category">
-      <h2>Категории</h2>
+      <div class="heading">
+        <h2>Категории</h2>
+      </div>
       <button @click="showModal">Добавить категорию</button>
 
       <Modal

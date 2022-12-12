@@ -1,6 +1,24 @@
 <template>
   <div class="catalog-tool">
-    <h2>Каталог</h2>
+    <div class="heading">
+      <h2>Каталог</h2>
+    </div>
+
+    <div class="cart__modal">
+      <Modal :title="'Оформление'" @closeModal="closeOrderModal" v-if="isOrderModalVisible">
+        <template v-slot:content>
+
+        </template>
+        <template v-slot:footer>
+            <Button
+                :label="'Оформить'"
+                :size="'small'"
+                :color="'color'"
+                :click="orderProducts"
+            />
+        </template>
+      </Modal>
+    </div>
 
     <button @click="showModal">Добавить товар</button>
     <input v-model="filter.searchText" @keyup="findProduct" placeholder="Поиск товара">
@@ -101,3 +119,4 @@ export default {
   }
 }
 </script>
+

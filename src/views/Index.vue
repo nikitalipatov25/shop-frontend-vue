@@ -4,13 +4,12 @@
     <main class="container">
       <section class="carousel_section">
         <section class="heading">
-          <h1>Акции</h1>
+          <h1>Наши акции</h1>
         </section>
-        <Carusel2
-            :carusel_data="sliderItems"
+        <Carousel
+            :carousel_data="sliderItems"
             :interval="5000"
-        >
-        </Carusel2>
+        />
       </section>
       <section class="catalog_section">
         <IndexCatalog/>
@@ -51,7 +50,7 @@ import Header from '../components/Sections/Header'
 import Footer from '../components/Sections/Footer'
 import ProductCard from "../components/ProductCard";
 import IndexCatalog from "../components/Sections/IndexCatalog";
-import Carusel2 from "../components/carusel/Carusel"
+import Carousel from "../components/carusel/Carusel"
 import '../assets/Style.scss'
 import CatalogService from '../services/catalog.service'
 import saleService from "@/services/sale.service";
@@ -66,7 +65,7 @@ export default {
     Footer,
     ProductCard,
     IndexCatalog,
-    Carusel2
+    Carousel
 
   },
   data() {

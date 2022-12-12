@@ -1,38 +1,7 @@
 <template>
   <tr class="admin-order_desk" v-if="order.orderStatus !== 'Завершен'">
 
-    <div class="order__modal">
-      <Modal :title="'Изменение'" @closeModal="closeOrderModal" v-if="isOrderModalVisible">
-        <template v-slot:content>
-          <form class="modal-form">
-            <div class="info-el">
-              <label>
-                <span>Измените статус заказа:</span>
-                <select class="" v-model="defaultOrderStatus">
-                  <option
-                      v-for="status in orderStatuses"
-                      :value="status.value"
-                      :key="status.value"
-                  >
-                    {{status.value}}
-                  </option>
-                </select>
-              </label>
-            </div>
-          </form>
-        </template>
-        <template v-slot:footer>
-          <div class="">
-            <Button
-                :label="'Изменить'"
-                :size="'small'"
-                :color="'color'"
-                :click="modifyOrder"
-            />
-          </div>
-        </template>
-      </Modal>
-    </div>
+
 
 
 
@@ -50,10 +19,43 @@
     </td>
     <td class="item__el">
       <h4>{{ order.orderType }}</h4>
-    </td><td class="item__el">
-      <h4>{{ order.orderStatus }}</h4>
-  </td>
+    </td>
     <td class="item__el">
+      <h4>{{ order.orderStatus }}</h4>
+    </td>
+    <td class="item__el">
+      <div class="order-admin__modal">
+        <Modal :title="'Изменение'" @closeModal="closeOrderModal" v-if="isOrderModalVisible">
+          <template v-slot:content>
+            <form class="modal-form">
+              <div class="info-el">
+                <label>
+                  <span>Измените статус заказа:</span>
+                  <select class="" v-model="defaultOrderStatus">
+                    <option
+                        v-for="status in orderStatuses"
+                        :value="status.value"
+                        :key="status.value"
+                    >
+                      {{status.value}}
+                    </option>
+                  </select>
+                </label>
+              </div>
+            </form>
+          </template>
+          <template v-slot:footer>
+            <div class="">
+              <Button
+                  :label="'Изменить'"
+                  :size="'small'"
+                  :color="'color'"
+                  :click="modifyOrder"
+              />
+            </div>
+          </template>
+        </Modal>
+      </div>
       <button @click="showOrderModal">Изменить</button>
     </td>
   </tr>
@@ -160,6 +162,9 @@ export default {
 <!--</style>-->
 
 <style lang="scss">
+.order-admin__modal{
+
+}
 .admin-order_desk{
   width: 280px;
   .row_del{

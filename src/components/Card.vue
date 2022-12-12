@@ -31,7 +31,7 @@ export default {
 
 <style lang="scss" scoped>
   .card{
-    background: linear-gradient(270.04deg, #EB4D4B -0.64%, #FF8B8B 99.97%);
+    background: #fff;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
     border-radius: 25px;
     transition: 0.3s;
@@ -43,7 +43,7 @@ export default {
     }
     .card__item{
       h1{
-        color: #FFFFFF;
+        color: #000;
       }
       img{
         /* еще больше контроля с max-width */
