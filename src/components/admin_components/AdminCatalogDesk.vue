@@ -1,5 +1,5 @@
 <template>
-    <tr class="admin-catalog_desk">
+    <tr class="admin-catalog_desk admin_desk">
       <td class="item__el item__image">
         <img
             :src="'http://localhost:8080/files/' + product.image"
@@ -23,14 +23,20 @@
       <td class="item__el">
         <h4>{{ product.sale }}</h4>
       </td>
-      <td class="item__el">
-        <button @click="showModal">Изменить</button>
-        <Modal
-            v-show="isModalVisible"
-            @close="closeModal"
-            :product="product"
-        />
-        <button @click="deleteProductFromCatalog(product.id)">Удалить</button>
+      <td class="item__el item__el_option">
+        <div class="wrapper">
+          <div class="option-button" @click="showModal">
+            <img src="../../assets/pencil_ico.png" alt="">
+          </div>
+          <Modal
+              v-show="isModalVisible"
+              @close="closeModal"
+              :product="product"
+          />
+          <div class="option-button" @click="deleteProductFromCatalog(product.id)">
+            <img src="../../assets/trash_ico.png" alt="">
+          </div>
+        </div>
       </td>
     </tr>
 
@@ -80,27 +86,5 @@ export default {
 </script>
 
 <style lang="scss">
-.admin-catalog_desk{
-  width: 280px;
-  .row_del{
-    width: 100%;
-    height: 100%;
-  }
-  .item__el{
-    text-align: center;
-  }
-  .item__image{
-    img{
-      //max-height: 150px;
-      //max-width: 150px;
-      height: 80px;
-      width: 80px;
-    }
-  }
-  .item__label{
-    h4{
-      color: #1BB0CE;
-    }
-  }
-}
+
 </style>

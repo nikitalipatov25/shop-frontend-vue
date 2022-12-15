@@ -1,5 +1,5 @@
 <template>
-  <tr class="admin-sale_desk">
+  <tr class="admin-sale_desk admin_desk">
     <td class="item__el item__image">
       <img
           :src="'http://localhost:8080/files/' + sale.image"
@@ -17,14 +17,21 @@
     <td class="item__el item__total-price">
       <h4>{{ sale.discount }} % </h4>
     </td>
-    <td class="item__el">
-      <button @click="showModal">Изменить</button>
-      <Modal
-          v-show="isModalVisible"
-          @close="closeModal"
-          :sale="sale"
-      />
-      <button @click="deleteSale(sale.id)">Удалить</button>
+    <td class="item__el item__el_option">
+      <div class="wrapper">
+        <div class="option-button" @click="showModal">
+          <img  src="../../assets/pencil_ico.png" alt="">
+        </div>
+        <Modal
+            v-show="isModalVisible"
+            @close="closeModal"
+            :sale="sale"
+        />
+        <div class="option-button" @click="deleteSale(sale.id)">
+          <img src="../../assets/trash_ico.png" alt="">
+        </div>
+      </div>
+
     </td>
   </tr>
 
@@ -73,27 +80,5 @@ export default {
 </script>
 
 <style lang="scss">
-.admin-sale_desk{
-  width: 280px;
-  .row_del{
-    width: 100%;
-    height: 100%;
-  }
-  .item__el{
-    text-align: center;
-  }
-  .item__image{
-    img{
-      //max-height: 150px;
-      //max-width: 150px;
-      height: 80px;
-      width: 80px;
-    }
-  }
-  .item__label{
-    h4{
-      color: #1BB0CE;
-    }
-  }
-}
+
 </style>

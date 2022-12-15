@@ -1,10 +1,5 @@
 <template>
-  <tr class="admin-order_desk" v-if="order.orderStatus !== 'Завершен'">
-
-
-
-
-
+  <tr class="admin-order_desk admin_desk" v-if="order.orderStatus !== 'Завершен'">
     <td class="item__el item__label">
       <h4>{{ order.orderId }}</h4>
     </td>
@@ -23,7 +18,12 @@
     <td class="item__el">
       <h4>{{ order.orderStatus }}</h4>
     </td>
-    <td class="item__el">
+    <td class="item__el item__el_option">
+      <div class="wrapper">
+        <div class="option-button" @click="showOrderModal">
+          <img src="../../assets/pencil_ico.png" alt="">
+        </div>
+      </div>
       <div class="order-admin__modal">
         <Modal :title="'Изменение'" @closeModal="closeOrderModal" v-if="isOrderModalVisible">
           <template v-slot:content>
@@ -56,11 +56,8 @@
           </template>
         </Modal>
       </div>
-      <button @click="showOrderModal">Изменить</button>
     </td>
   </tr>
-
-
 </template>
 
 <script>
@@ -111,55 +108,5 @@ export default {
 .order-admin__modal{
 
 }
-.admin-order_desk{
-  width: 280px;
-  .row_del{
-    width: 100%;
-    height: 100%;
-  }
-  .item__el{
-    text-align: center;
-  }
-  .item__image{
-    img{
-      //max-height: 150px;
-      //max-width: 150px;
-      height: 80px;
-      width: 80px;
-    }
-  }
-  .item__label{
-    h4{
-      color: #1BB0CE;
-    }
-  }
-  .item__counter{
-    display: grid;
-    grid-template-columns: 20px 70px 20px;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-    button{
-      color: #1BB0CE;
-      font-size: 30px;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      background: none;
-      -ms-user-select: none;
-      -moz-user-select: none;
-      -webkit-user-select: none;
-    }
-  }
-  .item__del{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
-    align-items: center;
-    img{
-      cursor: pointer;
-      height: 15px;
-    }
-  }
-}
+
 </style>
