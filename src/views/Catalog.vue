@@ -107,13 +107,6 @@ methods: {
             this.sales = response.data.content
           })
     },
-    getProducts() {
-      CatalogService.getAllProductsFromCatalog(this.pageNumber, this.pageSize, this.sortBy).then(
-          response => {
-            this.products = response.data.content;
-          }
-      );
-    },
 
   getFilteredProducts() {
     CatalogService.getByUserFilter(this.filter).then(
@@ -169,7 +162,6 @@ methods: {
     this.getSales()
     this.getFilteredProducts()
     this.getUserProducts()
-    // this.getProducts();
     eventBus.$on('createUserFilter', payload => {
       this.filter.sale = payload.isSale;
       this.filter.categories = payload.categories;

@@ -19,9 +19,19 @@
         </template>
       </Modal>
     </div>
+    <div class="admin__button">
+      <Button
+          :label="'Добавить товар'"
+          :size="'small'"
+          :color="'color'"
+          :click="showModal"
+      />
+    </div>
 
-    <button @click="showModal">Добавить товар</button>
-    <input v-model="filter.searchText" @keyup="findProduct" placeholder="Поиск товара">
+    <div class="admin__search">
+      <input v-model="filter.searchText" @keyup="findProduct" placeholder="Поиск товара">
+    </div>
+
 
     <Modal
         v-show="isModalVisible"
@@ -30,20 +40,23 @@
     />
 
      <section>
-       <tr>
-         <td><h4>Изображение</h4></td>
-         <td><h4>Название</h4></td>
-         <td><h4>Категория</h4></td>
-         <td><h4>Описание</h4></td>
-         <td><h4>Количество</h4></td>
-         <td><h4>Цена</h4></td>
-         <td><h4>Акция</h4></td>
-       </tr>
-       <admin-catalog-desk
-           v-for="product in products"
-           :key="product.id"
-           :product="product"
-       />
+       <table>
+         <tr>
+           <td><h4>Изображение</h4></td>
+           <td><h4>Название</h4></td>
+           <td><h4>Категория</h4></td>
+           <td><h4>Описание</h4></td>
+           <td><h4>Количество</h4></td>
+           <td><h4>Цена</h4></td>
+           <td><h4>Акция</h4></td>
+           <td><h4>Опции</h4></td>
+         </tr>
+         <admin-catalog-desk
+             v-for="product in products"
+             :key="product.id"
+             :product="product"
+         />
+       </table>
      </section>
 
   </div>
@@ -52,6 +65,7 @@
 <script>
 import CatalogService from '@/services/catalog.service'
 import Modal from "@/components/admin_components/AdminCatalogModal";
+import Button from "@/components/Base/Button";
 import AdminCatalogDesk from "@/components/admin_components/AdminCatalogDesk";
 import {eventBus} from "@/main";
 
@@ -59,6 +73,7 @@ export default {
   components: {
     AdminCatalogDesk,
     Modal,
+    Button
   },
   data() {
     return {
@@ -95,7 +110,6 @@ export default {
     getCatalog() {
       CatalogService.getAllProductsFromCatalog(0,Number.MAX_SAFE_INTEGER,this.sortBy).then(
           response => {
-            console.log(response.data);
             this.products = response.data.content
           }
       )
@@ -119,4 +133,5 @@ export default {
   }
 }
 </script>
+
 

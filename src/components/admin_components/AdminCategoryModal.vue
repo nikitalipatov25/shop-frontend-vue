@@ -151,6 +151,8 @@ export default {
 }
 
 .btn-green {
+  cursor: pointer;
+  padding: 5px 10px;
   color: white;
   background: #4AAE9B;
   border: 1px solid #4AAE9B;

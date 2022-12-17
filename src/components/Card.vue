@@ -2,7 +2,6 @@
   <div class="card" @click="openCatalogCategory(name)">
     <div class="card-wrapper">
       <div class="card__item card__img">
-<!--              <img :src="'http://localhost:8080/files/' + image">-->
         <img :src=image>
       </div>
       <div class="card__item card__title">
@@ -23,7 +22,6 @@ export default {
   methods:{
     openCatalogCategory(catalogParameter) {
       this.$router.push({ name: 'catalog-page', params: {catalogParameter: catalogParameter} });
-      //test
     }
   }
 }
