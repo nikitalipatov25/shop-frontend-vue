@@ -15,7 +15,7 @@
           <td><h4>Общая стоимость</h4></td>
           <td><h4>Тип</h4></td>
           <td><h4>Статус</h4></td>
-          <td><h4>Статус</h4></td>
+          <td><h4>Опции</h4></td>
         </tr>
         <admin-order-desk
             v-for="order in orders"
@@ -69,7 +69,6 @@ export default {
 
 <style lang="scss">
 
-.cart-list_desk{
   table{
     width: 100%;
     border-collapse: separate;
@@ -110,6 +109,5 @@ export default {
 
     }
   }
-}
 
 </style>

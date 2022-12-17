@@ -3,7 +3,15 @@
       <div class="heading">
         <h2>Категории</h2>
       </div>
-      <button @click="showModal">Добавить категорию</button>
+      <div class="admin__button">
+        <Button
+            :label="'Добавить категорию'"
+            :size="'small'"
+            :color="'color'"
+            :click="showModal"
+        />
+      </div>
+
 
       <Modal
           v-show="isModalVisible"
@@ -12,15 +20,19 @@
       />
 
       <section>
-        <tr>
-          <td><h4>Изображение</h4></td>
-          <td><h4>Название</h4></td>
-        </tr>
-        <admin-category-desk
-            v-for="category in categories"
-            :key="category.id"
-            :category="category"
-        />
+        <table>
+          <tr>
+            <td><h4>Изображение</h4></td>
+            <td><h4>Название</h4></td>
+            <td><h4>Опции</h4></td>
+          </tr>
+          <admin-category-desk
+              v-for="category in categories"
+              :key="category.id"
+              :category="category"
+          />
+        </table>
+
       </section>
 
   </div>
@@ -31,10 +43,12 @@ import {eventBus} from "@/main";
 import CategoryService from "@/services/category.service";
 import AdminCategoryDesk from "@/components/admin_components/AdminCategoryDesk";
 import Modal from "@/components/admin_components/AdminCategoryModal";
+import Button from "@/components/Base/Button";
 export default {
   components: {
     AdminCategoryDesk,
-    Modal
+    Modal,
+    Button
   },
   data() {
     return {
